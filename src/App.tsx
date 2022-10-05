@@ -1,8 +1,9 @@
 import { FC } from 'react';
 import './App.css';
+import { SignupForm } from './components/form/Form';
 
 const App: FC = () => {
-  return <div className='App'></div>;
+  return <SignupForm />;
 };
 
 export default App;
