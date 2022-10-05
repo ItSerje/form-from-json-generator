@@ -1,8 +1,24 @@
+import { FC } from 'react';
 import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
 import styles from './form.module.scss';
 
-const TextInput = ({ label, ...props }) => {
+type InputProps = JSX.IntrinsicElements['input'] & {
+  label: string;
+  name: string;
+};
+
+type CheckboxProps = JSX.IntrinsicElements['input'] & {
+  children: string | JSX.Element;
+  name: string;
+};
+
+type SelectProps = JSX.IntrinsicElements['select'] & {
+  label: string;
+  name: string;
+};
+
+const TextInput = ({ label, ...props }: InputProps): JSX.Element => {
   const [field, meta] = useField(props);
   return (
     <>
@@ -15,7 +31,7 @@ const TextInput = ({ label, ...props }) => {
   );
 };
 
-const Checkbox = ({ children, ...props }) => {
+const Checkbox = ({ children, ...props }: CheckboxProps): JSX.Element => {
   const [field, meta] = useField({ ...props, type: 'checkbox' });
   return (
     <div>
@@ -30,7 +46,7 @@ const Checkbox = ({ children, ...props }) => {
   );
 };
 
-const Select = ({ label, ...props }) => {
+const Select = ({ label, ...props }: SelectProps): JSX.Element => {
   const [field, meta] = useField(props);
   return (
     <div>
@@ -43,7 +59,7 @@ const Select = ({ label, ...props }) => {
   );
 };
 
-export const SignupForm = () => {
+export const SignupForm: FC = () => {
   return (
     <>
       <h1>Subscribe!</h1>
