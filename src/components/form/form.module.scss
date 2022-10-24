@@ -50,6 +50,7 @@ html {
   --red: #f56565;
   --text-decoration-color: var(--gray-400);
   --text-color: var(--gray-800);
+
   --focus-ring-color: var(--blue-500);
 }
 
@@ -194,6 +195,10 @@ input[type='number'] {
 }
 
 @media (prefers-color-scheme: dark) {
+  input {
+    color-scheme: dark;
+  }
+
   input[type='email'],
   input[type='text'],
   input[type='number'] {
@@ -633,8 +638,97 @@ input[type='email'],
 input[type='text'],
 input[type='number'],
 textarea,
-select {
+select,
+.dropzone,
+.upload-progress {
   width: 400px;
+}
+
+.input-wrapper {
+  display: flex;
+  width: 400px;
+
+  input {
+    border: 2px solid var(--gray-200);
+    background-color: var(--gray-100);
+    color: var(--gray-800);
+    border-radius: 10px 0 0 10px;
+  }
+
+  & .input-btns-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 2rem;
+
+    overflow: hidden;
+
+    border: 2px solid var(--gray-200);
+    border-left: none;
+    background-color: var(--gray-100);
+    color: var(--gray-800);
+    border-radius: 0 10px 10px 0;
+
+    // flex-direction: column;
+  }
+  span {
+    display: block;
+    // justify-content: center;
+    // align-items: center;
+    height: 50%;
+    font-size: 0.5rem;
+    // line-height: 1rem;
+    width: 100%;
+
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 125.304 125.304"><path d="M62.652 103.895L0 21.41h125.304" fill="%23343334"/></svg>');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 0.5rem;
+    transition: all 0.3s;
+  }
+
+  span:first-of-type {
+    transform: rotate(180deg);
+  }
+
+  span:hover {
+    background-color: var(--gray-800);
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 125.304 125.304"><path d="M62.652 103.895L0 21.41h125.304" fill="%23ffffff"/></svg>');
+  }
+
+  .form-item-delete-btn {
+    font-weight: bold;
+    margin: auto;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .input-btns-wrapper {
+      background-color: var(--gray-800);
+      border-color: var(--gray-700);
+      color: white;
+    }
+
+    input,
+    span {
+      background-color: var(--gray-800);
+      border-color: var(--gray-700);
+      color: white;
+    }
+
+    span {
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 125.304 125.304" ><path d="M62.652 103.895L0 21.41h125.304" fill="%23ffffff" /></svg>');
+      background-position: center center;
+      transition: all 0.3s;
+    }
+
+    span:first-of-type {
+      transform: rotate(180deg);
+    }
+
+    span:hover {
+      background-color: var(--gray-100);
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 125.304 125.304"><path d="M62.652 103.895L0 21.41h125.304" fill="%23343334"/></svg>');
+    }
+  }
 }
 
 label {
@@ -648,3 +742,30 @@ label.checkbox {
 button[type='submit'] {
   margin-top: 1rem;
 }
+
+.dropzone {
+  border: 2px dashed var(--gray-800);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--gray-100);
+  outline: none;
+
+  p {
+    margin: 2rem auto;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    border: 2px dashed var(--gray-100);
+    background: var(--gray-800);
+  }
+}
+
+// input.validation-error,
+// select,
+// input {
+//   border: 2px solid #ff7d87 !important;
+//   box-shadow: none;
+// }

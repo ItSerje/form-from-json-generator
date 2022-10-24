@@ -1,118 +1,17 @@
 import { FC } from 'react';
-import { Formik, Form, useField } from 'formik';
+import { Formik, Form } from 'formik';
+import { TextInput } from './TextInput/TextInput';
+// import { TextInputWithAddMore } from './TextInput/TextInputWithAddMore';
+import { MultipleInputs } from './MultipleInputs/MultipleInputs';
+import { NumberInput } from './NumberInput/NumberInput';
+import { Checkbox } from './Checkbox/Checkbox';
+import { CheckboxGroup } from './Checkbox/CheckboxGroup';
+import { Select } from './Select/Select';
 import * as Yup from 'yup';
-import styles from './form.module.scss';
-
-type InputProps = JSX.IntrinsicElements['input'] & {
-  label: string;
-  name: string;
-};
-
-type CheckboxProps = JSX.IntrinsicElements['input'] & {
-  children: string | JSX.Element;
-  name: string;
-};
-
-type CheckboxGroupProps = {
-  children: string[] | JSX.Element[];
-  groupLabel: string;
-};
-
-type SelectProps = JSX.IntrinsicElements['select'] & {
-  label: string;
-  name: string;
-};
-
-const TextInput = ({ label, ...props }: InputProps): JSX.Element => {
-  const [field, meta] = useField(props);
-  return (
-    <>
-      <label htmlFor={props.id || props.name}>{label}</label>
-      <input className={styles['text-input']} {...field} {...props} />
-      {meta.touched && meta.error ? (
-        <div className={styles.error}>{meta.error}</div>
-      ) : null}
-    </>
-  );
-};
-
-const NumberInput = ({ label, ...props }: InputProps): JSX.Element => {
-  const [field, meta, helpers] = useField({ ...props, type: 'text' });
-
-  const increaseHandler = () => {
-    helpers.setValue(Number(field.value) + 1, true);
-  };
-  const decreaseHandler = () => {
-    if (Number(field.value) - 1 >= 0) {
-      helpers.setValue(Number(field.value) - 1, true);
-    }
-  };
-
-  return (
-    <>
-      <label htmlFor={props.id || props.name}>{label}</label>
-      <span onClick={decreaseHandler}>-</span>
-      <input
-        type='text'
-        className={styles['number-input']}
-        {...field}
-        onChange={(e) => {
-          if (/^\d+$/.test(e.target.value) || e.target.value === '') {
-            field.onChange(e);
-          }
-        }}
-        {...props}
-      />
-      <span onClick={increaseHandler}>+</span>
-      {meta.touched && meta.error ? (
-        <div className={styles.error}>{meta.error}</div>
-      ) : null}
-    </>
-  );
-};
-
-const Checkbox = ({ children, ...props }: CheckboxProps): JSX.Element => {
-  const [field, meta] = useField({ ...props, type: 'checkbox' });
-  console.log(field);
-  return (
-    <div>
-      <label className={styles['checkbox-input']}>
-        <input type='checkbox' {...field} {...props} />
-        {children}
-      </label>
-      {meta.touched && meta.error ? (
-        <div className={styles.error}>{meta.error}</div>
-      ) : null}
-    </div>
-  );
-};
-
-const CheckboxGroup = ({
-  groupLabel,
-  children,
-}: CheckboxGroupProps): JSX.Element => {
-  return (
-    <>
-      <label htmlFor='checkbox-group'>{groupLabel}</label>
-      <div id='checkbox-group' role='group' aria-labelledby='checkbox-group'>
-        {children}
-      </div>
-    </>
-  );
-};
-
-const Select = ({ label, ...props }: SelectProps): JSX.Element => {
-  const [field, meta] = useField(props);
-  return (
-    <div>
-      <label htmlFor={props.id || props.name}>{label}</label>
-      <select {...field} {...props} />
-      {meta.touched && meta.error ? (
-        <div className={styles.error}>{meta.error}</div>
-      ) : null}
-    </div>
-  );
-};
+import { MultipleFilesUploadField } from './UploadInput/MultipleFilesUploadField';
+import { formValidationSchema } from '../../models/formValidation/formValidationSchema';
+import { Label } from './Label/Label';
+import { HintOrError } from './HintOrError/HintOrError';
 
 export const SignupForm: FC = () => {
   return (
@@ -127,86 +26,92 @@ export const SignupForm: FC = () => {
           acceptedTerms: false,
           jobType: '',
           favourites: [],
+          phoneNumbers: [''],
+          files: [],
         }}
-        validationSchema={Yup.object({
-          firstName: Yup.string()
-            .max(15, 'Must be 15 characters or less')
-            .required('Required'),
-          lastName: Yup.string()
-            .max(20, 'Must be 20 characters or less')
-            .required('Required'),
-          age: Yup.number()
-            .required('Required')
-            .min(0, 'Invalid age')
-            .max(120, 'Wow, you are older than 120, but please still use 120.')
-            .integer('Only integers are allowed.'),
-          email: Yup.string()
-            .email('Invalid email address')
-            .required('Required'),
-          acceptedTerms: Yup.boolean()
-            .required('Required')
-            .oneOf([true], 'You must accept terms and conditions'),
-          jobType: Yup.string()
-            .oneOf(
-              ['designer', 'development', 'product', 'other'],
-              'Invalid Job Type'
-            )
-            .required('Required'),
-          favourites: Yup.array().of(Yup.string()),
-        })}
+        validationSchema={formValidationSchema}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
             alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
+            return new Promise((res) => {
+              setTimeout(res, 2500);
+              setSubmitting(false);
+            });
           }, 400);
         }}
       >
-        <Form>
-          <TextInput
-            label='First Name'
-            name='firstName'
-            type='text'
-            placeholder='John'
-          />
-          <TextInput
-            label='Last Name'
-            name='lastName'
-            type='text'
-            placeholder='Doe'
-          />
+        {({ values, touched, errors, isSubmitting }) => (
+          <Form>
+            <Label label='First Name' fieldName='firstName' />
+            <TextInput name='firstName' type='text' placeholder='John' />
+            <HintOrError
+              touched={touched['firstName']}
+              error={errors['firstName']}
+            />
 
-          <NumberInput label='Age' name='age' min='0' max='120' />
+            <Label label='Last Name' fieldName='lastName' />
+            <TextInput name='lastName' type='text' placeholder='Doe' />
+            <HintOrError
+              touched={touched['lastName']}
+              error={errors['lastName']}
+            />
 
-          <TextInput
-            label='Email Address'
-            name='email'
-            type='email'
-            placeholder='john@doe.com'
-          />
+            <Label label='Age' fieldName='age' />
+            <NumberInput name='age' min='0' max='120' />
+            <HintOrError touched={touched['age']} error={errors['age']} />
 
-          <CheckboxGroup groupLabel='Checkbox Group'>
-            <Checkbox name='favourites' value='Movies'>
-              Movies
-            </Checkbox>
-            <Checkbox name='favourites' value='Hobbies'>
-              Hobbies
-            </Checkbox>
-          </CheckboxGroup>
+            <Label label='Email Address' fieldName='email' />
+            <TextInput name='email' type='email' placeholder='john@doe.com' />
+            <HintOrError touched={touched['email']} error={errors['email']} />
 
-          <Select label='Job Type' name='jobType'>
-            <option value=''>Select a job type</option>
-            <option value='designer'>Designer</option>
-            <option value='development'>Development</option>
-            <option value='product'>Product</option>
-            <option value='other'>Other</option>
-          </Select>
+            <Label label='Your hobbies' fieldName='favourites' />
+            <CheckboxGroup
+              name='favourites'
+              options={[
+                { value: 'carving', checkboxLabel: 'Carving' },
+                { value: 'philately', checkboxLabel: 'Philately' },
+              ]}
+            />
+            <HintOrError
+              touched={touched['favourites']}
+              error={errors['favourites']}
+            />
 
-          <Checkbox name='acceptedTerms'>
-            I accept the terms and conditions
-          </Checkbox>
+            <Label label='Email Address' fieldName='jobType' />
+            <Select
+              name='jobType'
+              options={[
+                { value: '', label: 'Select a job type' },
+                { value: 'designer', label: 'Designer' },
+                { value: 'development', label: 'Development' },
+                { value: 'product', label: 'Product' },
+                { value: 'other', label: 'Other' },
+              ]}
+            />
+            <HintOrError
+              touched={touched['jobType']}
+              error={errors['jobType']}
+            />
 
-          <button type='submit'>Submit</button>
-        </Form>
+            <Label label='Phone Numbers' fieldName='phoneNumbers' />
+            <MultipleInputs name='phoneNumbers' placeholder='Contact Number' />
+            <HintOrError
+              touched={touched['phoneNumbers']}
+              error={errors['phoneNumbers']}
+            />
+
+            <MultipleFilesUploadField name='files' label='Upload Files' />
+
+            <Checkbox
+              name='acceptedTerms'
+              checkboxLabel='I accept the terms and conditions'
+            ></Checkbox>
+            <button type='submit' disabled={isSubmitting}>
+              {isSubmitting ? 'Submitting' : 'Submit'}
+            </button>
+            <pre>{JSON.stringify({ values, errors }, null, 2)}</pre>
+          </Form>
+        )}
       </Formik>
     </>
   );
