@@ -3,13 +3,13 @@ import { FC } from 'react';
 type LabelProps = {
   label: string;
   fieldName: string;
-  required?: boolean;
+  requiredLabel?: boolean;
 };
 
-export const Label: FC<LabelProps> = ({ label, fieldName, required }) => {
+export const Label: FC<LabelProps> = ({ label, fieldName, requiredLabel }) => {
   return (
     <label htmlFor={fieldName}>
-      {label} {required ? <span style={{ color: 'red' }}>*</span> : null}
+      {label} {requiredLabel ? <span style={{ color: 'red' }}>*</span> : null}
     </label>
   );
 };

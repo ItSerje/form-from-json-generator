@@ -6,7 +6,7 @@
       "label": "Имя",
       "placeholder": "123",
       "name": "firstName",
-      "required": true,
+      "requiredLabel": true,
       "validationType": "string",
       "validations": [
         { "type": "required", "params": ["Это обязательное поле"] },
@@ -21,7 +21,7 @@
       "label": "Возраст",
       "name": "age",
       "initialValue": "1",
-      "required": true,
+      "requiredLabel": true,
       "validationType": "number",
       "validations": [
         { "type": "required", "params": ["Это обязательное поле"] },
@@ -38,7 +38,7 @@
         { "value": "single", "label": "Не женат/не замужем" },
         { "value": "married", "label": "Женат/замужем" }
       ],
-      "required": true,
+      "requiredLabel": true,
       "validationType": "string",
       "validations": [
         { "type": "required", "params": ["Выберите одну из опций"] },
@@ -55,19 +55,29 @@
       "hint": "Укажите учебные заведения, в которых вы учились",
       "name": "education",
       "initialValue": [""],
+      "requiredLabel": true,
       "validationType": "array",
       "validations": [
         { "type": "required", "params": ["Это обязательное поле"] },
         {
           "type": "min",
-          "params": [2, "Укажите хотя бы ${min} учебных заведения"],
-          "validationType": "string",
-          "validations": [
-            {
-              "type": "min",
-              "params": [3, "Минимальное колчиство символов: ${min}"]
-            }
-          ]
+          "params": [2, "Укажите хотя бы ${min} учебных заведения"]
+        },
+        {
+          "type": "innerType",
+          "params": {
+            "validationType": "string",
+            "validations": [
+              {
+                "type": "required",
+                "params": ["Пожалуйста, заполните это поле"]
+              },
+              {
+                "type": "min",
+                "params": [3, "Минимальное колчиство символов: ${min}"]
+              }
+            ]
+          }
         }
       ]
     },
