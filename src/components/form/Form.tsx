@@ -9,7 +9,7 @@ import { CheckboxGroup } from './Checkbox/CheckboxGroup';
 import { Select } from './Select/Select';
 import * as Yup from 'yup';
 import { MultipleFilesUploadField } from './UploadInput/MultipleFilesUploadField';
-import { staticFormValidationSchema } from '../../validations/formFromJsonValidation/staticFormValidationSchema';
+import { staticFormValidationSchema } from '../../validations/formValidations/staticFormValidationSchema';
 import { Label } from './Label/Label';
 import { HintOrError } from './HintOrError/HintOrError';
 

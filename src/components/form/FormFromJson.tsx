@@ -12,11 +12,11 @@ import {
 import { Select, SelectProps } from './Select/Select';
 import * as Yup from 'yup';
 import { MultipleFilesUploadField } from './UploadInput/MultipleFilesUploadField';
-import { formJsonValidationSchema } from '../../validations/formFromJsonValidation/formJsonValidationSchema';
+import { formJsonValidationSchema } from '../../validations/formValidations/formJsonValidationSchema';
 import {
   dynamicFormValidationsGenerator,
   Data,
-} from '../../validations/formFromJsonValidation/dynamicFormValidationsGenerator';
+} from '../../validations/formValidations/dynamicFormValidationsGenerator';
 import { Label } from './Label/Label';
 import { HintOrError } from './HintOrError/HintOrError';
 import formDataJson from '../../form-data.json';
