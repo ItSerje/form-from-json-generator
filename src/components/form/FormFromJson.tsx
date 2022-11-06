@@ -12,11 +12,11 @@ import {
 import { Select, SelectProps } from './Select/Select';
 import * as Yup from 'yup';
 import { MultipleFilesUploadField } from './UploadInput/MultipleFilesUploadField';
+import { formJsonValidationSchema } from '../../validations/formFromJsonValidation/formJsonValidationSchema';
 import {
-  validateSchema,
-  formValidationSchema,
-  formFromJsonSchema,
-} from '../../models/formValidation/formValidationSchema';
+  dynamicFormValidationsGenerator,
+  Data,
+} from '../../validations/formFromJsonValidation/dynamicFormValidationsGenerator';
 import { Label } from './Label/Label';
 import { HintOrError } from './HintOrError/HintOrError';
 import formDataJson from '../../form-data.json';
@@ -30,46 +30,27 @@ const COMPONENTS = {
   MultipleInputs,
 };
 
-// type IData = {
+// export type Data = {
 //   formLabel: string;
 //   fields: {
 //     component: string;
-//     label: string;
+//     label?: string;
 //     placeholder?: string;
 //     name: string;
-//     initialValue: string;
-//     required?: boolean;
+//     initialValue?: any;
+//     requiredLabel?: boolean;
 //     min?: number;
 //     max?: number;
 //     hint?: string;
 //     options?: string[];
-//     validationType: string;
-//     validations: [];
-//   }[] &
-//     (JSX.IntrinsicElements['select'][] | JSX.IntrinsicElements['input'][]);
+//     validationType?: string;
+//     validations?: [];
+//   }[];
 // } | null;
 
-export type Data = {
-  formLabel: string;
-  fields: {
-    component: string;
-    label?: string;
-    placeholder?: string;
-    name: string;
-    initialValue?: any;
-    required?: boolean;
-    min?: number;
-    max?: number;
-    hint?: string;
-    options?: string[];
-    validationType?: string;
-    validations?: [];
-  }[];
-} | null;
-
-type InitialValues = {
-  [key: string]: any;
-};
+// type InitialValues = {
+//   [key: string]: any;
+// };
 
 // interface Props {
 //   selectProps: SelectProps;
@@ -80,7 +61,7 @@ const fetchDataUrl = 'https://api.npoint.io/dbad6207d801d27a240b';
 const editDataUrl = 'https://www.npoint.io/docs/dbad6207d801d27a240b';
 
 export const FormFromJson: FC = () => {
-  const [data, setData] = useState<Data>(null);
+  const [data, setData] = useState<Data | null>(null);
   const [isDynamicallyLoaded, setIsDynamicallyLoaded] = useState(false);
   const [shouldRefresh, setShouldRefresh] = useState(false);
   const [initialValues, setInitialValues] = useState({});
@@ -99,7 +80,7 @@ export const FormFromJson: FC = () => {
     const fetchedData = await response.json();
 
     if (fetchedData) {
-      formFromJsonSchema
+      formJsonValidationSchema
         .validate(fetchedData, {
           strict: true,
           abortEarly: false,
@@ -118,7 +99,6 @@ export const FormFromJson: FC = () => {
           });
           console.log('validation fail', err.errors);
         });
-
       setIsDynamicallyLoaded(true);
     } else {
       setData(formDataJson as Data);
@@ -152,14 +132,11 @@ export const FormFromJson: FC = () => {
     fetchJson();
   }, [shouldRefresh]);
 
-  if (!data?.fields.length) {
-    return <h1>No data to display!</h1>;
-  }
-
   //   const initialValues = getInitialValues();
 
   return (
     <>
+      {!data?.fields?.length && <h1>No data to display!</h1>}
       {isDynamicallyLoaded ? (
         <h4>
           Data is loaded dynamically from server. To test the form, you can edit
@@ -191,10 +168,12 @@ export const FormFromJson: FC = () => {
       )}
       {!isError.error && !isLoading && initialValues && (
         <>
-          <h1>{data.formLabel}</h1>
+          <h1>{data?.formLabel}</h1>
           <Formik
             initialValues={initialValues}
-            validationSchema={() => validateSchema(data)}
+            validationSchema={() =>
+              data ? dynamicFormValidationsGenerator(data) : null
+            }
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {
                 alert(JSON.stringify(values, null, 2));
@@ -207,13 +186,13 @@ export const FormFromJson: FC = () => {
           >
             {({ values, touched, errors, isSubmitting, dirty, isValid }) => (
               <Form>
-                {data.fields.map((field, index) => {
+                {data?.fields?.map((field, index) => {
                   const {
                     validationType,
                     validations,
                     component,
                     initialValue,
-                    required,
+                    requiredLabel,
                     ...rest
                   } = field;
 
@@ -223,7 +202,7 @@ export const FormFromJson: FC = () => {
                         <Label
                           label={field.label}
                           fieldName={field.name}
-                          required={field.required}
+                          requiredLabel={field.requiredLabel}
                         />
                       )}
                       {React.createElement(
@@ -247,7 +226,8 @@ export const FormFromJson: FC = () => {
 
                 <button
                   type='submit'
-                  disabled={!dirty || !isValid || isSubmitting}
+                  //   disabled={!dirty || !isValid || isSubmitting}
+                  disabled={isSubmitting}
                 >
                   {isSubmitting ? 'Submitting' : 'Submit'}
                 </button>

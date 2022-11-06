@@ -9,7 +9,7 @@ import { CheckboxGroup } from './Checkbox/CheckboxGroup';
 import { Select } from './Select/Select';
 import * as Yup from 'yup';
 import { MultipleFilesUploadField } from './UploadInput/MultipleFilesUploadField';
-import { formValidationSchema } from '../../models/formValidation/formValidationSchema';
+import { staticFormValidationSchema } from '../../validations/formFromJsonValidation/staticFormValidationSchema';
 import { Label } from './Label/Label';
 import { HintOrError } from './HintOrError/HintOrError';
 
@@ -29,7 +29,7 @@ export const SignupForm: FC = () => {
           phoneNumbers: [''],
           files: [],
         }}
-        validationSchema={formValidationSchema}
+        validationSchema={staticFormValidationSchema}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
             alert(JSON.stringify(values, null, 2));
