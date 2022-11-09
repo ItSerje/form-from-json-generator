@@ -79,10 +79,6 @@ export const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
             <a href={editDataUrl} target='_blank'>
               <button type='button'>Edit Json</button>
             </a>{' '}
-            and then{' '}
-            <button type='button' onClick={handleRefetch}>
-              Refresh
-            </button>
             <br />
             If you mess things up, you can always{' '}
             <button
@@ -95,6 +91,12 @@ export const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
             >
               Copy Default Data
             </button>
+            <br />
+            Don't forget to{' '}
+            <button type='button' onClick={handleRefetch}>
+              Refresh
+            </button>{' '}
+            the form after making changes
           </h4>
         ) : (
           <h4>

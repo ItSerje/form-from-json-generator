@@ -13,7 +13,6 @@ export type TextInputProps = JSX.IntrinsicElements['input'] & {
 
 export const TextInput = (props: TextInputProps): JSX.Element => {
   const [field, meta] = useField(props);
-  console.log('field', field);
 
   return (
     <>

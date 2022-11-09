@@ -9,7 +9,7 @@ import styles from '../form.module.scss';
 
 export type CheckboxProps = JSX.IntrinsicElements['input'] & {
   name: string;
-  checkboxLabel: string;
+  checkboxLabel?: string;
   value?: string;
 };
 
@@ -20,7 +20,7 @@ export const Checkbox = (props: CheckboxProps): JSX.Element => {
   return (
     <label className={styles['checkbox-input']}>
       <input type='checkbox' {...field} />
-      {props.checkboxLabel || props.value}
+      {props.checkboxLabel ? props.checkboxLabel : props.value}
     </label>
   );
 };

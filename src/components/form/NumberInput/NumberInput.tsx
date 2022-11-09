@@ -1,7 +1,7 @@
 import { useField } from 'formik';
 import styles from '../form.module.scss';
 
-type NumberInputProps = JSX.IntrinsicElements['input'] & {
+export type NumberInputProps = JSX.IntrinsicElements['input'] & {
   name: string;
 };
 

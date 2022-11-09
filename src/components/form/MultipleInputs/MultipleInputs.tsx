@@ -9,8 +9,9 @@ export type MultipleInputsProps = JSX.IntrinsicElements['input'] & {
 };
 
 export const MultipleInputs = (props: MultipleInputsProps): JSX.Element => {
-  const [field, meta] = useField(props);
-  //   console.log(props, field);
+  const [field, meta, helpers] = useField(props);
+
+  //   console.log('hey', field, meta, helpers);
 
   return (
     <FieldArray name={field.name}>
@@ -23,15 +24,33 @@ export const MultipleInputs = (props: MultipleInputsProps): JSX.Element => {
               <div key={index}>
                 <div className={styles['input-wrapper']}>
                   <TextInput
+                    className={
+                      field.value.length > 1
+                        ? ''
+                        : styles['input-without-buttons']
+                    }
                     name={`${field.name}.${index}`}
                     placeholder={props.placeholder}
                   />
-                  <div
-                    className={styles['input-btns-wrapper']}
-                    onClick={() => remove(index)}
-                  >
-                    <div className={styles['form-item-delete-btn']}>X</div>
-                  </div>
+
+                  {field.value.length > 1 && (
+                    <div className={styles['input-btns-wrapper']}>
+                      <div
+                        className={styles['form-item-delete-btn']}
+                        onClick={() => remove(index)}
+                      >
+                        X
+                      </div>
+                      {/* {index === field.value.length - 1 && (
+                        <div
+                        className={styles['form-item-delete-btn']}
+                        onClick={() => push('')}
+                        >
+                        +
+                        </div>
+                    )} */}
+                    </div>
+                  )}
                 </div>
                 {touch && typeof meta.error === 'object' ? (
                   <div className={styles.error}>{meta.error[index]}</div>

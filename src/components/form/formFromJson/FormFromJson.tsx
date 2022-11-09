@@ -10,12 +10,18 @@ import {
 } from '../MultipleInputs/MultipleInputs';
 import { Select, SelectProps } from '../Select/Select';
 import {
+  MultipleFilesUploadField,
+  MultipleFilesUploadFieldProps,
+} from '../UploadInput/MultipleFilesUploadField';
+import {
   dynamicFormValidationsGenerator,
   Data,
 } from '../../../validations/formValidations/dynamicFormValidationsGenerator';
 import { Label } from '../Label/Label';
 import { HintOrError } from '../HintOrError/HintOrError';
 import { CurrentFormValuesAndErrors } from '../CurrentFormValuesAndErrors/CurrentFormValuesAndErrors';
+import { fieldSchema } from '../../../validations/formValidations/formJsonValidationSchema';
+import * as yup from 'yup';
 
 const COMPONENTS = {
   TextInput,
@@ -24,6 +30,7 @@ const COMPONENTS = {
   Checkbox,
   CheckboxGroup,
   MultipleInputs,
+  MultipleFilesUploadField,
 };
 
 type FormFromJsonProps = {
@@ -53,43 +60,43 @@ export const FormFromJson: FC<FormFromJsonProps> = ({
     >
       {({ values, touched, errors, isSubmitting, dirty, isValid }) => (
         <Form>
-          {data?.fields?.map((field, index) => {
-            const {
-              validationType,
-              validations,
-              component,
-              initialValue,
-              requiredLabel,
-              ...rest
-            } = field;
+          {data?.fields?.map(
+            (field: yup.InferType<typeof fieldSchema>, index) => {
+              const {
+                validationType,
+                validations,
+                component,
+                initialValue,
+                requiredLabel,
+                componentSpecific,
+                ...rest
+              } = field;
 
-            return (
-              <Fragment key={index}>
-                {field.label && (
-                  <Label
-                    label={field.label}
-                    fieldName={field.name}
-                    requiredLabel={field.requiredLabel}
+              return (
+                <Fragment key={index}>
+                  {field.label && (
+                    <Label
+                      label={field.label}
+                      fieldName={field.name}
+                      requiredLabel={field.requiredLabel}
+                    />
+                  )}
+                  {createElement(
+                    COMPONENTS[component as keyof typeof COMPONENTS],
+                    {
+                      ...componentSpecific,
+                      ...rest,
+                    }
+                  )}
+                  <HintOrError
+                    touched={touched[field.name]}
+                    error={errors[field.name]}
+                    hint={field.hint}
                   />
-                )}
-                {createElement(
-                  COMPONENTS[component as keyof typeof COMPONENTS],
-                  {
-                    ...(rest as unknown as TextInputProps &
-                      SelectProps &
-                      MultipleInputsProps &
-                      CheckboxProps &
-                      CheckboxGroupProps),
-                  }
-                )}
-                <HintOrError
-                  touched={touched[field.name]}
-                  error={errors[field.name]}
-                  hint={field.hint}
-                />
-              </Fragment>
-            );
-          })}
+                </Fragment>
+              );
+            }
+          )}
 
           <button
             type='submit'

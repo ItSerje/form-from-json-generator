@@ -100,7 +100,12 @@ export const SignupForm: FC = () => {
               error={errors['phoneNumbers']}
             />
 
-            <MultipleFilesUploadField name='files' label='Upload Files' />
+            <Label label='Upload Files' fieldName='files' />
+            <MultipleFilesUploadField
+              name='files'
+              acceptedFormats={{ 'image/*': [] }}
+            />
+            <HintOrError touched={touched['files']} error={errors['files']} />
 
             <Checkbox
               name='acceptedTerms'

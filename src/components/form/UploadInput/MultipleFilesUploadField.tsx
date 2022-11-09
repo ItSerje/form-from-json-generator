@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { Grid } from '@mui/material';
 import styles from '../form.module.scss';
 import { useField } from 'formik';
@@ -13,38 +14,103 @@ function getNewId() {
   return ++currentId;
 }
 
-export interface UploadableFile {
+export interface DroppedFile {
   id: number;
   file: File;
   errors: FileError[];
   url?: string;
 }
 
-export function MultipleFilesUploadField({
-  name,
-  label,
-}: {
-  name: string;
-  label: string;
-}) {
-  const [_, __, helpers] = useField(name);
+export interface UploadableFile {
+  id: number;
+  file: File;
+  url: string;
+}
 
-  const [files, setFiles] = useState<UploadableFile[]>([]);
+export type MultipleFilesUploadFieldProps = JSX.IntrinsicElements['input'] & {
+  name: string;
+  acceptedFormats?: {
+    [key: string]: string[];
+  };
+  multiple?: boolean;
+  maximumFileSize?: number;
+  preview?: boolean;
+  checkboxLabel?: string;
+  value?: string;
+};
+
+export const MultipleFilesUploadField: FC<MultipleFilesUploadFieldProps> = ({
+  name,
+  multiple = true,
+  maximumFileSize,
+  preview,
+  acceptedFormats,
+}) => {
+  const [field, meta, helpers] = useField(name);
+  const [files, setFiles] = useState<DroppedFile[]>([]);
+  const [fileDataURL, setFileDataURL] = useState<string | ArrayBuffer>('');
 
   const onDrop = useCallback((accFiles: File[], rejFiles: FileRejection[]) => {
+    console.log('filess', accFiles, rejFiles);
+
     const mappedAcc = accFiles.map((file) => ({
       file,
       errors: [],
       id: getNewId(),
     }));
     const mappedRej = rejFiles.map((r) => ({ ...r, id: getNewId() }));
-    setFiles((curr) => [...curr, ...mappedAcc, ...mappedRej]);
+    setFiles((curr) => {
+      curr = [...curr, ...mappedAcc, ...mappedRej];
+      if (!multiple) {
+        curr = curr.slice(curr.length - 1);
+      }
+      return curr;
+    });
+    helpers.setTouched(true);
   }, []);
 
   useEffect(() => {
-    helpers.setValue(files);
+    helpers.setValue(
+      files.filter((file) => !file.errors.length),
+      true
+    );
     // helpers.setTouched(true);
+    console.log(field, meta, helpers);
   }, [files]);
+
+  useEffect(() => {
+    if (preview) {
+      if (!field.value[0]?.file) {
+        setFileDataURL('');
+        return;
+      }
+      let fileReader: FileReader,
+        isCancel = false;
+      if (field.value[0]?.file) {
+        fileReader = new FileReader();
+        fileReader.onload = (e) => {
+          if (e.target?.result) {
+            const { result } = e.target;
+            if (!isCancel) {
+              setFileDataURL(result);
+            }
+          }
+        };
+        console.log('файл', field.value[0].file);
+        fileReader.readAsDataURL(field.value[0].file);
+      }
+      return () => {
+        isCancel = true;
+        if (fileReader && fileReader.readyState === 1) {
+          fileReader.abort();
+        }
+      };
+    }
+  }, [field.value]);
+
+  //   useEffect(() => {
+  //     onUpload(files[0].file, fileDataURL as string);
+  //   }, [fileDataURL]);
 
   function onUpload(file: File, url: string) {
     setFiles((curr) =>
@@ -63,17 +129,26 @@ export function MultipleFilesUploadField({
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
-    accept: { 'image/*': [], 'video/*': [], 'text/*': ['.pdf'] },
-    maxSize: 300 * 1024, // 300KB
+    // multiple: multiple,
+    ...(acceptedFormats && { accept: acceptedFormats }), // eg. accept: { 'image/*': [], 'video/*': [], 'text/*': ['.pdf'] },
+    ...(maximumFileSize && { maxSize: maximumFileSize * 1024 * 1024 }), // maximumFileSize MB
   });
 
   return (
     <React.Fragment>
       <Grid item>
-        <label htmlFor={name}>{label}</label>
         <div {...getRootProps({ className: styles.dropzone })}>
           <input {...getInputProps()} />
-          <p>Drag 'n' drop some files here, or click to select files</p>
+          {preview &&
+          typeof fileDataURL === 'string' &&
+          fileDataURL.length > 0 ? (
+            <img
+              src={fileDataURL}
+              className={styles['dropzone--image-preview']}
+            />
+          ) : (
+            <p>Drag 'n' drop some files here, or click to select files</p>
+          )}
         </div>
       </Grid>
 
@@ -96,4 +171,4 @@ export function MultipleFilesUploadField({
       ))}
     </React.Fragment>
   );
-}
+};

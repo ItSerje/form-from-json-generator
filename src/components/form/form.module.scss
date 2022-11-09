@@ -653,6 +653,9 @@ select,
     background-color: var(--gray-100);
     color: var(--gray-800);
     border-radius: 10px 0 0 10px;
+    &.input-without-buttons {
+      border-radius: 10px;
+    }
   }
 
   & .input-btns-wrapper {
@@ -749,12 +752,18 @@ button[type='submit'] {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 
   background: var(--gray-100);
   outline: none;
 
   p {
     margin: 2rem auto;
+  }
+
+  &--image-preview {
+    width: 100%;
+    // object-fit: ;
   }
 
   @media (prefers-color-scheme: dark) {

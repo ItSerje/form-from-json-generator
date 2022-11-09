@@ -4,8 +4,10 @@ import * as yup from 'yup';
 export type Data = yup.InferType<typeof formJsonValidationSchema>;
 
 function createYupSchema(schema: any, config: any) {
-  const { name, options = [], validationType, validations = [] } = config;
+  const { name, validationType, validations = [] } = config;
+  const options = config.componentSpecific?.options || [];
 
+  console.log('opts', options);
   if (!(yup as any)[validationType]) {
     return schema;
   }

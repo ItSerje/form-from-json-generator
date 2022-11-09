@@ -9,7 +9,6 @@ type HintOrErrorProps = {
 };
 
 export const HintOrError: FC<HintOrErrorProps> = ({ touched, error, hint }) => {
-  //   console.log(touched, error);
   return (
     <>
       {touched && error && typeof error === 'string' ? (

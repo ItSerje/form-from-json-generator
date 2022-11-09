@@ -6,6 +6,40 @@ declare module 'yup' {
   }
 }
 
+const formatKeyValueSchema = {
+  'image/*': yup.array(
+    yup.string().oneOf(['.bmp', '.gif', '.jpeg', '.jpg', '.png', '.webp'])
+  ),
+  'video/*': yup.array(yup.string().oneOf(['.webm', '.avi', '.mp4', '.mpeg'])),
+  'application/*': yup.array(yup.string().oneOf(['.pdf', '.rtf'])),
+  'text/*': yup.array(
+    yup.string().oneOf(['.txt', '.md', '.markdown', '.mdown', '.markdn'])
+  ),
+
+  'image/bmp': yup.array(yup.string().oneOf(['.bmp'])),
+  'image/gif': yup.array(yup.string().oneOf(['.gif'])),
+  'image/jpeg': yup.array(yup.string().oneOf(['.jpeg', '.jpg'])),
+  'image/jpg': yup.array(yup.string().oneOf(['.jpeg', '.jpg'])),
+  'image/png': yup.array(yup.string().oneOf(['.png'])),
+  'image/webp': yup.array(yup.string().oneOf(['.webp'])),
+
+  'application/rtf': yup.array(yup.string().oneOf(['.rtf'])),
+  'application/pdf': yup.array(yup.string().oneOf(['.pdf'])),
+
+  'video/webm': yup.array(yup.string().oneOf(['.webm'])),
+  'video/x-msvideo': yup.array(yup.string().oneOf(['.avi'])),
+  'video/mp4': yup.array(yup.string().oneOf(['.mp4'])),
+  'video/mpeg': yup.array(yup.string().oneOf(['.mpeg'])),
+
+  'text/plain': yup.array(yup.string().oneOf(['.txt'])),
+  'text/markdown': yup.array(
+    yup.string().oneOf(['.md', '.markdown', '.mdown', '.markdn'])
+  ),
+  'text/x-markdow': yup.array(
+    yup.string().oneOf(['.md', '.markdown', '.mdown', '.markdn'])
+  ),
+};
+
 yup.addMethod(
   yup.array,
   'unique',
@@ -17,65 +51,11 @@ yup.addMethod(
       if (!list) {
         return true;
       }
+
       return list.length === new Set(list.map(mapper)).size;
     });
   }
 );
-
-const optionsSchema = yup
-  .array()
-  .when('component', {
-    is: 'CheckboxGroup',
-    then: yup
-      .array(
-        yup
-          .object()
-          .shape({
-            value: yup.string().required(),
-            checkboxLabel: yup.string().required(),
-          })
-          .noUnknown()
-      )
-      .required()
-      .unique(
-        (s) => s.value,
-        '${path}: Value of property "value" is duplicated'
-      )
-      .unique(
-        (s) => s.checkboxLabel,
-        '${path}: Value of property "label" is duplicated'
-      ),
-  })
-  .when('component', {
-    is: 'Select',
-    then: yup
-      .array(
-        yup
-          .object()
-          .shape({
-            value: yup.string().min(0),
-            label: yup.string().required(),
-          })
-          .noUnknown()
-      )
-      .unique(
-        (s) => s.value,
-        '${path}: Value of property "value" is duplicated'
-      )
-      .unique(
-        (s) => s.label,
-        '${path}: Value of property "label" is duplicated'
-      ),
-  })
-  .when('component', {
-    is: (val: string) => val === 'CheckboxGroup' || val === 'Select',
-    otherwise: yup
-      .array()
-      .max(
-        0,
-        '${path} with the current "component" value should not contain "options". "Options" are only allowed for "CheckboxGroup" and "Select" components'
-      ),
-  });
 
 const validationsSchema = yup.array(
   yup
@@ -115,48 +95,113 @@ const validationsSchema = yup.array(
     .noUnknown()
 );
 
-const fieldsSchema = yup.array(
-  yup
-    .object()
-    .shape({
-      component: yup
-        .string()
-        .required()
-        .oneOf([
-          'TextInput',
-          'NumberInput',
-          'Select',
-          'Checkbox',
-          'CheckboxGroup',
-          'MultipleInputs',
-        ]),
-      name: yup.string().required(),
-      label: yup.string(),
-      placeholder: yup.string(),
-      initialValue: yup.mixed(),
-      requiredLabel: yup.boolean(),
-      hint: yup.string(),
-      checkboxLabel: yup.string().when('component', {
+const SelectOptionsSchema = yup
+  .array(
+    yup
+      .object()
+      .shape({
+        value: yup.string().min(0),
+        label: yup.string().required(),
+      })
+      .noUnknown()
+  )
+  .unique((s) => s.value, '${path}: Value of property "value" is duplicated')
+  .unique((s) => s.label, '${path}: Value of property "label" is duplicated');
+
+const CheckboxGroupOptionsSchema = yup
+  .array(
+    yup
+      .object()
+      .shape({
+        value: yup.string().required(),
+        checkboxLabel: yup.string().required(),
+      })
+      .noUnknown()
+  )
+  .required()
+  .unique((s) => s.value, '${path}: Value of property "value" is duplicated')
+  .unique(
+    (s) => s.checkboxLabel,
+    '${path}: Value of property "label" is duplicated'
+  );
+
+export const fieldSchema = yup
+  .object()
+  .shape({
+    component: yup
+      .string()
+      .required()
+      .oneOf([
+        'TextInput',
+        'NumberInput',
+        'Select',
+        'Checkbox',
+        'CheckboxGroup',
+        'MultipleInputs',
+        'MultipleFilesUploadField',
+      ]),
+    name: yup.string().required(),
+    label: yup.string(),
+    placeholder: yup.string(),
+    initialValue: yup.mixed(),
+    requiredLabel: yup.boolean(),
+    hint: yup.string(),
+    componentSpecific: yup
+      .object()
+      .when('component', {
+        is: 'MultipleFilesUploadField',
+        then: yup
+          .object()
+          .shape({
+            acceptedFormats: yup
+              .object()
+              .shape(formatKeyValueSchema)
+              .noUnknown(),
+            multiple: yup.boolean(),
+            maximumFileSize: yup.number(),
+            preview: yup.boolean(),
+          })
+          .noUnknown(),
+      })
+      .when('component', {
         is: 'Checkbox',
-        then: yup.string().required(),
-        otherwise: yup
-          .string()
-          .oneOf([undefined], '${path} should be used only with Checkbox'),
-      }),
-      selectAll: yup.boolean(),
-      options: optionsSchema,
-      validationType: yup
-        .string()
-        .oneOf(['string', 'number', 'array', 'boolean']),
-      validations: validationsSchema,
-    })
-    .noUnknown()
-);
+        then: yup
+          .object()
+          .shape({
+            checkboxLabel: yup.string().required(),
+          })
+          .noUnknown(),
+      })
+      .when('component', {
+        is: 'CheckboxGroup',
+        then: yup
+          .object()
+          .shape({
+            selectAll: yup.boolean(),
+            options: CheckboxGroupOptionsSchema,
+          })
+          .noUnknown(),
+      })
+      .when('component', {
+        is: 'Select',
+        then: yup.object().shape({
+          options: SelectOptionsSchema,
+        }),
+      })
+      .noUnknown(),
+    // options: optionsSchema,
+    validationType: yup
+      .string()
+      .oneOf(['string', 'number', 'array', 'boolean']),
+    validations: validationsSchema,
+  })
+  .noUnknown();
 
 export const formJsonValidationSchema = yup
   .object({
     formLabel: yup.string(),
-    fields: fieldsSchema
+    fields: yup
+      .array(fieldSchema)
       .required()
       .unique((s) => s.name, '${path}: Value of property "name" is duplicated'),
   })

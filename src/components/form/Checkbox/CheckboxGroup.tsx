@@ -2,7 +2,6 @@ import { FieldMetaProps, FormikValues, useField } from 'formik';
 import { useEffect, useRef, useState } from 'react';
 import { Checkbox } from './Checkbox';
 import styles from '../form.module.scss';
-import { checkPrime } from 'crypto';
 
 export type CheckboxGroupProps = {
   name: string;
