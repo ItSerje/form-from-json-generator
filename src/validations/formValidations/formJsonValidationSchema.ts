@@ -15,6 +15,9 @@ const formatKeyValueSchema = {
   'text/*': yup.array(
     yup.string().oneOf(['.txt', '.md', '.markdown', '.mdown', '.markdn'])
   ),
+  'audio/*': yup.array(
+    yup.string().oneOf(['.mid', '.midi', '.mp3', '.wav', '.weba'])
+  ),
 
   'image/bmp': yup.array(yup.string().oneOf(['.bmp'])),
   'image/gif': yup.array(yup.string().oneOf(['.gif'])),
@@ -38,6 +41,12 @@ const formatKeyValueSchema = {
   'text/x-markdow': yup.array(
     yup.string().oneOf(['.md', '.markdown', '.mdown', '.markdn'])
   ),
+
+  'audio/midi': yup.array(yup.string().oneOf(['.mid', '.midi'])),
+  'audio/x-midi': yup.array(yup.string().oneOf(['.mid', '.midi'])),
+  'audio/mpeg': yup.array(yup.string().oneOf(['.mp3'])),
+  'audio/wav': yup.array(yup.string().oneOf(['.wav'])),
+  'audio/webm': yup.array(yup.string().oneOf(['.weba'])),
 };
 
 yup.addMethod(
@@ -160,6 +169,7 @@ export const fieldSchema = yup
             multiple: yup.boolean(),
             maximumFileSize: yup.number(),
             preview: yup.boolean(),
+            dropzoneText: yup.string(),
           })
           .noUnknown(),
       })
@@ -188,6 +198,12 @@ export const fieldSchema = yup
           options: SelectOptionsSchema,
         }),
       })
+      .when('component', {
+        is: 'MultipleInputs',
+        then: yup.object().shape({
+          addFieldBtnText: yup.string(),
+        }),
+      })
       .noUnknown(),
     // options: optionsSchema,
     validationType: yup
@@ -200,6 +216,8 @@ export const fieldSchema = yup
 export const formJsonValidationSchema = yup
   .object({
     formLabel: yup.string(),
+    submitBtnText: yup.string(),
+    submittingBtnText: yup.string(),
     fields: yup
       .array(fieldSchema)
       .required()
