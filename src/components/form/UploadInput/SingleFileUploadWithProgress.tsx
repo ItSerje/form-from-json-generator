@@ -15,15 +15,52 @@ export const SingleFileUploadWithProgress = ({
   onUpload,
 }: SingleFileUploadWithProgressProps) => {
   const [progress, setProgress] = useState(0);
+  const [fileDataURL, setFileDataURL] = useState<string | ArrayBuffer>('');
 
   useEffect(() => {
     async function upload() {
-      const url = await uploadFile(file, setProgress);
-      onUpload(file, url);
+      let url;
+      //   if (preview) {
+      await getFileDataURL(file, setFileDataURL, setProgress);
+      url = fileDataURL;
+      //   } else {
+      //     url = await uploadFile(file, setProgress);
+      //   }
+      onUpload(file, url as string);
     }
 
     upload();
-  }, []);
+  }, [fileDataURL]);
+
+  //   useEffect(() => {
+  //     if (preview) {
+  //       if (!file) {
+  //         setFileDataURL('');
+  //         return;
+  //       }
+  //       let fileReader: FileReader,
+  //         isCancel = false;
+  //       if (file) {
+  //         fileReader = new FileReader();
+  //         fileReader.onload = (e) => {
+  //           if (e.target?.result) {
+  //             const { result } = e.target;
+  //             if (!isCancel) {
+  //               setFileDataURL(result);
+  //             }
+  //           }
+  //         };
+  //         console.log('файл', file);
+  //         fileReader.readAsDataURL(file);
+  //       }
+  //       return () => {
+  //         isCancel = true;
+  //         if (fileReader && fileReader.readyState === 1) {
+  //           fileReader.abort();
+  //         }
+  //       };
+  //     }
+  //   }, []);
 
   return (
     <Grid className={styles['upload-progress']} item>
@@ -59,4 +96,38 @@ function uploadFile(file: File, onProgress: (percentage: number) => void) {
 
     xhr.send(formData);
   });
+}
+
+async function getFileDataURL(
+  file: File,
+  setFileDataURL: (dataUrl: string | ArrayBuffer) => void,
+  onProgress: (percentage: number) => void
+) {
+  let fileReader: FileReader,
+    isCancel = false;
+  if (file) {
+    fileReader = new FileReader();
+    fileReader.onload = (e) => {
+      if (e.target?.result) {
+        const { result } = e.target;
+        if (!isCancel) {
+          setFileDataURL(result);
+        }
+      }
+    };
+    fileReader.onprogress = (e) => {
+      if (e.lengthComputable) {
+        const percentage = (e.loaded / e.total) * 100;
+        onProgress(Math.round(percentage));
+      }
+    };
+    console.log('файл', file);
+    fileReader.readAsDataURL(file);
+  }
+  return () => {
+    isCancel = true;
+    if (fileReader && fileReader.readyState === 1) {
+      fileReader.abort();
+    }
+  };
 }

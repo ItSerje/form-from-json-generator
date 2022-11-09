@@ -35,6 +35,7 @@ export type MultipleFilesUploadFieldProps = JSX.IntrinsicElements['input'] & {
   multiple?: boolean;
   maximumFileSize?: number;
   preview?: boolean;
+  dropzoneText?: string;
   checkboxLabel?: string;
   value?: string;
 };
@@ -44,11 +45,11 @@ export const MultipleFilesUploadField: FC<MultipleFilesUploadFieldProps> = ({
   multiple = true,
   maximumFileSize,
   preview,
+  dropzoneText,
   acceptedFormats,
 }) => {
   const [field, meta, helpers] = useField(name);
   const [files, setFiles] = useState<DroppedFile[]>([]);
-  const [fileDataURL, setFileDataURL] = useState<string | ArrayBuffer>('');
 
   const onDrop = useCallback((accFiles: File[], rejFiles: FileRejection[]) => {
     console.log('filess', accFiles, rejFiles);
@@ -75,38 +76,9 @@ export const MultipleFilesUploadField: FC<MultipleFilesUploadFieldProps> = ({
       true
     );
     // helpers.setTouched(true);
-    console.log(field, meta, helpers);
+    console.log('файлk', files[0]?.file);
+    // console.log(field, meta, helpers);
   }, [files]);
-
-  useEffect(() => {
-    if (preview) {
-      if (!field.value[0]?.file) {
-        setFileDataURL('');
-        return;
-      }
-      let fileReader: FileReader,
-        isCancel = false;
-      if (field.value[0]?.file) {
-        fileReader = new FileReader();
-        fileReader.onload = (e) => {
-          if (e.target?.result) {
-            const { result } = e.target;
-            if (!isCancel) {
-              setFileDataURL(result);
-            }
-          }
-        };
-        console.log('файл', field.value[0].file);
-        fileReader.readAsDataURL(field.value[0].file);
-      }
-      return () => {
-        isCancel = true;
-        if (fileReader && fileReader.readyState === 1) {
-          fileReader.abort();
-        }
-      };
-    }
-  }, [field.value]);
 
   //   useEffect(() => {
   //     onUpload(files[0].file, fileDataURL as string);
@@ -140,14 +112,19 @@ export const MultipleFilesUploadField: FC<MultipleFilesUploadFieldProps> = ({
         <div {...getRootProps({ className: styles.dropzone })}>
           <input {...getInputProps()} />
           {preview &&
-          typeof fileDataURL === 'string' &&
-          fileDataURL.length > 0 ? (
+          files[0] &&
+          files[0].url &&
+          typeof files[0].url === 'string' &&
+          files[0].url.length > 0 ? (
             <img
-              src={fileDataURL}
+              src={files[0].url}
               className={styles['dropzone--image-preview']}
             />
           ) : (
-            <p>Drag 'n' drop some files here, or click to select files</p>
+            <p>
+              {dropzoneText ||
+                "Drag 'n' drop some files here, or click to select files"}
+            </p>
           )}
         </div>
       </Grid>
