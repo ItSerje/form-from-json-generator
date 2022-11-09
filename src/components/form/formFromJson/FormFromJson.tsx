@@ -103,7 +103,9 @@ export const FormFromJson: FC<FormFromJsonProps> = ({
             //   disabled={!dirty || !isValid || isSubmitting}
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'Submitting' : 'Submit'}
+            {isSubmitting
+              ? data.submittingBtnText || 'Submitting...'
+              : data.submitBtnText || 'Submit'}
           </button>
 
           <CurrentFormValuesAndErrors values={values} errors={errors} />

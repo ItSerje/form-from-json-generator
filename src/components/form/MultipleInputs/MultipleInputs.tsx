@@ -6,6 +6,7 @@ import { TextInput } from '../TextInput/TextInput';
 export type MultipleInputsProps = JSX.IntrinsicElements['input'] & {
   name: string;
   placeholder?: string;
+  addFieldBtnText?: string;
 };
 
 export const MultipleInputs = (props: MultipleInputsProps): JSX.Element => {
@@ -60,7 +61,7 @@ export const MultipleInputs = (props: MultipleInputsProps): JSX.Element => {
           })}
 
           <button type='button' onClick={() => push('')}>
-            Add another number
+            {props.addFieldBtnText || 'Add'}
           </button>
         </>
       )}
