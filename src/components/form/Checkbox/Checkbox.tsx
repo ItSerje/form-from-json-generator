@@ -15,7 +15,7 @@ export type CheckboxProps = JSX.IntrinsicElements['input'] & {
 
 export const Checkbox = (props: CheckboxProps): JSX.Element => {
   const [field] = useField({ ...props, type: 'checkbox' });
-  //   console.log(field);
+  console.log(props.checkboxLabel);
 
   return (
     <label className={styles['checkbox-input']}>
