@@ -1,12 +1,13 @@
 import { FormControlLabel, FormGroup, Switch } from '@mui/material';
 import { FC, useState } from 'react';
 import { SignupForm } from '../../components/form/Form';
-import { FormFromJsonContainer } from '../../components/form/formFromJson/FormFromJsonContainer';
+import { FormFromJsonContainer } from '../../components/form/formFromJson/FormFromJsonContainerWithSteps';
 
 const Home: FC = () => {
   const [checked, setChecked] = useState(true);
   const [fetchDataUrl, setFetchDataUrl] = useState(
-    'https://api.npoint.io/dbad6207d801d27a240b'
+    'https://api.npoint.io/66d4fe66bc68be3a4642' ||
+      'https://api.npoint.io/dbad6207d801d27a240b'
   );
 
   const handleChange = () => {

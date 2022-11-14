@@ -124,10 +124,10 @@ async function getFileDataURL(
     console.log('файл', file);
     fileReader.readAsDataURL(file);
   }
-  return () => {
-    isCancel = true;
-    if (fileReader && fileReader.readyState === 1) {
-      fileReader.abort();
-    }
-  };
+  //   return () => {
+  //     isCancel = true;
+  //     if (fileReader && fileReader.readyState === 1) {
+  //       fileReader.abort();
+  //     }
+  //   };
 }

@@ -49,7 +49,11 @@ export const MultipleFilesUploadField: FC<MultipleFilesUploadFieldProps> = ({
   acceptedFormats,
 }) => {
   const [field, meta, helpers] = useField(name);
-  const [files, setFiles] = useState<DroppedFile[]>([]);
+
+  const [files, setFiles] = useState<DroppedFile[]>(
+    field.value.length ? field.value : []
+  );
+  console.log('field', field, 'files', files);
 
   const onDrop = useCallback((accFiles: File[], rejFiles: FileRejection[]) => {
     console.log('filess', accFiles, rejFiles);
@@ -76,8 +80,6 @@ export const MultipleFilesUploadField: FC<MultipleFilesUploadFieldProps> = ({
       true
     );
     // helpers.setTouched(true);
-    console.log('файлk', files[0]?.file);
-    // console.log(field, meta, helpers);
   }, [files]);
 
   //   useEffect(() => {
