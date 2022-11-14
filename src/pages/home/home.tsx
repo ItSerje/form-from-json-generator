@@ -1,7 +1,7 @@
 import { FormControlLabel, FormGroup, Switch } from '@mui/material';
 import { FC, useState } from 'react';
 import { SignupForm } from '../../components/form/Form';
-import { FormFromJsonContainer } from '../../components/form/formFromJson/FormFromJsonContainerWithSteps';
+import { FormFromJsonContainer } from '../../components/form/formFromJson/FormFromJsonContainer';
 
 const Home: FC = () => {
   const [checked, setChecked] = useState(true);

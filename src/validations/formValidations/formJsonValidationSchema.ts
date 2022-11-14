@@ -213,14 +213,16 @@ export const fieldSchema = yup
   })
   .noUnknown();
 
+export const stepDataSchema = yup
+  .array(fieldSchema)
+  .required()
+  .unique((s) => s.name, '${path}: Value of property "name" is duplicated');
+
 export const formJsonValidationSchema = yup
   .object({
     formLabel: yup.string(),
     submitBtnText: yup.string(),
     submittingBtnText: yup.string(),
-    fields: yup
-      .array(fieldSchema)
-      .required()
-      .unique((s) => s.name, '${path}: Value of property "name" is duplicated'),
+    fields: yup.array(stepDataSchema).required(),
   })
   .noUnknown();

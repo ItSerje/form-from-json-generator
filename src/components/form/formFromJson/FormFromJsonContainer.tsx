@@ -57,9 +57,9 @@ export const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
       }
     } catch (error) {
       console.log(error);
-      setData(localFormDataJson as Data);
-      setInitialValues(getInitialValues(localFormDataJson as Data));
-      setIsDynamicallyLoaded(false);
+      //   setData(localFormDataJson as Data);
+      //   setInitialValues(getInitialValues(localFormDataJson as Data));
+      //   setIsDynamicallyLoaded(false);
     }
     setIsLoading(false);
   };
@@ -128,7 +128,7 @@ export const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
           <p>{isError.msg}</p>
         </>
       )}
-      {!isError.error && !isLoading && data?.formLabel && initialValues && (
+      {!isError.error && !isLoading && data && data.formLabel && initialValues && (
         <>
           <h1>{data.formLabel}</h1>
           <FormFromJson data={data} initialValues={initialValues} />
