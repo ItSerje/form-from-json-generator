@@ -75,7 +75,8 @@ export const FormFromJson: FC<FormFromJsonProps> = ({
       onSubmit={(values, { setSubmitting, setTouched }) => {
         if (isLastStep()) {
           setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
+            // alert(JSON.stringify(values, null, 2));
+            alert('Form is successfully submitted');
             return new Promise((res) => {
               setTimeout(res, 2500);
               setSubmitting(false);
