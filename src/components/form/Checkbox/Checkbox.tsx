@@ -1,6 +1,7 @@
 import { FieldMetaProps, FormikValues, useField } from 'formik';
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import styles from '../form.module.scss';
+import { FaCheck } from 'react-icons/fa';
+// import styles from '../form.module.scss';
 
 // type CheckboxProps = JSX.IntrinsicElements['input'] & {
 //   children: string | JSX.Element;
@@ -15,12 +16,19 @@ export type CheckboxProps = JSX.IntrinsicElements['input'] & {
 
 export const Checkbox = (props: CheckboxProps): JSX.Element => {
   const [field] = useField({ ...props, type: 'checkbox' });
-  console.log(props.checkboxLabel);
 
   return (
-    <label className={styles['checkbox-input']}>
-      <input type='checkbox' {...field} />
+    // <div className='single-checkbox__wrapper'>
+    <label className='single-checkbox__label'>
+      <div className='single-checkbox__input-wrapper'>
+        <input type='checkbox' className='single-checkbox__input' {...field} />
+
+        <span>
+          <FaCheck />
+        </span>
+      </div>
       {props.checkboxLabel ? props.checkboxLabel : props.value}
     </label>
+    // </div>
   );
 };

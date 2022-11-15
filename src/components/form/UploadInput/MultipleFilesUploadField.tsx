@@ -110,18 +110,15 @@ export const MultipleFilesUploadField: FC<MultipleFilesUploadFieldProps> = ({
 
   return (
     <React.Fragment>
-      <Grid item>
-        <div {...getRootProps({ className: styles.dropzone })}>
+      <div>
+        <div {...getRootProps({ className: 'dropzone' })}>
           <input {...getInputProps()} />
           {preview &&
           files[0] &&
           files[0].url &&
           typeof files[0].url === 'string' &&
           files[0].url.length > 0 ? (
-            <img
-              src={files[0].url}
-              className={styles['dropzone--image-preview']}
-            />
+            <img src={files[0].url} className='dropzone--image-preview' />
           ) : (
             <p>
               {dropzoneText ||
@@ -129,10 +126,10 @@ export const MultipleFilesUploadField: FC<MultipleFilesUploadFieldProps> = ({
             </p>
           )}
         </div>
-      </Grid>
+      </div>
 
       {files.map((fileWrapper) => (
-        <Grid item key={fileWrapper.id}>
+        <div key={fileWrapper.id} className='dropzone__file-wrapper'>
           {fileWrapper.errors.length ? (
             <UploadError
               file={fileWrapper.file}
@@ -146,7 +143,7 @@ export const MultipleFilesUploadField: FC<MultipleFilesUploadFieldProps> = ({
               onUpload={onUpload}
             />
           )}
-        </Grid>
+        </div>
       ))}
     </React.Fragment>
   );

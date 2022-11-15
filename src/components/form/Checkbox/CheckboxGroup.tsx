@@ -1,7 +1,7 @@
 import { FieldMetaProps, FormikValues, useField } from 'formik';
 import { useEffect, useRef, useState } from 'react';
+import { FaCheck } from 'react-icons/fa';
 import { Checkbox } from './Checkbox';
-import styles from '../form.module.scss';
 
 export type CheckboxGroupProps = {
   name: string;
@@ -52,19 +52,41 @@ export const CheckboxGroup = ({
   }, [field.value]);
 
   return (
-    <div id={name} role='group' aria-labelledby={name}>
+    <div
+      id={name}
+      role='group'
+      aria-labelledby={name}
+      className='form__checkbox-group'
+    >
       {options?.map((option, index) => (
         <Checkbox name={name} {...option} key={index} />
       ))}
       {selectAll && (
-        <label className={styles['checkbox-input']}>
-          <input
-            type='checkbox'
-            ref={selectAllCheckbox}
-            onChange={handleSelectAll}
-          />
-          {'Выделить все'}
+        <label className='single-checkbox__label'>
+          <div className='single-checkbox__input-wrapper'>
+            <input
+              type='checkbox'
+              className='single-checkbox__input'
+              ref={selectAllCheckbox}
+              onChange={handleSelectAll}
+            />
+
+            <span>
+              <FaCheck />
+            </span>
+          </div>
+          Выделить все
         </label>
+
+        // <div className='single-checkbox__wrapper'>
+        //   <input
+        //     type='checkbox'
+        //     ref={selectAllCheckbox}
+        //     onChange={handleSelectAll}
+        //     className='single-checkbox__input'
+        //   />
+        //   <label className='single-checkbox__label'>Выделить все</label>
+        // </div>
       )}
     </div>
   );

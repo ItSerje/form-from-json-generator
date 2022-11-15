@@ -1,0 +1,52 @@
+.container {
+  position: relative;
+
+  max-width: 120rem;
+  margin: auto;
+
+  padding: 2rem 4rem;
+}
+
+.container-column {
+  position: relative;
+  display: flex;
+  max-width: 120rem;
+  margin: auto;
+  column-gap: 4rem;
+  padding: 0 2rem;
+
+  @media only screen and (max-width: $bp-large) {
+    column-gap: 2rem;
+  }
+
+  @media only screen and (max-width: $bp-medium) {
+    flex-direction: column;
+  }
+
+  @media only screen and (max-width: $bp-small) {
+    padding: 0 0;
+  }
+}
+
+.box {
+  position: relative;
+  display: flex;
+  //   flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  margin: 5rem 0;
+  padding: 5rem 3rem;
+  overflow: hidden;
+
+  //   flex-wrap: wrap;
+
+  @media only screen and (max-width: $bp-large) {
+    margin: 2rem 0;
+    padding: 3rem 2rem;
+  }
+
+  @media only screen and (max-width: $bp-small) {
+    margin: 0 0 1.5rem 0;
+  }
+}

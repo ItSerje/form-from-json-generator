@@ -1,0 +1,38 @@
+:root {
+  --color-white: #fff;
+  --color-white-transparent: #ffffffcc;
+
+  --color-grey-light-1: #ebecf0;
+  --color-grey-light-2: #e6e6e6;
+  --color-grey-dark-1: #babecc;
+  --color-grey-dark-2: #61677c;
+
+  --color-black-transparent: #0000002f;
+
+  --color-red-1: #ae1100;
+  --color-purple-1: #c87ef0;
+  --color-brown-1: #a28080;
+
+  --shadow-text-1: 0.1rem 0.1rem 0 var(--color-white);
+  --shadow-text-2: 0.1rem 0.1rem 0 var(--color-white);
+  //   --shadow-text-2: 0.1rem 0.1rem 0.1rem var(--color-white);
+
+  --shadow-neuromorphic-basic-1: inset 0.2rem 0.2rem 0.5rem
+      var(--color-grey-dark-1),
+    inset -0.5rem -0.5rem 1rem var(--color-white);
+  --shadow-neuromorphic-action: inset 0.1rem 0.1rem 0.2rem
+      var(--color-grey-dark-1),
+    inset -0.1rem -0.1rem 0.2rem var(--color-white);
+  --shadow-neuromorphic-hover: -0.2rem -0.2rem 0.5rem var(--color-white),
+    0.2rem 0.2rem 0.5rem var(--color-grey-dark-1);
+  --shadow-neuromorphic-basic-2: -0.5rem -0.5rem 2rem var(--color-white),
+    0.5rem 0.5rem 2rem var(--color-grey-dark-1);
+  --shadow-neuromorphic-box: 1rem 1rem 1.5rem var(--color-black-transparent),
+    -1rem -1rem 1.5rem var(--color-white-transparent);
+}
+
+$bp-large: 75em; // 1200px
+$bp-medium: 50em; // 800px
+$bp-small: 25em; // 400px
+$bp-smallest: 15.625em //250px
+;

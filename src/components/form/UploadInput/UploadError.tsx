@@ -26,7 +26,9 @@ export function UploadError({ file, onDelete, errors }: UploadErrorProps) {
       <ErrorLinearProgress variant='determinate' value={100} />
       {errors.map((error) => (
         <div key={error.code}>
-          <div className={styles.error}>{error.message}</div>
+          <div className='dropzone__message dropzone__message--error'>
+            {error.message}
+          </div>
         </div>
       ))}
     </Grid>

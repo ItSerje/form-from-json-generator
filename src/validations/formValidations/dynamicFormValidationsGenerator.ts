@@ -9,7 +9,7 @@ function createYupSchema(schema: any, config: any) {
   const { name, validationType, validations = [] } = config;
   const options = config.componentSpecific?.options || [];
 
-  console.log('opts', options);
+  //   console.log('opts', options);
   if (!(yup as any)[validationType]) {
     return schema;
   }

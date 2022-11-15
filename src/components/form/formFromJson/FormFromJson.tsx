@@ -1,5 +1,20 @@
-import { FC, Fragment, createElement, useState } from 'react';
-import { Formik, Form } from 'formik';
+import {
+  FC,
+  Fragment,
+  createElement,
+  useState,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+} from 'react';
+import {
+  Formik,
+  Form,
+  useFormikContext,
+  FormikContextType,
+  FormikValues,
+} from 'formik';
 import { TextInput, TextInputProps } from '../TextInput/TextInput';
 import { NumberInput } from '../NumberInput/NumberInput';
 import { Checkbox, CheckboxProps } from '../Checkbox/Checkbox';
@@ -22,6 +37,7 @@ import { HintOrError } from '../HintOrError/HintOrError';
 import { CurrentFormValuesAndErrors } from '../CurrentFormValuesAndErrors/CurrentFormValuesAndErrors';
 import { fieldSchema } from '../../../validations/formValidations/formJsonValidationSchema';
 import * as yup from 'yup';
+import { FormObserver } from '../FormObserver/FormObserver';
 
 const COMPONENTS = {
   TextInput,
@@ -36,11 +52,13 @@ const COMPONENTS = {
 type FormFromJsonProps = {
   data: Data;
   initialValues: any;
+  handleFormValuesChange: ({ values, errors }: any) => void;
 };
 
 export const FormFromJson: FC<FormFromJsonProps> = ({
   data,
   initialValues,
+  handleFormValuesChange,
 }) => {
   const [step, setStep] = useState(0);
 
@@ -70,73 +88,77 @@ export const FormFromJson: FC<FormFromJsonProps> = ({
         }
       }}
     >
-      {({ values, touched, errors, isSubmitting, dirty, isValid }) => (
-        <Form>
-          {data?.fields[step]?.map(
-            (field: yup.InferType<typeof fieldSchema>, index) => {
-              const {
-                validationType,
-                validations,
-                component,
-                initialValue,
-                requiredLabel,
-                componentSpecific,
-                ...rest
-              } = field;
+      {({ values, touched, errors, isSubmitting, dirty, isValid }) => {
+        return (
+          <Form className='form' autoComplete='off'>
+            <FormObserver handleFormValuesChange={handleFormValuesChange} />
+            <h1 className='box-title'>{data.formLabel}</h1>
+            {data?.fields[step]?.map(
+              (field: yup.InferType<typeof fieldSchema>, index) => {
+                const {
+                  validationType,
+                  validations,
+                  component,
+                  initialValue,
+                  requiredLabel,
+                  componentSpecific,
+                  ...rest
+                } = field;
 
-              return (
-                <Fragment key={index}>
-                  {field.label && (
-                    <Label
-                      label={field.label}
-                      fieldName={field.name}
-                      requiredLabel={field.requiredLabel}
+                return (
+                  <div className='form__field-wrapper' key={index}>
+                    {field.label && (
+                      <Label
+                        label={field.label}
+                        fieldName={field.name}
+                        requiredLabel={field.requiredLabel}
+                      />
+                    )}
+                    {createElement(
+                      COMPONENTS[component as keyof typeof COMPONENTS],
+                      {
+                        ...componentSpecific,
+                        ...rest,
+                      }
+                    )}
+                    <HintOrError
+                      touched={touched[field.name]}
+                      error={errors[field.name]}
+                      hint={field.hint}
                     />
-                  )}
-                  {createElement(
-                    COMPONENTS[component as keyof typeof COMPONENTS],
-                    {
-                      ...componentSpecific,
-                      ...rest,
-                    }
-                  )}
-                  <HintOrError
-                    touched={touched[field.name]}
-                    error={errors[field.name]}
-                    hint={field.hint}
-                  />
-                </Fragment>
-              );
-            }
-          )}
-          <div>
-            {step > 0 ? (
+                  </div>
+                );
+              }
+            )}
+            <div className='form__field-wrapper btn-group'>
+              {step > 0 ? (
+                <button
+                  className='btn btn--rounded btn--floating'
+                  type='button'
+                  disabled={isSubmitting}
+                  onClick={() => {
+                    setStep((s) => s - 1);
+                  }}
+                >
+                  Back
+                </button>
+              ) : null}
               <button
-                type='button'
+                className='btn btn--rounded btn--floating'
+                type='submit'
+                //   disabled={!dirty || !isValid || isSubmitting}
                 disabled={isSubmitting}
-                onClick={() => {
-                  setStep((s) => s - 1);
-                }}
               >
-                Back
+                {isSubmitting
+                  ? data.submittingBtnText || 'Submitting...'
+                  : isLastStep()
+                  ? data.submitBtnText || 'Submit'
+                  : 'Next'}
               </button>
-            ) : null}
-            <button
-              type='submit'
-              //   disabled={!dirty || !isValid || isSubmitting}
-              disabled={isSubmitting}
-            >
-              {isSubmitting
-                ? data.submittingBtnText || 'Submitting...'
-                : isLastStep()
-                ? data.submitBtnText || 'Submit'
-                : 'Next'}
-            </button>
-          </div>
-
-          <CurrentFormValuesAndErrors values={values} errors={errors} />
-        </Form>
-      )}
+            </div>
+          </Form>
+        );
+      }}
     </Formik>
   );
 };

@@ -12,9 +12,9 @@ export const HintOrError: FC<HintOrErrorProps> = ({ touched, error, hint }) => {
   return (
     <>
       {touched && error && typeof error === 'string' ? (
-        <div className={styles.error}>{error}</div>
+        <div className='form__message form__message--error'>{error}</div>
       ) : hint ? (
-        <div className={styles.hint}>{hint}</div>
+        <div className='form__message'>{hint}</div>
       ) : null}
     </>
   );

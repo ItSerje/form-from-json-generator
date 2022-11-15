@@ -17,7 +17,9 @@ export const TextInput = (props: TextInputProps): JSX.Element => {
   return (
     <>
       <input
-        className={meta.error && meta.touched ? styles['validation-error'] : ''}
+        // className={meta.error && meta.touched ? styles['validation-error'] : ''}
+        className='input'
+        spellCheck='false'
         type={props.type || 'text'}
         {...field}
         {...props}

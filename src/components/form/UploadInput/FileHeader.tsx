@@ -1,4 +1,5 @@
 import { Button, Grid } from '@mui/material';
+import { FaTrash } from 'react-icons/fa';
 
 export interface FileHeaderProps {
   file: File;
@@ -9,11 +10,17 @@ export function FileHeader({ file, onDelete }: FileHeaderProps) {
   return (
     <Grid container justifyContent='space-between' alignItems='center'>
       <Grid item>{file.name}</Grid>
-      <Grid item>
-        <Button size='small' onClick={() => onDelete(file)}>
-          Delete
-        </Button>
-      </Grid>
+      <div>
+        <button
+          //   size='small'
+          onClick={() => onDelete(file)}
+          className='btn btn--upload'
+        >
+          <span>
+            <FaTrash />
+          </span>
+        </button>
+      </div>
     </Grid>
   );
 }

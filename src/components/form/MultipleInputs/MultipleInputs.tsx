@@ -2,6 +2,8 @@ import { ErrorMessage, Field, FieldArray, useField, getIn } from 'formik';
 import React from 'react';
 import styles from '../form.module.scss';
 import { TextInput } from '../TextInput/TextInput';
+import { FaTrash, FaPlusCircle } from 'react-icons/fa';
+import { HintOrError } from '../HintOrError/HintOrError';
 
 export type MultipleInputsProps = JSX.IntrinsicElements['input'] & {
   name: string;
@@ -21,28 +23,31 @@ export const MultipleInputs = (props: MultipleInputsProps): JSX.Element => {
           {field.value.map((v: string, index: number) => {
             const touch = getIn(form.touched, `${field.name}.${index}`);
 
-            return (
-              <div key={index}>
-                <div className={styles['input-wrapper']}>
-                  <TextInput
-                    className={
-                      field.value.length > 1
-                        ? ''
-                        : styles['input-without-buttons']
-                    }
-                    name={`${field.name}.${index}`}
-                    placeholder={props.placeholder}
-                  />
+            const isLastElement = () => {
+              return index === field.value.length - 1;
+            };
 
-                  {field.value.length > 1 && (
-                    <div className={styles['input-btns-wrapper']}>
-                      <div
-                        className={styles['form-item-delete-btn']}
-                        onClick={() => remove(index)}
-                      >
-                        X
-                      </div>
-                      {/* {index === field.value.length - 1 && (
+            return (
+              <React.Fragment key={index}>
+                <div className='input-group__row'>
+                  <div className='input-with-embedded-btn'>
+                    <TextInput
+                      name={`${field.name}.${index}`}
+                      placeholder={props.placeholder}
+                    />
+
+                    {field.value.length > 1 && (
+                      <div className='input-with-embedded-btn__btn-container'>
+                        <button
+                          className='btn'
+                          type='button'
+                          onClick={() => remove(index)}
+                        >
+                          <span>
+                            <FaTrash />
+                          </span>
+                        </button>
+                        {/* {index === field.value.length - 1 && (
                         <div
                         className={styles['form-item-delete-btn']}
                         onClick={() => push('')}
@@ -50,19 +55,33 @@ export const MultipleInputs = (props: MultipleInputsProps): JSX.Element => {
                         +
                         </div>
                     )} */}
-                    </div>
+                      </div>
+                    )}
+                  </div>
+                  {isLastElement() && (
+                    <button
+                      className='btn btn--squared btn--embossed'
+                      type='button'
+                      onClick={() => push('')}
+                    >
+                      <span>
+                        {props.addFieldBtnText || <FaPlusCircle />}
+                        {/* <i class='fa-solid fa-plus-circle'></i> */}
+                      </span>
+                    </button>
                   )}
                 </div>
                 {touch && typeof meta.error === 'object' ? (
-                  <div className={styles.error}>{meta.error[index]}</div>
+                  //   <div className={styles.error}>{meta.error[index]}</div>
+                  <HintOrError touched={touch} error={meta.error[index]} />
                 ) : null}
-              </div>
+              </React.Fragment>
             );
           })}
 
-          <button type='button' onClick={() => push('')}>
+          {/* <button type='button' onClick={() => push('')}>
             {props.addFieldBtnText || 'Add'}
-          </button>
+          </button> */}
         </>
       )}
     </FieldArray>
