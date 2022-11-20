@@ -6,7 +6,7 @@ declare module 'yup' {
   }
 }
 
-const formatKeyValueSchema = {
+const fileTypeKeyValueSchema = {
   'image/*': yup.array(
     yup.string().oneOf(['.bmp', '.gif', '.jpeg', '.jpg', '.png', '.webp'])
   ),
@@ -164,7 +164,7 @@ export const fieldSchema = yup
           .shape({
             acceptedFormats: yup
               .object()
-              .shape(formatKeyValueSchema)
+              .shape(fileTypeKeyValueSchema)
               .noUnknown(),
             multiple: yup.boolean(),
             maximumFileSize: yup.number(),
