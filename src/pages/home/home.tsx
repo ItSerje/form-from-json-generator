@@ -2,18 +2,12 @@ import { FormControlLabel, FormGroup, Switch } from '@mui/material';
 import { FC, useState } from 'react';
 import { string } from 'yup';
 import { CurrentFormValuesAndErrors } from '../../components/form/CurrentFormValuesAndErrors/CurrentFormValuesAndErrors';
-import { SignupForm } from '../../components/form/Form';
 import { FormFromJsonContainer } from '../../components/form/formFromJson/FormFromJsonContainer';
 import '../../styles/main.scss';
 import jsonMultistepForm from '../../multistep-form.json';
 
 const Home: FC = () => {
-  const [checked, setChecked] = useState(true);
   const [parsedJson, setParsedJson] = useState(jsonMultistepForm);
-
-  const handleChange = () => {
-    setChecked(!checked);
-  };
 
   return (
     <>
@@ -52,13 +46,12 @@ const Home: FC = () => {
           />
         </div> */}
       </div>
-      {!checked && <SignupForm />}
-      {checked && (
-        <FormFromJsonContainer
-          parsedJson={parsedJson}
-          //   setCurrentValuesAndErrors={setCurrentValuesAndErrors}
-        />
-      )}
+
+      <FormFromJsonContainer
+        parsedJson={parsedJson}
+        //   setCurrentValuesAndErrors={setCurrentValuesAndErrors}
+      />
+
       {/* <div className='box'>
         <CurrentFormValuesAndErrors
           values={currentValuesAndErrors.values}
