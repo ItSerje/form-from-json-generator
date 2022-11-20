@@ -80,7 +80,7 @@ export const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
       console.log(error);
       //   setData(localFormDataJson as Data);
       //   setInitialValues(getInitialValues(localFormDataJson as Data));
-      //   setIsDynamicallyLoaded(false);
+      setIsDynamicallyLoaded(false);
     }
     setIsLoading(false);
   };
