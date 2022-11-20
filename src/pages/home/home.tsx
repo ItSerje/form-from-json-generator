@@ -5,14 +5,11 @@ import { CurrentFormValuesAndErrors } from '../../components/form/CurrentFormVal
 import { SignupForm } from '../../components/form/Form';
 import { FormFromJsonContainer } from '../../components/form/formFromJson/FormFromJsonContainer';
 import '../../styles/main.scss';
+import jsonMultistepForm from '../../multistep-form.json';
 
 const Home: FC = () => {
   const [checked, setChecked] = useState(true);
-
-  const [fetchDataUrl, setFetchDataUrl] = useState(
-    'https://api.npoint.io/66d4fe66bc68be3a4642' ||
-      'https://api.npoint.io/dbad6207d801d27a240b'
-  );
+  const [parsedJson, setParsedJson] = useState(jsonMultistepForm);
 
   const handleChange = () => {
     setChecked(!checked);
@@ -44,7 +41,7 @@ const Home: FC = () => {
             label='Render from JSON'
           />
         </FormGroup> */}
-        <div className='neuromorphic'>
+        {/* <div className='neuromorphic'>
           <label className='form__field-label'>Json Source</label>
           <input
             className='input'
@@ -53,12 +50,12 @@ const Home: FC = () => {
             onChange={(e) => setFetchDataUrl(e.target.value)}
             spellCheck='false'
           />
-        </div>
+        </div> */}
       </div>
       {!checked && <SignupForm />}
       {checked && (
         <FormFromJsonContainer
-          fetchDataUrl={fetchDataUrl}
+          parsedJson={parsedJson}
           //   setCurrentValuesAndErrors={setCurrentValuesAndErrors}
         />
       )}

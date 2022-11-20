@@ -238,3 +238,7 @@ export const formJsonValidationSchema = yup
       ),
   })
   .noUnknown();
+
+export const noNameDuplicatesSchema = yup
+  .array()
+  .unique((s) => s.name, 'Value of field property "name" is duplicated');
