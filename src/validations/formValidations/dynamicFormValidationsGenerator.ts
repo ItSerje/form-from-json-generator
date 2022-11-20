@@ -1,9 +1,9 @@
 import { formJsonValidationSchema } from './formJsonValidationSchema';
-import { stepDataSchema } from './formJsonValidationSchema';
+import { stepFieldsSchema } from './formJsonValidationSchema';
 import * as yup from 'yup';
 
 export type Data = yup.InferType<typeof formJsonValidationSchema>;
-export type StepData = yup.InferType<typeof stepDataSchema>;
+export type StepData = yup.InferType<typeof stepFieldsSchema>;
 
 function createYupSchema(schema: any, config: any) {
   const { name, validationType, validations = [] } = config;

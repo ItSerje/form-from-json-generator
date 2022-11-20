@@ -66,7 +66,7 @@ yup.addMethod(
   }
 );
 
-const validationsSchema = yup.array(
+const validationsFieldSchema = yup.array(
   yup
     .object()
     .shape({
@@ -209,13 +209,14 @@ export const fieldSchema = yup
     validationType: yup
       .string()
       .oneOf(['string', 'number', 'array', 'boolean']),
-    validations: validationsSchema,
+    validations: validationsFieldSchema,
   })
   .noUnknown();
 
-export const stepDataSchema = yup
+export const stepFieldsSchema = yup
   .array(fieldSchema)
   .required()
+  .min(1, 'Minimum one field in each step is required')
   .unique((s) => s.name, '${path}: Value of property "name" is duplicated');
 
 export const formJsonValidationSchema = yup
@@ -223,6 +224,17 @@ export const formJsonValidationSchema = yup
     formLabel: yup.string(),
     submitBtnText: yup.string(),
     submittingBtnText: yup.string(),
-    fields: yup.array(stepDataSchema).required(),
+    steps: yup
+      .array(
+        yup.object().shape({
+          stepLabel: yup.string(),
+          fields: stepFieldsSchema,
+        })
+      )
+      .required()
+      .min(
+        1,
+        'Minimum one step with some fields is required for the form to be generated'
+      ),
   })
   .noUnknown();

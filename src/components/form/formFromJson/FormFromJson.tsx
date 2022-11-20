@@ -63,14 +63,14 @@ export const FormFromJson: FC<FormFromJsonProps> = ({
   const [step, setStep] = useState(0);
 
   const isLastStep = () => {
-    return step === data.fields.length - 1;
+    return step === data.steps?.length - 1;
   };
 
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={() =>
-        data ? dynamicFormValidationsGenerator(data.fields[step]) : null
+        dynamicFormValidationsGenerator(data.steps[step].fields)
       }
       onSubmit={(values, { setSubmitting, setTouched }) => {
         if (isLastStep()) {
@@ -94,7 +94,10 @@ export const FormFromJson: FC<FormFromJsonProps> = ({
           <Form className='form' autoComplete='off'>
             <FormObserver handleFormValuesChange={handleFormValuesChange} />
             <h1 className='box-title'>{data.formLabel}</h1>
-            {data?.fields[step]?.map(
+            {data.steps[step].stepLabel && (
+              <h2 className='box-title'>{data.steps[step].stepLabel}</h2>
+            )}
+            {data.steps[step].fields?.map(
               (field: yup.InferType<typeof fieldSchema>, index) => {
                 const {
                   validationType,
