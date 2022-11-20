@@ -3,6 +3,7 @@ import {
   formJsonValidationSchema,
   noNameDuplicatesSchema,
 } from '../../../validations/formValidations/formJsonValidationSchema';
+import { validateParsedJson } from '../../../validations/formValidations/validateJson';
 import { FormFromJson } from './FormFromJson';
 import { Data } from '../../../validations/formValidations/dynamicFormValidationsGenerator';
 import { getInitialValues } from '../../../utils/formUtils/getInitialValues';
@@ -32,37 +33,21 @@ export const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
     // console.log(values, errors);
   };
 
-  const validateJson = (parsedJson: any) => {
-    try {
-      const validationOptions = {
-        strict: true,
-        abortEarly: false,
-        stripUnknown: true,
-      };
-      const validatedJson = formJsonValidationSchema.validateSync(
-        parsedJson,
-        validationOptions
-      );
-
-      let fields: any = [];
-      parsedJson?.steps?.forEach((step: { fields: any }) =>
-        fields.push(...step.fields)
-      );
-      noNameDuplicatesSchema.validateSync(fields, validationOptions);
-
-      setData(validatedJson as Data);
-      setInitialValues(getInitialValues(validatedJson as Data));
-      setJsonValidationError({ error: false, messages: [] });
-    } catch (error: any) {
-      setJsonValidationError({
-        error: true,
-        messages: error.errors,
-      });
-    }
-  };
-
   useEffect(() => {
-    validateJson(parsedJson);
+    validateParsedJson(
+      parsedJson,
+      (validatedJson) => {
+        setJsonValidationError({ error: false, messages: [] });
+        setData(validatedJson as Data);
+        setInitialValues(getInitialValues(validatedJson as Data));
+      },
+      (error: { errors: [] }) => {
+        setJsonValidationError({
+          error: true,
+          messages: error.errors,
+        });
+      }
+    );
   }, [parsedJson]);
 
   return (
