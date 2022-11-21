@@ -9,7 +9,7 @@ import { fieldSchema } from '../../../validations/formValidations/formJsonValida
 import FormObserver from './FormObserver';
 import * as yup from 'yup';
 
-// not to mix FormComponents used in json with the rest ones
+// not to mix FormComponents used in json with the rest ones exported by default
 const COMPONENTS: { [key: string]: any } = {
   TextInput: FormComponents.TextInput,
   NumberInput: FormComponents.NumberInput,
