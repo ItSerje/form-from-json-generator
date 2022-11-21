@@ -1,19 +1,16 @@
 import { FieldMetaProps, FormikValues, useField } from 'formik';
-import { useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { FaCheck } from 'react-icons/fa';
-import { Checkbox } from './Checkbox';
+import Checkbox from '../Checkbox';
 
-export type CheckboxGroupProps = {
+type CheckboxGroupProps = {
   name: string;
   options?: { value: string; checkboxLabel: string }[];
   selectAll?: boolean;
 };
 
-export const CheckboxGroup = ({
-  name,
-  options,
-  selectAll,
-}: CheckboxGroupProps): JSX.Element => {
+const CheckboxGroup: FC<CheckboxGroupProps> = (props) => {
+  const { name, options, selectAll } = props;
   const [field, meta, helpers] = useField({ name });
   const [selectAllChecked, setSelectAllChecked] = useState(false);
   const [allSelected, setAllSelected] = useState(false);
@@ -91,3 +88,5 @@ export const CheckboxGroup = ({
     </div>
   );
 };
+
+export default CheckboxGroup;

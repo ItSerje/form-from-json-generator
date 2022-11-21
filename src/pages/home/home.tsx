@@ -1,8 +1,5 @@
-import { FormControlLabel, FormGroup, Switch } from '@mui/material';
 import { FC, useState } from 'react';
-import { string } from 'yup';
-import { CurrentFormValuesAndErrors } from '../../components/form/CurrentFormValuesAndErrors/CurrentFormValuesAndErrors';
-import { FormFromJsonContainer } from '../../components/form/formFromJson/FormFromJsonContainer';
+import FormFromJsonContainer from '../../views/form/FormFromJson';
 import '../../styles/main.scss';
 import jsonMultistepForm from '../../multistep-form.json';
 
@@ -51,13 +48,6 @@ const Home: FC = () => {
         parsedJson={parsedJson}
         //   setCurrentValuesAndErrors={setCurrentValuesAndErrors}
       />
-
-      {/* <div className='box'>
-        <CurrentFormValuesAndErrors
-          values={currentValuesAndErrors.values}
-          errors={currentValuesAndErrors.errors}
-        />
-      </div> */}
     </>
   );
 };

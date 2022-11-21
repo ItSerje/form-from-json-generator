@@ -1,7 +1,7 @@
 import { useField } from 'formik';
 import styles from '../form.module.scss';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
-import { useRef, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import useOutsideClick from '../../../hooks/useOutsideClick';
 
 // export type SelectProps = JSX.IntrinsicElements['select'] & {
@@ -14,7 +14,7 @@ import useOutsideClick from '../../../hooks/useOutsideClick';
 //   }[];
 // };
 
-export type SelectProps = {
+type SelectProps = {
   name: string;
   required?: boolean;
   options?: {
@@ -23,7 +23,7 @@ export type SelectProps = {
   }[];
 };
 
-export const Select = (props: SelectProps): JSX.Element => {
+const Select: FC<SelectProps> = (props) => {
   const [field, meta, helpers] = useField(props);
   const { options, required, ...rest } = props;
   const [showOptions, setShowOptions] = useState(false);
@@ -98,3 +98,5 @@ export const Select = (props: SelectProps): JSX.Element => {
   //     </select>
   //   );
 };
+
+export default Select;

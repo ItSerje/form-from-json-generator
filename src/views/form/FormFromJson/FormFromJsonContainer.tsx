@@ -1,19 +1,15 @@
 import { FC, useEffect, useState } from 'react';
-import {
-  formJsonValidationSchema,
-  noNameDuplicatesSchema,
-} from '../../../validations/formValidations/formJsonValidationSchema';
 import { validateParsedJson } from '../../../validations/formValidations/validateJson';
-import { FormFromJson } from './FormFromJson';
+import FormFromJson from './FormFromJson';
 import { Data } from '../../../validations/formValidations/dynamicFormValidationsGenerator';
 import { getInitialValues } from '../../../utils/formUtils/getInitialValues';
-import { CurrentFormValuesAndErrors } from '../CurrentFormValuesAndErrors/CurrentFormValuesAndErrors';
+import CurrentFormValuesAndErrors from '../CurrentFormValuesAndErrors';
 
 type FormFromJsonContainerProps = {
   parsedJson: any; // data will be validated anyway
 };
 
-export const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
+const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
   parsedJson,
 }) => {
   const [data, setData] = useState<Data | null>(null);
@@ -90,3 +86,5 @@ export const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
     </>
   );
 };
+
+export default FormFromJsonContainer;

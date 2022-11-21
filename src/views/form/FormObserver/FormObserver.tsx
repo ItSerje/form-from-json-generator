@@ -5,9 +5,7 @@ type FormObserverProps = {
   handleFormValuesChange: ({ values, errors }: any) => void;
 };
 
-export const FormObserver: FC<FormObserverProps> = ({
-  handleFormValuesChange,
-}) => {
+const FormObserver: FC<FormObserverProps> = ({ handleFormValuesChange }) => {
   const { values, errors } = useFormikContext();
   useEffect(() => {
     handleFormValuesChange({ values, errors });
@@ -15,3 +13,5 @@ export const FormObserver: FC<FormObserverProps> = ({
 
   return null;
 };
+
+export default FormObserver;

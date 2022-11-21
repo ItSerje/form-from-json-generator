@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { useField } from 'formik';
 import styles from '../form.module.scss';
 
@@ -7,11 +8,11 @@ import styles from '../form.module.scss';
 //   placeholder?: string;
 // };
 
-export type TextInputProps = JSX.IntrinsicElements['input'] & {
+type TextInputProps = JSX.IntrinsicElements['input'] & {
   name: string;
 };
 
-export const TextInput = (props: TextInputProps): JSX.Element => {
+const TextInput: FC<TextInputProps> = (props) => {
   const [field, meta] = useField(props);
 
   return (
@@ -27,3 +28,5 @@ export const TextInput = (props: TextInputProps): JSX.Element => {
     </>
   );
 };
+
+export default TextInput;

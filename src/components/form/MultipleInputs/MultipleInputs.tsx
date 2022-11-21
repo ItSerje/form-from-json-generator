@@ -1,18 +1,19 @@
+import React, { FC } from 'react';
 import { ErrorMessage, Field, FieldArray, useField, getIn } from 'formik';
-import React from 'react';
 import styles from '../form.module.scss';
-import { TextInput } from '../TextInput/TextInput';
 import { FaTrash, FaPlusCircle } from 'react-icons/fa';
-import { HintOrError } from '../HintOrError/HintOrError';
+import TextInput from '../TextInput';
+import HintOrError from '../HintOrError';
 
-export type MultipleInputsProps = JSX.IntrinsicElements['input'] & {
+type MultipleInputsProps = JSX.IntrinsicElements['input'] & {
   name: string;
   placeholder?: string;
   addFieldBtnText?: string;
 };
 
-export const MultipleInputs = (props: MultipleInputsProps): JSX.Element => {
-  const [field, meta, helpers] = useField(props);
+const MultipleInputs: FC<MultipleInputsProps> = (props) => {
+  const { name, placeholder, addFieldBtnText } = props;
+  const [field, meta, helpers] = useField(name);
 
   //   console.log('hey', field, meta, helpers);
 
@@ -33,7 +34,7 @@ export const MultipleInputs = (props: MultipleInputsProps): JSX.Element => {
                   <div className='input-with-embedded-btn'>
                     <TextInput
                       name={`${field.name}.${index}`}
-                      placeholder={props.placeholder}
+                      placeholder={placeholder}
                     />
 
                     {field.value.length > 1 && (
@@ -65,7 +66,7 @@ export const MultipleInputs = (props: MultipleInputsProps): JSX.Element => {
                       onClick={() => push('')}
                     >
                       <span>
-                        {props.addFieldBtnText || <FaPlusCircle />}
+                        {addFieldBtnText || <FaPlusCircle />}
                         {/* <i class='fa-solid fa-plus-circle'></i> */}
                       </span>
                     </button>
@@ -87,3 +88,5 @@ export const MultipleInputs = (props: MultipleInputsProps): JSX.Element => {
     </FieldArray>
   );
 };
+
+export default MultipleInputs;

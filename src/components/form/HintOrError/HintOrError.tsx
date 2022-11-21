@@ -8,7 +8,8 @@ type HintOrErrorProps = {
   hint?: string;
 };
 
-export const HintOrError: FC<HintOrErrorProps> = ({ touched, error, hint }) => {
+const HintOrError: FC<HintOrErrorProps> = (props) => {
+  const { touched, error, hint } = props;
   return (
     <>
       {touched && error && typeof error === 'string' ? (
@@ -19,3 +20,5 @@ export const HintOrError: FC<HintOrErrorProps> = ({ touched, error, hint }) => {
     </>
   );
 };
+
+export default HintOrError;

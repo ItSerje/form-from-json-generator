@@ -1,52 +1,23 @@
-import {
-  FC,
-  Fragment,
-  createElement,
-  useState,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-} from 'react';
-import {
-  Formik,
-  Form,
-  useFormikContext,
-  FormikContextType,
-  FormikValues,
-} from 'formik';
-import { TextInput, TextInputProps } from '../TextInput/TextInput';
-import { NumberInput } from '../NumberInput/NumberInput';
-import { Checkbox, CheckboxProps } from '../Checkbox/Checkbox';
-import { CheckboxGroup, CheckboxGroupProps } from '../Checkbox/CheckboxGroup';
-import {
-  MultipleInputs,
-  MultipleInputsProps,
-} from '../MultipleInputs/MultipleInputs';
-import { Select, SelectProps } from '../Select/Select';
-import {
-  MultipleFilesUploadField,
-  MultipleFilesUploadFieldProps,
-} from '../UploadInput/MultipleFilesUploadField';
+import { FC, createElement, useState } from 'react';
+import { Formik, Form } from 'formik';
+import FormComponents from '../../../components/form';
 import {
   dynamicFormValidationsGenerator,
   Data,
 } from '../../../validations/formValidations/dynamicFormValidationsGenerator';
-import { Label } from '../Label/Label';
-import { HintOrError } from '../HintOrError/HintOrError';
-import { CurrentFormValuesAndErrors } from '../CurrentFormValuesAndErrors/CurrentFormValuesAndErrors';
 import { fieldSchema } from '../../../validations/formValidations/formJsonValidationSchema';
+import FormObserver from '../FormObserver';
 import * as yup from 'yup';
-import { FormObserver } from '../FormObserver/FormObserver';
 
-const COMPONENTS = {
-  TextInput,
-  NumberInput,
-  Select,
-  Checkbox,
-  CheckboxGroup,
-  MultipleInputs,
-  MultipleFilesUploadField,
+// not to mix FormComponents used in json with the rest ones
+const COMPONENTS: { [key: string]: any } = {
+  TextInput: FormComponents.TextInput,
+  NumberInput: FormComponents.NumberInput,
+  Select: FormComponents.Select,
+  MultipleInputs: FormComponents.MultipleInputs,
+  CheckboxGroup: FormComponents.CheckboxGroup,
+  MultipleFilesUploadField: FormComponents.UploadInput,
+  Checkbox: FormComponents.Checkbox,
 };
 
 type FormFromJsonProps = {
@@ -55,7 +26,7 @@ type FormFromJsonProps = {
   handleFormValuesChange: ({ values, errors }: any) => void;
 };
 
-export const FormFromJson: FC<FormFromJsonProps> = ({
+const FormFromJson: FC<FormFromJsonProps> = ({
   data,
   initialValues,
   handleFormValuesChange,
@@ -112,20 +83,18 @@ export const FormFromJson: FC<FormFromJsonProps> = ({
                 return (
                   <div className='form__field-wrapper' key={index}>
                     {field.label && (
-                      <Label
+                      <FormComponents.Label
                         label={field.label}
                         fieldName={field.name}
                         requiredLabel={field.requiredLabel}
                       />
                     )}
-                    {createElement(
-                      COMPONENTS[component as keyof typeof COMPONENTS],
-                      {
-                        ...componentSpecific,
-                        ...rest,
-                      }
-                    )}
-                    <HintOrError
+
+                    {createElement(COMPONENTS[component], {
+                      ...componentSpecific,
+                      ...rest,
+                    })}
+                    <FormComponents.HintOrError
                       touched={touched[field.name]}
                       error={errors[field.name]}
                       hint={field.hint}
@@ -166,3 +135,5 @@ export const FormFromJson: FC<FormFromJsonProps> = ({
     </Formik>
   );
 };
+
+export default FormFromJson;

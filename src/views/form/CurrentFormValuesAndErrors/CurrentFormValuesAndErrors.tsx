@@ -6,9 +6,10 @@ type CurrentFormValuesAndErrorsProps = {
   errors: object;
 };
 
-export const CurrentFormValuesAndErrors: FC<
-  CurrentFormValuesAndErrorsProps
-> = ({ values, errors }) => {
+const CurrentFormValuesAndErrors: FC<CurrentFormValuesAndErrorsProps> = ({
+  values,
+  errors,
+}) => {
   //   const [valuesCopy, setValuesCopy] = useState(values);
   //   const [errorsCopy, setErorrsCopy] = useState(errors);
   const maxLength = 100;
@@ -39,3 +40,5 @@ export const CurrentFormValuesAndErrors: FC<
     </div>
   );
 };
+
+export default CurrentFormValuesAndErrors;

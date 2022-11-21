@@ -1,13 +1,14 @@
+import { FC } from 'react';
 import { useField } from 'formik';
 import styles from '../form.module.scss';
 import { IconContext } from 'react-icons';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 
-export type NumberInputProps = JSX.IntrinsicElements['input'] & {
+type NumberInputProps = JSX.IntrinsicElements['input'] & {
   name: string;
 };
 
-export const NumberInput = (props: NumberInputProps): JSX.Element => {
+const NumberInput: FC<NumberInputProps> = (props) => {
   const [field, meta, helpers] = useField(props);
 
   const increaseHandler = () => {
@@ -65,3 +66,5 @@ export const NumberInput = (props: NumberInputProps): JSX.Element => {
     </div>
   );
 };
+
+export default NumberInput;

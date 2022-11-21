@@ -27,7 +27,7 @@ export interface UploadableFile {
   url: string;
 }
 
-export type MultipleFilesUploadFieldProps = JSX.IntrinsicElements['input'] & {
+type MultipleFilesUploadFieldProps = JSX.IntrinsicElements['input'] & {
   name: string;
   acceptedFormats?: {
     [key: string]: string[];
@@ -40,14 +40,15 @@ export type MultipleFilesUploadFieldProps = JSX.IntrinsicElements['input'] & {
   value?: string;
 };
 
-export const MultipleFilesUploadField: FC<MultipleFilesUploadFieldProps> = ({
-  name,
-  multiple = true,
-  maximumFileSize,
-  preview,
-  dropzoneText,
-  acceptedFormats,
-}) => {
+const MultipleFilesUploadField: FC<MultipleFilesUploadFieldProps> = (props) => {
+  const {
+    name,
+    multiple = true,
+    maximumFileSize,
+    preview,
+    dropzoneText,
+    acceptedFormats,
+  } = props;
   const [field, meta, helpers] = useField(name);
 
   const [files, setFiles] = useState<DroppedFile[]>(
@@ -148,3 +149,5 @@ export const MultipleFilesUploadField: FC<MultipleFilesUploadFieldProps> = ({
     </React.Fragment>
   );
 };
+
+export default MultipleFilesUploadField;

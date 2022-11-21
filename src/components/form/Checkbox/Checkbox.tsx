@@ -1,5 +1,5 @@
 import { FieldMetaProps, FormikValues, useField } from 'formik';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { FC, Dispatch, SetStateAction, useEffect } from 'react';
 import { FaCheck } from 'react-icons/fa';
 // import styles from '../form.module.scss';
 
@@ -8,13 +8,13 @@ import { FaCheck } from 'react-icons/fa';
 //   name: string;
 // };
 
-export type CheckboxProps = JSX.IntrinsicElements['input'] & {
+type CheckboxProps = JSX.IntrinsicElements['input'] & {
   name: string;
   checkboxLabel?: string;
   value?: string;
 };
 
-export const Checkbox = (props: CheckboxProps): JSX.Element => {
+const Checkbox: FC<CheckboxProps> = (props) => {
   const [field] = useField({ ...props, type: 'checkbox' });
 
   return (
@@ -32,3 +32,5 @@ export const Checkbox = (props: CheckboxProps): JSX.Element => {
     // </div>
   );
 };
+
+export default Checkbox;

@@ -6,7 +6,8 @@ type LabelProps = {
   requiredLabel?: boolean;
 };
 
-export const Label: FC<LabelProps> = ({ label, fieldName, requiredLabel }) => {
+const Label: FC<LabelProps> = (props) => {
+  const { label, fieldName, requiredLabel } = props;
   return (
     <label htmlFor={fieldName} className='form__field-label'>
       {label}{' '}
@@ -16,3 +17,5 @@ export const Label: FC<LabelProps> = ({ label, fieldName, requiredLabel }) => {
     </label>
   );
 };
+
+export default Label;
