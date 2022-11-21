@@ -1,7 +1,7 @@
 import { Grid, LinearProgress } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { FileHeader } from './FileHeader';
-import { getFileDataURL } from '../../../utils/formUtils/getFileDataURL';
+import { getFileDataUrlWithProgress } from '../../../utils/formUtils/getFileDataURL';
 
 type DroppedFileProps = {
   file: File;
@@ -16,7 +16,7 @@ const DroppedFile = ({ file, onDelete, onUpload }: DroppedFileProps) => {
   useEffect(() => {
     const load = async () => {
       let url;
-      await getFileDataURL(file, setFileDataURL, setProgress);
+      await getFileDataUrlWithProgress(file, setFileDataURL, setProgress);
       url = fileDataURL;
 
       onUpload(file, url as string);

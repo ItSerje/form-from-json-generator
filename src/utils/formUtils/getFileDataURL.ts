@@ -1,5 +1,5 @@
 // currently files are not uploaded onDrop. When needed the below function can be replaced with uploadFiles() (check formUtils)
-export const getFileDataURL = async (
+export const getFileDataUrlWithProgress = async (
   file: File,
   setFileDataURL: (dataUrl: string | ArrayBuffer) => void,
   onProgress: (percentage: number) => void
