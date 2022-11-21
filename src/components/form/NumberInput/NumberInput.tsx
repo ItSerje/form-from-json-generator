@@ -1,7 +1,5 @@
 import { FC } from 'react';
 import { useField } from 'formik';
-import styles from '../form.module.scss';
-import { IconContext } from 'react-icons';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 
 type NumberInputProps = JSX.IntrinsicElements['input'] & {
@@ -27,12 +25,7 @@ const NumberInput: FC<NumberInputProps> = (props) => {
   };
 
   return (
-    <div
-      //   className={`${styles['input-wrapper']} ${
-      //     meta.error && meta.touched ? styles['validation-error'] : ''
-      //   }`}
-      className='input-with-embedded-btn'
-    >
+    <div className='input-with-embedded-btn'>
       <input
         className='input'
         style={{ paddingRight: '8.8rem' }}
@@ -45,19 +38,13 @@ const NumberInput: FC<NumberInputProps> = (props) => {
           }
         }}
       />
-      {/* <div className={styles['input-btns-wrapper']}>
-        <span onClick={increaseHandler}></span>
-        <span onClick={decreaseHandler}></span>
-        </div> */}
       <div className='input-with-embedded-btn__btn-container'>
         <button className='btn' type='button' onClick={decreaseHandler}>
-          {/* <i className='fa-solid fa-minus'></i> */}
           <span>
             <FaMinus />
           </span>
         </button>
         <button className='btn' type='button' onClick={increaseHandler}>
-          {/* <i className='fa-solid fa-minus'></i> */}
           <span>
             <FaPlus />
           </span>
