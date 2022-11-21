@@ -1,6 +1,5 @@
 import { FormikErrors, FormikTouched } from 'formik';
 import { FC } from 'react';
-import styles from '../form.module.scss';
 
 type HintOrErrorProps = {
   touched?: boolean | FormikTouched<any> | FormikTouched<any>[];
