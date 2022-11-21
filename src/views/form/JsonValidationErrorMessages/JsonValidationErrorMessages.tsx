@@ -1,10 +1,10 @@
 import { FC } from 'react';
 
-type ValidationErrorMessagesProps = {
+type JsonValidationErrorMessagesProps = {
   messages: string[];
 };
 
-const ValidationErrorMessages: FC<ValidationErrorMessagesProps> = ({
+const JsonValidationErrorMessages: FC<JsonValidationErrorMessagesProps> = ({
   messages,
 }) => {
   return (
@@ -21,4 +21,4 @@ const ValidationErrorMessages: FC<ValidationErrorMessagesProps> = ({
   );
 };
 
-export default ValidationErrorMessages;
+export default JsonValidationErrorMessages;

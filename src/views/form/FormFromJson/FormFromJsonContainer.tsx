@@ -5,7 +5,7 @@ import { TData } from '../../../types/jsonTypes';
 import { TValuesAndErrors } from '../../../types/formikTypes';
 import { getInitialValues } from '../../../utils/formUtils/getInitialValues';
 import CurrentFormValuesAndErrors from '../CurrentFormValuesAndErrors';
-import ValidationErrorMessages from '../ValidationErrorMessages';
+import ValidationErrorMessages from '../JsonValidationErrorMessages';
 
 type FormFromJsonContainerProps = {
   parsedJson: any; // data will be validated by yup
