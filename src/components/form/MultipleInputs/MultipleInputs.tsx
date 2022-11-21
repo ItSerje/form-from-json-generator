@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
-import { ErrorMessage, Field, FieldArray, useField, getIn } from 'formik';
-import styles from '../form.module.scss';
+import { FieldArray, useField, getIn } from 'formik';
 import { FaTrash, FaPlusCircle } from 'react-icons/fa';
 import TextInput from '../TextInput';
 import HintOrError from '../HintOrError';
@@ -13,15 +12,13 @@ type MultipleInputsProps = JSX.IntrinsicElements['input'] & {
 
 const MultipleInputs: FC<MultipleInputsProps> = (props) => {
   const { name, placeholder, addFieldBtnText } = props;
-  const [field, meta, helpers] = useField(name);
-
-  //   console.log('hey', field, meta, helpers);
+  const [field, meta] = useField(name);
 
   return (
     <FieldArray name={field.name}>
       {({ push, remove, form }) => (
         <>
-          {field.value.map((v: string, index: number) => {
+          {field.value.map((_: string, index: number) => {
             const touch = getIn(form.touched, `${field.name}.${index}`);
 
             const isLastElement = () => {
@@ -36,7 +33,6 @@ const MultipleInputs: FC<MultipleInputsProps> = (props) => {
                       name={`${field.name}.${index}`}
                       placeholder={placeholder}
                     />
-
                     {field.value.length > 1 && (
                       <div className='input-with-embedded-btn__btn-container'>
                         <button
@@ -48,14 +44,6 @@ const MultipleInputs: FC<MultipleInputsProps> = (props) => {
                             <FaTrash />
                           </span>
                         </button>
-                        {/* {index === field.value.length - 1 && (
-                        <div
-                        className={styles['form-item-delete-btn']}
-                        onClick={() => push('')}
-                        >
-                        +
-                        </div>
-                    )} */}
                       </div>
                     )}
                   </div>
@@ -65,24 +53,16 @@ const MultipleInputs: FC<MultipleInputsProps> = (props) => {
                       type='button'
                       onClick={() => push('')}
                     >
-                      <span>
-                        {addFieldBtnText || <FaPlusCircle />}
-                        {/* <i class='fa-solid fa-plus-circle'></i> */}
-                      </span>
+                      <span>{addFieldBtnText || <FaPlusCircle />}</span>
                     </button>
                   )}
                 </div>
                 {touch && typeof meta.error === 'object' ? (
-                  //   <div className={styles.error}>{meta.error[index]}</div>
                   <HintOrError touched={touch} error={meta.error[index]} />
                 ) : null}
               </React.Fragment>
             );
           })}
-
-          {/* <button type='button' onClick={() => push('')}>
-            {props.addFieldBtnText || 'Add'}
-          </button> */}
         </>
       )}
     </FieldArray>
