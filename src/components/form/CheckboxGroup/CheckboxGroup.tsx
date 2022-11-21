@@ -7,10 +7,11 @@ type CheckboxGroupProps = {
   name: string;
   options?: { value: string; checkboxLabel: string }[];
   selectAll?: boolean;
+  selectAllText?: string;
 };
 
 const CheckboxGroup: FC<CheckboxGroupProps> = (props) => {
-  const { name, options, selectAll } = props;
+  const { name, options, selectAll, selectAllText } = props;
   const [field, _, helpers] = useField({ name });
   const [selectAllChecked, setSelectAllChecked] = useState(false);
 
@@ -67,7 +68,7 @@ const CheckboxGroup: FC<CheckboxGroupProps> = (props) => {
               <FaCheck />
             </span>
           </div>
-          Выделить все
+          {selectAllText || 'Select All'}
         </label>
       )}
     </div>

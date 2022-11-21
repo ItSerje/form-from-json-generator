@@ -150,6 +150,7 @@
           "name": "skills",
           "componentSpecific": {
             "selectAll": true,
+            "selectAllText": "Выбрать все",
             "options": [
               { "value": "communication", "checkboxLabel": "Общение" },
               {

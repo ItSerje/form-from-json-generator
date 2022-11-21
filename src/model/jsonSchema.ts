@@ -190,6 +190,7 @@ const fieldSchema = yup
           .object()
           .shape({
             selectAll: yup.boolean(),
+            selectAllText: yup.string(),
             options: CheckboxGroupOptionsSchema,
           })
           .noUnknown(),
