@@ -1,1 +1,1 @@
-export { default } from './MultipleFilesUploadField';
+export { default } from './UploadInputContainer';

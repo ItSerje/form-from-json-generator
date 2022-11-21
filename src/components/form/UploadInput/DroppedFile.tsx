@@ -2,22 +2,18 @@ import { Grid, LinearProgress } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { FileHeader } from './FileHeader';
 
-export interface SingleFileUploadWithProgressProps {
+type DroppedFileProps = {
   file: File;
   onDelete: (file: File) => void;
   onUpload: (file: File, url: string) => void;
-}
+};
 
-export const SingleFileUploadWithProgress = ({
-  file,
-  onDelete,
-  onUpload,
-}: SingleFileUploadWithProgressProps) => {
+const DroppedFile = ({ file, onDelete, onUpload }: DroppedFileProps) => {
   const [progress, setProgress] = useState(0);
   const [fileDataURL, setFileDataURL] = useState<string | ArrayBuffer>('');
 
   useEffect(() => {
-    async function upload() {
+    async function load() {
       let url;
       await getFileDataURL(file, setFileDataURL, setProgress);
       url = fileDataURL;
@@ -25,7 +21,7 @@ export const SingleFileUploadWithProgress = ({
       onUpload(file, url as string);
     }
 
-    upload();
+    load();
   }, [fileDataURL]);
 
   return (
@@ -91,3 +87,5 @@ async function getFileDataURL(
     fileReader.readAsDataURL(file);
   }
 }
+
+export { DroppedFile };

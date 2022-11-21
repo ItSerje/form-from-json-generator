@@ -3,7 +3,7 @@ import { useField } from 'formik';
 import React, { useEffect } from 'react';
 import { useCallback, useState } from 'react';
 import { FileError, FileRejection, useDropzone } from 'react-dropzone';
-import { SingleFileUploadWithProgress } from './SingleFileUploadWithProgress';
+import { DroppedFile } from './DroppedFile';
 import { UploadError } from './UploadError';
 
 let currentId = 0;
@@ -12,14 +12,14 @@ function getNewId() {
   return ++currentId;
 }
 
-export interface DroppedFile {
+type DroppedFiles = {
   id: number;
   file: File;
   errors: FileError[];
   url?: string;
-}
+};
 
-type MultipleFilesUploadFieldProps = JSX.IntrinsicElements['input'] & {
+type UploadInputContainerProps = JSX.IntrinsicElements['input'] & {
   name: string;
   acceptedFormats?: {
     [key: string]: string[];
@@ -32,7 +32,7 @@ type MultipleFilesUploadFieldProps = JSX.IntrinsicElements['input'] & {
   value?: string;
 };
 
-const MultipleFilesUploadField: FC<MultipleFilesUploadFieldProps> = (props) => {
+const UploadInputContainer: FC<UploadInputContainerProps> = (props) => {
   const {
     name,
     multiple = true,
@@ -42,7 +42,7 @@ const MultipleFilesUploadField: FC<MultipleFilesUploadFieldProps> = (props) => {
     acceptedFormats,
   } = props;
   const [field, _, helpers] = useField(name);
-  const [files, setFiles] = useState<DroppedFile[]>(
+  const [files, setFiles] = useState<DroppedFiles[]>(
     field.value.length ? field.value : []
   );
 
@@ -117,7 +117,7 @@ const MultipleFilesUploadField: FC<MultipleFilesUploadFieldProps> = (props) => {
               onDelete={onDelete}
             />
           ) : (
-            <SingleFileUploadWithProgress
+            <DroppedFile
               file={fileWrapper.file}
               onDelete={onDelete}
               onUpload={onUpload}
@@ -129,4 +129,4 @@ const MultipleFilesUploadField: FC<MultipleFilesUploadFieldProps> = (props) => {
   );
 };
 
-export default MultipleFilesUploadField;
+export default UploadInputContainer;
