@@ -93,22 +93,19 @@ const MultipleFilesUploadField: FC<MultipleFilesUploadFieldProps> = (props) => {
 
   return (
     <React.Fragment>
-      <div>
-        <div {...getRootProps({ className: 'dropzone' })}>
-          <input {...getInputProps()} />
-          {preview &&
-          files[0] &&
-          files[0].url &&
-          typeof files[0].url === 'string' &&
-          files[0].url.length > 0 ? (
-            <img src={files[0].url} className='dropzone--image-preview' />
-          ) : (
-            <p>
-              {dropzoneText ||
-                "Drag 'n' drop some files here, or click to select files"}
-            </p>
-          )}
-        </div>
+      <div {...getRootProps({ className: 'dropzone' })}>
+        <input {...getInputProps()} />
+        {preview &&
+        files[0]?.url &&
+        typeof files[0].url === 'string' &&
+        files[0].url.length > 0 ? (
+          <img src={files[0].url} className='dropzone--image-preview' />
+        ) : (
+          <p>
+            {dropzoneText ||
+              "Drag 'n' drop some files here, or click to select files"}
+          </p>
+        )}
       </div>
 
       {files.map((fileWrapper) => (
