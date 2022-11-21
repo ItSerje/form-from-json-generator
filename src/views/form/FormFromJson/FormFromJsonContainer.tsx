@@ -26,7 +26,7 @@ const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
       errors: {},
     });
 
-  const handleFormValuesChange = ({ values, errors }: TValuesAndErrors) => {
+  const getFormValuesAndErrors = ({ values, errors }: TValuesAndErrors) => {
     setCurrentValuesAndErrors({ values, errors });
   };
 
@@ -63,7 +63,7 @@ const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
             <FormFromJson
               formData={formData}
               initialValues={initialValues}
-              handleFormValuesChange={handleFormValuesChange}
+              getFormValuesAndErrors={getFormValuesAndErrors}
             />
           </div>
           <div className='box'>

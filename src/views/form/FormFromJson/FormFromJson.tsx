@@ -19,13 +19,13 @@ const COMPONENTS: { [key: string]: any } = {
 type FormFromJsonProps = {
   formData: TFormData;
   initialValues: any;
-  handleFormValuesChange: ({ values, errors }: any) => void;
+  getFormValuesAndErrors: ({ values, errors }: any) => void;
 };
 
 const FormFromJson: FC<FormFromJsonProps> = ({
   formData,
   initialValues,
-  handleFormValuesChange,
+  getFormValuesAndErrors,
 }) => {
   const [step, setStep] = useState(0);
 
@@ -58,7 +58,7 @@ const FormFromJson: FC<FormFromJsonProps> = ({
       {({ touched, errors, isSubmitting }) => {
         return (
           <Form className='form' autoComplete='off'>
-            <FormObserver handleFormValuesChange={handleFormValuesChange} />
+            <FormObserver getFormValuesAndErrors={getFormValuesAndErrors} />
             {formData.formLabel && (
               <h1 className='box-title'>{formData.formLabel}</h1>
             )}
