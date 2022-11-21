@@ -33,10 +33,10 @@ const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
   useEffect(() => {
     validateParsedJson(
       parsedJson,
-      (validatedJson) => {
+      (validatedJson: TData) => {
         setJsonValidationError({ error: false, messages: [] });
-        setData(validatedJson as TData);
-        setInitialValues(getInitialValues(validatedJson as TData));
+        setData(validatedJson);
+        setInitialValues(getInitialValues(validatedJson));
       },
       (error: { errors: [] }) => {
         setJsonValidationError({
@@ -57,7 +57,6 @@ const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
       {jsonValidationError.error && (
         <ValidationErrorMessages messages={jsonValidationError.messages} />
       )}
-
       {!jsonValidationError.error && data && initialValues && (
         <div className='container-column neuromorphic'>
           <div className='box'>
