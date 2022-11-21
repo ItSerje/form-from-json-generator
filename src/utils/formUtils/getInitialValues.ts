@@ -26,6 +26,5 @@ export const getInitialValues = (data: TFormData) => {
     });
   });
 
-  console.log(initialValues);
   return initialValues;
 };
