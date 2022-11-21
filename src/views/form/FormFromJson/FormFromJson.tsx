@@ -1,7 +1,7 @@
 import { FC, createElement, useState, Key } from 'react';
 import { Formik, Form } from 'formik';
 import FormComponents from '../../../components/form';
-import generateFormValidations from '../../../validations/formValidations/generateFormValidations';
+import generateFormValidations from '../../../utils/formUtils/generateFormValidations';
 import { TField, TData } from '../../../types/jsonTypes';
 import FormObserver from './FormObserver';
 
