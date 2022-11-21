@@ -1,13 +1,9 @@
-import { FC, createElement, useState } from 'react';
+import { FC, createElement, useState, Key } from 'react';
 import { Formik, Form } from 'formik';
 import FormComponents from '../../../components/form';
-import {
-  dynamicFormValidationsGenerator,
-  Data,
-} from '../../../validations/formValidations/dynamicFormValidationsGenerator';
-import { fieldSchema } from '../../../validations/formValidations/formJsonValidationSchema';
+import generateFormValidations from '../../../validations/formValidations/generateFormValidations';
+import { TField, TData } from '../../../types/jsonTypes';
 import FormObserver from './FormObserver';
-import * as yup from 'yup';
 
 // not to mix FormComponents used in json with the rest ones exported by default
 const COMPONENTS: { [key: string]: any } = {
@@ -21,7 +17,7 @@ const COMPONENTS: { [key: string]: any } = {
 };
 
 type FormFromJsonProps = {
-  data: Data;
+  data: TData;
   initialValues: any;
   handleFormValuesChange: ({ values, errors }: any) => void;
 };
@@ -40,9 +36,7 @@ const FormFromJson: FC<FormFromJsonProps> = ({
   return (
     <Formik
       initialValues={initialValues}
-      validationSchema={() =>
-        dynamicFormValidationsGenerator(data.steps[step].fields)
-      }
+      validationSchema={() => generateFormValidations(data.steps[step].fields)}
       onSubmit={(values, { setSubmitting, setTouched }) => {
         if (isLastStep()) {
           setTimeout(() => {
@@ -68,41 +62,39 @@ const FormFromJson: FC<FormFromJsonProps> = ({
             {data.steps[step].stepLabel && (
               <h2 className='box-title'>{data.steps[step].stepLabel}</h2>
             )}
-            {data.steps[step].fields?.map(
-              (field: yup.InferType<typeof fieldSchema>, index) => {
-                const {
-                  validationType,
-                  validations,
-                  component,
-                  initialValue,
-                  requiredLabel,
-                  componentSpecific,
-                  ...rest
-                } = field;
+            {data.steps[step].fields?.map((field: TField, index) => {
+              const {
+                validationType,
+                validations,
+                component,
+                initialValue,
+                requiredLabel,
+                componentSpecific,
+                ...rest
+              } = field;
 
-                return (
-                  <div className='form__field-wrapper' key={index}>
-                    {field.label && (
-                      <FormComponents.Label
-                        label={field.label}
-                        fieldName={field.name}
-                        requiredLabel={field.requiredLabel}
-                      />
-                    )}
-
-                    {createElement(COMPONENTS[component], {
-                      ...componentSpecific,
-                      ...rest,
-                    })}
-                    <FormComponents.HintOrError
-                      touched={touched[field.name]}
-                      error={errors[field.name]}
-                      hint={field.hint}
+              return (
+                <div className='form__field-wrapper' key={index}>
+                  {field.label && (
+                    <FormComponents.Label
+                      label={field.label}
+                      fieldName={field.name}
+                      requiredLabel={field.requiredLabel}
                     />
-                  </div>
-                );
-              }
-            )}
+                  )}
+
+                  {createElement(COMPONENTS[component], {
+                    ...componentSpecific,
+                    ...rest,
+                  })}
+                  <FormComponents.HintOrError
+                    touched={touched[field.name]}
+                    error={errors[field.name]}
+                    hint={field.hint}
+                  />
+                </div>
+              );
+            })}
             <FormComponents.ButtonGroup
               step={step}
               btnText={data.btnText}

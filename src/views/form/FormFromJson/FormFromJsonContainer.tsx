@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { validateParsedJson } from '../../../validations/formValidations/validateJson';
 import FormFromJson from './FormFromJson';
-import { Data } from '../../../validations/formValidations/dynamicFormValidationsGenerator';
+import { TData } from '../../../types/jsonTypes';
 import { getInitialValues } from '../../../utils/formUtils/getInitialValues';
 import CurrentFormValuesAndErrors from '../CurrentFormValuesAndErrors';
 import ValidationErrorMessages from '../ValidationErrorMessages';
@@ -13,7 +13,7 @@ type FormFromJsonContainerProps = {
 const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
   parsedJson,
 }) => {
-  const [data, setData] = useState<Data | null>(null);
+  const [data, setData] = useState<TData | null>(null);
   const [initialValues, setInitialValues] = useState({});
   const [jsonValidationError, setJsonValidationError] = useState({
     error: false,
@@ -34,8 +34,8 @@ const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
       parsedJson,
       (validatedJson) => {
         setJsonValidationError({ error: false, messages: [] });
-        setData(validatedJson as Data);
-        setInitialValues(getInitialValues(validatedJson as Data));
+        setData(validatedJson as TData);
+        setInitialValues(getInitialValues(validatedJson as TData));
       },
       (error: { errors: [] }) => {
         setJsonValidationError({

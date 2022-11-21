@@ -134,7 +134,7 @@ const CheckboxGroupOptionsSchema = yup
     '${path}: Value of property "label" is duplicated'
   );
 
-export const fieldSchema = yup
+const fieldSchema = yup
   .object()
   .shape({
     component: yup
@@ -213,13 +213,13 @@ export const fieldSchema = yup
   })
   .noUnknown();
 
-export const stepFieldsSchema = yup
+const stepFieldsSchema = yup
   .array(fieldSchema)
   .required()
   .min(1, 'Minimum one field in each step is required')
   .unique((s) => s.name, '${path}: Value of property "name" is duplicated');
 
-export const formJsonValidationSchema = yup
+const jsonSchema = yup
   .object({
     formLabel: yup.string(),
     btnText: yup
@@ -247,6 +247,8 @@ export const formJsonValidationSchema = yup
   })
   .noUnknown();
 
-export const noNameDuplicatesSchema = yup
+const duplicateNameSchema = yup
   .array()
   .unique((s) => s.name, 'Value of field property "name" is duplicated');
+
+export { jsonSchema, stepFieldsSchema, fieldSchema, duplicateNameSchema };

@@ -1,6 +1,6 @@
-import { Data } from '../../validations/formValidations/dynamicFormValidationsGenerator';
+import { TData } from '../../types/jsonTypes';
 
-export const getInitialValues = (data: Data) => {
+export const getInitialValues = (data: TData) => {
   const initialValues: {
     [key: string]: any;
   } = {};

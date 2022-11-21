@@ -1,7 +1,4 @@
-import {
-  formJsonValidationSchema,
-  noNameDuplicatesSchema,
-} from './formJsonValidationSchema';
+import { jsonSchema, duplicateNameSchema } from '../../model/jsonSchema';
 
 export const validateParsedJson = async (
   parsedJson: any,
@@ -17,7 +14,7 @@ export const validateParsedJson = async (
     };
 
     // main validation happens here. validate() is async
-    const validatedJson = await formJsonValidationSchema.validate(
+    const validatedJson = await jsonSchema.validate(
       parsedJson,
       validationOptions
     );
@@ -27,7 +24,7 @@ export const validateParsedJson = async (
     parsedJson?.steps?.forEach((step: { fields: any }) =>
       fields.push(...step.fields)
     );
-    await noNameDuplicatesSchema.validate(fields, validationOptions);
+    await duplicateNameSchema.validate(fields, validationOptions);
 
     onSuccess(validatedJson);
   } catch (error) {
