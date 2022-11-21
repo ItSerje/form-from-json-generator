@@ -5,7 +5,7 @@ import generateFormValidations from '../../../utils/formUtils/generateFormValida
 import { TField, TFormData } from '../../../types/jsonTypes';
 import FormObserver from './FormObserver';
 
-// not to mix FormComponents used in json with the rest ones exported by default
+// make list of components not to mix those used in json with the rest ones exported by default as FormComponents
 const COMPONENTS: { [key: string]: any } = {
   TextInput: FormComponents.TextInput,
   NumberInput: FormComponents.NumberInput,
@@ -42,7 +42,6 @@ const FormFromJson: FC<FormFromJsonProps> = ({
       onSubmit={(values, { setSubmitting, setTouched }) => {
         if (isLastStep()) {
           setTimeout(() => {
-            // alert(JSON.stringify(values, null, 2));
             alert('Form is successfully submitted');
             return new Promise((res) => {
               setTimeout(res, 2500);
@@ -56,7 +55,7 @@ const FormFromJson: FC<FormFromJsonProps> = ({
         }
       }}
     >
-      {({ values, touched, errors, isSubmitting, dirty, isValid }) => {
+      {({ touched, errors, isSubmitting }) => {
         return (
           <Form className='form' autoComplete='off'>
             <FormObserver handleFormValuesChange={handleFormValuesChange} />
