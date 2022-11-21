@@ -197,18 +197,24 @@ const fieldSchema = yup
       })
       .when('component', {
         is: 'Select',
-        then: yup.object().shape({
-          options: SelectOptionsSchema,
-        }),
+        then: yup
+          .object()
+          .shape({
+            required: yup.boolean(),
+            options: SelectOptionsSchema,
+          })
+          .noUnknown(),
       })
       .when('component', {
         is: 'MultipleInputs',
-        then: yup.object().shape({
-          addFieldBtnText: yup.string(),
-        }),
+        then: yup
+          .object()
+          .shape({
+            addFieldBtnText: yup.string(),
+          })
+          .noUnknown(),
       })
       .noUnknown(),
-    // options: optionsSchema,
     validationType: yup
       .string()
       .oneOf(['string', 'number', 'array', 'boolean']),
