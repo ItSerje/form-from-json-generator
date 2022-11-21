@@ -67,17 +67,17 @@ const UploadInputContainer: FC<UploadInputContainerProps> = (props) => {
 
   const onUpload = (file: File, url: string) => {
     setFiles((curr) =>
-      curr.map((fw) => {
-        if (fw.file === file) {
-          return { ...fw, url };
+      curr.map((fileWrapper) => {
+        if (fileWrapper.file === file) {
+          return { ...fileWrapper, url };
         }
-        return fw;
+        return fileWrapper;
       })
     );
   };
 
   const onDelete = (file: File) => {
-    setFiles((curr) => curr.filter((fw) => fw.file !== file));
+    setFiles((curr) => curr.filter((fileWrapper) => fileWrapper.file !== file));
   };
 
   const { getRootProps, getInputProps } = useDropzone({
