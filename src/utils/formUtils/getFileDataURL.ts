@@ -22,7 +22,6 @@ export const getFileDataURL = async (
         onProgress(Math.round(percentage));
       }
     };
-    console.log('файл', file);
     fileReader.readAsDataURL(file);
   }
 };
