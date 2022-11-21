@@ -1,7 +1,6 @@
 import { Grid, LinearProgress } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { FileHeader } from './FileHeader';
-import styles from '../form.module.scss';
 
 export interface SingleFileUploadWithProgressProps {
   file: File;
@@ -63,7 +62,7 @@ export const SingleFileUploadWithProgress = ({
   //   }, []);
 
   return (
-    <Grid className={styles['upload-progress']} item>
+    <Grid item>
       <FileHeader file={file} onDelete={onDelete} />
       <LinearProgress variant='determinate' value={progress} />
     </Grid>
