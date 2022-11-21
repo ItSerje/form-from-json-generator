@@ -3,10 +3,13 @@ import Button from '../Button';
 
 type ButtonGroupProps = {
   step: number;
-  submitBtnText?: string;
-  submittingBtnText?: string;
-  nextBtnText?: string;
-  backBtnText?: string;
+  btnText?: {
+    submit?: string;
+    submitting?: string;
+    next?: string;
+    back?: string;
+  };
+
   isSubmitting: boolean;
   isLastStep: boolean;
   onClick: () => void;
@@ -14,10 +17,7 @@ type ButtonGroupProps = {
 
 const ButtonGroup: FC<ButtonGroupProps> = ({
   step,
-  submitBtnText = 'Submit',
-  submittingBtnText = 'Submitting...',
-  nextBtnText = 'Next',
-  backBtnText = 'Back',
+  btnText,
   isSubmitting,
   isLastStep,
   onClick,
@@ -29,7 +29,7 @@ const ButtonGroup: FC<ButtonGroupProps> = ({
           type='button'
           disabled={isSubmitting}
           onClick={onClick}
-          value={backBtnText}
+          value={btnText?.back || 'Back'}
         />
       ) : null}
       <Button
@@ -37,10 +37,10 @@ const ButtonGroup: FC<ButtonGroupProps> = ({
         disabled={isSubmitting}
         value={
           isSubmitting
-            ? submittingBtnText
+            ? btnText?.submitting || 'Submitting'
             : isLastStep
-            ? submitBtnText
-            : nextBtnText
+            ? btnText?.submit || 'Submit'
+            : btnText?.next || 'Next'
         }
       />
     </div>
