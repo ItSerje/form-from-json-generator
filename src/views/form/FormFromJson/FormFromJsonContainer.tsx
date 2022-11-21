@@ -4,6 +4,7 @@ import FormFromJson from './FormFromJson';
 import { Data } from '../../../validations/formValidations/dynamicFormValidationsGenerator';
 import { getInitialValues } from '../../../utils/formUtils/getInitialValues';
 import CurrentFormValuesAndErrors from '../CurrentFormValuesAndErrors';
+import ValidationErrorMessages from '../ValidationErrorMessages';
 
 type FormFromJsonContainerProps = {
   parsedJson: any; // data will be validated anyway
@@ -54,16 +55,7 @@ const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
         </div>
       )}
       {jsonValidationError.error && (
-        <div className='container'>
-          <h1>Json Data Validation Error</h1>
-          <h4>
-            The form cannot be displayed due to errors in json data. Please
-            resolve the following errors:
-          </h4>
-          {jsonValidationError.messages.map((msg, index) => (
-            <p key={index}>{msg}</p>
-          ))}
-        </div>
+        <ValidationErrorMessages messages={jsonValidationError.messages} />
       )}
 
       {!jsonValidationError.error && data && data.formLabel && initialValues && (
