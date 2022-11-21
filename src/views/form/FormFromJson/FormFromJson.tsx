@@ -1,8 +1,8 @@
-import { FC, createElement, useState, Key } from 'react';
+import { FC, createElement, useState } from 'react';
 import { Formik, Form } from 'formik';
 import FormComponents from '../../../components/form';
 import generateFormValidations from '../../../utils/formUtils/generateFormValidations';
-import { TField, TData } from '../../../types/jsonTypes';
+import { TField, TFormData } from '../../../types/jsonTypes';
 import FormObserver from './FormObserver';
 
 // not to mix FormComponents used in json with the rest ones exported by default
@@ -17,26 +17,28 @@ const COMPONENTS: { [key: string]: any } = {
 };
 
 type FormFromJsonProps = {
-  data: TData;
+  formData: TFormData;
   initialValues: any;
   handleFormValuesChange: ({ values, errors }: any) => void;
 };
 
 const FormFromJson: FC<FormFromJsonProps> = ({
-  data,
+  formData,
   initialValues,
   handleFormValuesChange,
 }) => {
   const [step, setStep] = useState(0);
 
   const isLastStep = () => {
-    return step === data.steps?.length - 1;
+    return step === formData.steps?.length - 1;
   };
 
   return (
     <Formik
       initialValues={initialValues}
-      validationSchema={() => generateFormValidations(data.steps[step].fields)}
+      validationSchema={() =>
+        generateFormValidations(formData.steps[step].fields)
+      }
       onSubmit={(values, { setSubmitting, setTouched }) => {
         if (isLastStep()) {
           setTimeout(() => {
@@ -58,11 +60,13 @@ const FormFromJson: FC<FormFromJsonProps> = ({
         return (
           <Form className='form' autoComplete='off'>
             <FormObserver handleFormValuesChange={handleFormValuesChange} />
-            {data.formLabel && <h1 className='box-title'>{data.formLabel}</h1>}
-            {data.steps[step].stepLabel && (
-              <h2 className='box-title'>{data.steps[step].stepLabel}</h2>
+            {formData.formLabel && (
+              <h1 className='box-title'>{formData.formLabel}</h1>
             )}
-            {data.steps[step].fields?.map((field: TField, index) => {
+            {formData.steps[step].stepLabel && (
+              <h2 className='box-title'>{formData.steps[step].stepLabel}</h2>
+            )}
+            {formData.steps[step].fields?.map((field: TField, index) => {
               const {
                 validationType,
                 validations,
@@ -97,7 +101,7 @@ const FormFromJson: FC<FormFromJsonProps> = ({
             })}
             <FormComponents.ButtonGroup
               step={step}
-              btnText={data.btnText}
+              btnText={formData.btnText}
               isSubmitting={isSubmitting}
               isLastStep={isLastStep()}
               onClick={() => {

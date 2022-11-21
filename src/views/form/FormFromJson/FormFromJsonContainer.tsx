@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { validateParsedJson } from '../../../validations/formValidations/validateParsedJson';
 import FormFromJson from './FormFromJson';
-import { TData } from '../../../types/jsonTypes';
+import { TFormData } from '../../../types/jsonTypes';
 import { TValuesAndErrors } from '../../../types/formikTypes';
 import { getInitialValues } from '../../../utils/formUtils/getInitialValues';
 import CurrentFormValuesAndErrors from '../CurrentFormValuesAndErrors';
@@ -14,7 +14,7 @@ type FormFromJsonContainerProps = {
 const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
   parsedJson,
 }) => {
-  const [data, setData] = useState<TData | null>(null);
+  const [formData, setFormData] = useState<TFormData | null>(null);
   const [initialValues, setInitialValues] = useState({});
   const [jsonValidationError, setJsonValidationError] = useState({
     error: false,
@@ -33,9 +33,9 @@ const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
   useEffect(() => {
     validateParsedJson(
       parsedJson,
-      (validatedJson: TData) => {
+      (validatedJson: TFormData) => {
         setJsonValidationError({ error: false, messages: [] });
-        setData(validatedJson);
+        setFormData(validatedJson);
         setInitialValues(getInitialValues(validatedJson));
       },
       (error: { errors: [] }) => {
@@ -49,7 +49,7 @@ const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
 
   return (
     <>
-      {!data && !jsonValidationError.error && (
+      {!formData && !jsonValidationError.error && (
         <div className='container'>
           <h1>No data to display!</h1>
         </div>
@@ -57,11 +57,11 @@ const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
       {jsonValidationError.error && (
         <ValidationErrorMessages messages={jsonValidationError.messages} />
       )}
-      {!jsonValidationError.error && data && initialValues && (
+      {!jsonValidationError.error && formData && initialValues && (
         <div className='container-column neuromorphic'>
           <div className='box'>
             <FormFromJson
-              data={data}
+              formData={formData}
               initialValues={initialValues}
               handleFormValuesChange={handleFormValuesChange}
             />

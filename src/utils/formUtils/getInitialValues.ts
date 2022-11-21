@@ -1,6 +1,6 @@
-import { TData } from '../../types/jsonTypes';
+import { TFormData } from '../../types/jsonTypes';
 
-export const getInitialValues = (data: TData) => {
+export const getInitialValues = (data: TFormData) => {
   const initialValues: {
     [key: string]: any;
   } = {};
