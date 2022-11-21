@@ -2,6 +2,8 @@
   "formLabel": "Анкета",
   "submitBtnText": "Submit",
   "submittingBtnText": "Submitting",
+  "nextBtnText": "Вперед",
+  "backBtnText": "Назад",
   "steps": [
     {
       "stepLabel": "Step 1",

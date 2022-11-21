@@ -224,6 +224,8 @@ export const formJsonValidationSchema = yup
     formLabel: yup.string(),
     submitBtnText: yup.string(),
     submittingBtnText: yup.string(),
+    nextBtnText: yup.string(),
+    backBtnText: yup.string(),
     steps: yup
       .array(
         yup.object().shape({

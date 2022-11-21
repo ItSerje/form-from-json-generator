@@ -107,6 +107,8 @@ const FormFromJson: FC<FormFromJsonProps> = ({
               step={step}
               submitBtnText={data.submitBtnText}
               submittingBtnText={data.submittingBtnText}
+              nextBtnText={data.nextBtnText}
+              backBtnText={data.backBtnText}
               isSubmitting={isSubmitting}
               isLastStep={isLastStep()}
               onClick={() => {
