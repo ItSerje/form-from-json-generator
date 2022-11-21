@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { validateParsedJson } from '../../../validations/formValidations/validateJson';
+import { validateParsedJson } from '../../../validations/formValidations/validateParsedJson';
 import FormFromJson from './FormFromJson';
 import { TData } from '../../../types/jsonTypes';
 import { TValuesAndErrors } from '../../../types/formikTypes';

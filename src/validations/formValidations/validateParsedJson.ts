@@ -1,6 +1,6 @@
 import { jsonSchema, duplicateNameSchema } from '../../model/jsonSchema';
 
-export const validateParsedJson = async (
+const validateParsedJson = async (
   parsedJson: any,
   onSuccess: { (validatedJson: any): void },
   onCatch: { (error: { errors: [] }): void }
@@ -31,3 +31,5 @@ export const validateParsedJson = async (
     onCatch(error as { errors: [] });
   }
 };
+
+export { validateParsedJson };
