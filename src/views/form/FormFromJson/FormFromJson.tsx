@@ -6,7 +6,7 @@ import {
   Data,
 } from '../../../validations/formValidations/dynamicFormValidationsGenerator';
 import { fieldSchema } from '../../../validations/formValidations/formJsonValidationSchema';
-import FormObserver from '../FormObserver';
+import FormObserver from './FormObserver';
 import * as yup from 'yup';
 
 // not to mix FormComponents used in json with the rest ones
