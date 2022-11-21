@@ -19,12 +19,6 @@ export interface DroppedFile {
   url?: string;
 }
 
-export interface UploadableFile {
-  id: number;
-  file: File;
-  url: string;
-}
-
 type MultipleFilesUploadFieldProps = JSX.IntrinsicElements['input'] & {
   name: string;
   acceptedFormats?: {
@@ -47,16 +41,12 @@ const MultipleFilesUploadField: FC<MultipleFilesUploadFieldProps> = (props) => {
     dropzoneText,
     acceptedFormats,
   } = props;
-  const [field, meta, helpers] = useField(name);
-
+  const [field, _, helpers] = useField(name);
   const [files, setFiles] = useState<DroppedFile[]>(
     field.value.length ? field.value : []
   );
-  console.log('field', field, 'files', files);
 
   const onDrop = useCallback((accFiles: File[], rejFiles: FileRejection[]) => {
-    console.log('filess', accFiles, rejFiles);
-
     const mappedAcc = accFiles.map((file) => ({
       file,
       errors: [],
@@ -78,12 +68,7 @@ const MultipleFilesUploadField: FC<MultipleFilesUploadFieldProps> = (props) => {
       files.filter((file) => !file.errors.length),
       true
     );
-    // helpers.setTouched(true);
   }, [files]);
-
-  //   useEffect(() => {
-  //     onUpload(files[0].file, fileDataURL as string);
-  //   }, [fileDataURL]);
 
   function onUpload(file: File, url: string) {
     setFiles((curr) =>
@@ -102,7 +87,6 @@ const MultipleFilesUploadField: FC<MultipleFilesUploadFieldProps> = (props) => {
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
-    // multiple: multiple,
     ...(acceptedFormats && { accept: acceptedFormats }), // eg. accept: { 'image/*': [], 'video/*': [], 'text/*': ['.pdf'] },
     ...(maximumFileSize && { maxSize: maximumFileSize * 1024 * 1024 }), // maximumFileSize MB
   });

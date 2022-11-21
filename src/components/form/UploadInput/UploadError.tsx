@@ -4,7 +4,7 @@ import LinearProgress, {
 } from '@mui/material/LinearProgress';
 import { FileHeader } from './FileHeader';
 import { FileError } from 'react-dropzone';
-import { Grid, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 
 export interface UploadErrorProps {
   file: File;

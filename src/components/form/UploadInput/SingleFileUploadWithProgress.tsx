@@ -19,47 +19,14 @@ export const SingleFileUploadWithProgress = ({
   useEffect(() => {
     async function upload() {
       let url;
-      //   if (preview) {
       await getFileDataURL(file, setFileDataURL, setProgress);
       url = fileDataURL;
-      //   } else {
-      //     url = await uploadFile(file, setProgress);
-      //   }
+
       onUpload(file, url as string);
     }
 
     upload();
   }, [fileDataURL]);
-
-  //   useEffect(() => {
-  //     if (preview) {
-  //       if (!file) {
-  //         setFileDataURL('');
-  //         return;
-  //       }
-  //       let fileReader: FileReader,
-  //         isCancel = false;
-  //       if (file) {
-  //         fileReader = new FileReader();
-  //         fileReader.onload = (e) => {
-  //           if (e.target?.result) {
-  //             const { result } = e.target;
-  //             if (!isCancel) {
-  //               setFileDataURL(result);
-  //             }
-  //           }
-  //         };
-  //         console.log('файл', file);
-  //         fileReader.readAsDataURL(file);
-  //       }
-  //       return () => {
-  //         isCancel = true;
-  //         if (fileReader && fileReader.readyState === 1) {
-  //           fileReader.abort();
-  //         }
-  //       };
-  //     }
-  //   }, []);
 
   return (
     <Grid item>
@@ -123,10 +90,4 @@ async function getFileDataURL(
     console.log('файл', file);
     fileReader.readAsDataURL(file);
   }
-  //   return () => {
-  //     isCancel = true;
-  //     if (fileReader && fileReader.readyState === 1) {
-  //       fileReader.abort();
-  //     }
-  //   };
 }
