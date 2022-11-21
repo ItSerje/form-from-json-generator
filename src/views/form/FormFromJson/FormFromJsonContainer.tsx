@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import { validateParsedJson } from '../../../validations/formValidations/validateJson';
 import FormFromJson from './FormFromJson';
 import { TData } from '../../../types/jsonTypes';
+import { TValuesAndErrors } from '../../../types/formikTypes';
 import { getInitialValues } from '../../../utils/formUtils/getInitialValues';
 import CurrentFormValuesAndErrors from '../CurrentFormValuesAndErrors';
 import ValidationErrorMessages from '../ValidationErrorMessages';
@@ -19,13 +20,13 @@ const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
     error: false,
     messages: [],
   });
+  const [currentValuesAndErrors, setCurrentValuesAndErrors] =
+    useState<TValuesAndErrors>({
+      values: {},
+      errors: {},
+    });
 
-  const [currentValuesAndErrors, setCurrentValuesAndErrors] = useState({
-    values: {},
-    errors: {},
-  });
-
-  const handleFormValuesChange = ({ values, errors }: any) => {
+  const handleFormValuesChange = ({ values, errors }: TValuesAndErrors) => {
     setCurrentValuesAndErrors({ values, errors });
   };
 

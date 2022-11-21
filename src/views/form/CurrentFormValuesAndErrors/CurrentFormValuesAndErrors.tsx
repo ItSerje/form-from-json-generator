@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { cutStringFromStart } from '../../../utils/generalUtils/cutStringFromStart';
 
 type CurrentFormValuesAndErrorsProps = {
@@ -10,12 +10,7 @@ const CurrentFormValuesAndErrors: FC<CurrentFormValuesAndErrorsProps> = ({
   values,
   errors,
 }) => {
-  //   const [valuesCopy, setValuesCopy] = useState(values);
-  //   const [errorsCopy, setErorrsCopy] = useState(errors);
   const maxLength = 100;
-
-  const valuesCopy = { ...values };
-  const errorsCopy = { ...errors };
 
   return (
     <div className='current'>

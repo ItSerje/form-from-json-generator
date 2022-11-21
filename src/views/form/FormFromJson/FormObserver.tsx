@@ -1,12 +1,14 @@
-import { Dispatch, FC, SetStateAction, useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { useFormikContext } from 'formik';
+import { TValuesAndErrors } from '../../../types/formikTypes';
 
 type FormObserverProps = {
-  handleFormValuesChange: ({ values, errors }: any) => void;
+  handleFormValuesChange: ({ values, errors }: TValuesAndErrors) => void;
 };
 
 const FormObserver: FC<FormObserverProps> = ({ handleFormValuesChange }) => {
-  const { values, errors } = useFormikContext();
+  const { values, errors }: TValuesAndErrors = useFormikContext();
+
   useEffect(() => {
     handleFormValuesChange({ values, errors });
   }, [values, errors]);
