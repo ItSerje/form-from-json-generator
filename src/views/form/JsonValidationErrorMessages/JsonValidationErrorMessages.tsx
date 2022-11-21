@@ -14,9 +14,11 @@ const JsonValidationErrorMessages: FC<JsonValidationErrorMessagesProps> = ({
         The form cannot be displayed due to errors in json data. Please resolve
         the following errors:
       </h4>
-      {messages.map((msg, index) => (
-        <p key={index}>{msg}</p>
-      ))}
+      <ul>
+        {messages.map((msg, index) => (
+          <li key={index}>{msg}</li>
+        ))}
+      </ul>
     </div>
   );
 };
