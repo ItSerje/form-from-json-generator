@@ -53,6 +53,7 @@ const UploadInputContainer: FC<UploadInputContainerProps> = (props) => {
       id: getNewId(),
     }));
     const mappedRej = rejFiles.map((r) => ({ ...r, id: getNewId() }));
+
     setFiles((curr) => {
       curr = [...curr, ...mappedAcc, ...mappedRej];
       if (!multiple) {
@@ -60,17 +61,11 @@ const UploadInputContainer: FC<UploadInputContainerProps> = (props) => {
       }
       return curr;
     });
+
     helpers.setTouched(true);
   }, []);
 
-  useEffect(() => {
-    helpers.setValue(
-      files.filter((file) => !file.errors.length),
-      true
-    );
-  }, [files]);
-
-  function onUpload(file: File, url: string) {
+  const onUpload = (file: File, url: string) => {
     setFiles((curr) =>
       curr.map((fw) => {
         if (fw.file === file) {
@@ -79,17 +74,24 @@ const UploadInputContainer: FC<UploadInputContainerProps> = (props) => {
         return fw;
       })
     );
-  }
+  };
 
-  function onDelete(file: File) {
+  const onDelete = (file: File) => {
     setFiles((curr) => curr.filter((fw) => fw.file !== file));
-  }
+  };
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     ...(acceptedFormats && { accept: acceptedFormats }), // eg. accept: { 'image/*': [], 'video/*': [], 'text/*': ['.pdf'] },
     ...(maximumFileSize && { maxSize: maximumFileSize * 1024 * 1024 }), // maximumFileSize MB
   });
+
+  useEffect(() => {
+    helpers.setValue(
+      files.filter((file) => !file.errors.length),
+      true
+    );
+  }, [files]);
 
   return (
     <React.Fragment>
