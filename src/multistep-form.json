@@ -68,6 +68,7 @@
           "label": "Семейное положение",
           "name": "marriageStatus",
           "componentSpecific": {
+            "required": true,
             "options": [
               { "value": "", "label": "Выберите значение" },
               { "value": "single", "label": "Не женат/не замужем" },

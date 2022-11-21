@@ -1,22 +1,11 @@
 import { useField } from 'formik';
-import styles from '../form.module.scss';
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { FaChevronDown } from 'react-icons/fa';
 import { FC, useRef, useState } from 'react';
 import useOutsideClick from '../../../hooks/useOutsideClick';
 
-// export type SelectProps = JSX.IntrinsicElements['select'] & {
-//   label: string;
-//   name: string;
-//   placeholder?: string;
-//   options?: {
-//     value: string;
-//     label: string;
-//   }[];
-// };
-
 type SelectProps = {
   name: string;
-  required?: boolean;
+  required: boolean;
   options?: {
     value: string;
     label: string;
@@ -24,8 +13,8 @@ type SelectProps = {
 };
 
 const Select: FC<SelectProps> = (props) => {
-  const [field, meta, helpers] = useField(props);
-  const { options, required, ...rest } = props;
+  const [_, __, helpers] = useField(props);
+  const { options, required } = props;
   const [showOptions, setShowOptions] = useState(false);
   const [currentLabel, setCurrentLabel] = useState(
     options && options[0].label ? options[0].label : ''
@@ -55,14 +44,13 @@ const Select: FC<SelectProps> = (props) => {
       onClick={toggleShowOptions}
     >
       <div className='dropdown__value'>{currentLabel}</div>
-      {/* <select {...field} {...rest} hidden></select> */}
       <span>
         <FaChevronDown />
       </span>
       <div className='dropdown__options-container'>
         <ul className='dropdown__options'>
           {options.map((option, index) => {
-            if (option.value) {
+            if (option.value || (option.value === '' && !required)) {
               return (
                 <li
                   key={index}
@@ -80,23 +68,6 @@ const Select: FC<SelectProps> = (props) => {
       </div>
     </div>
   );
-
-  //   return (
-  //     <select {...field} {...rest}>
-  //       {options.map((option, index) => {
-  //         return (
-  //           <option
-  //             value={option.value}
-  //             key={index}
-  //             disabled={!option.value && required}
-  //             hidden={!option.value && required}
-  //           >
-  //             {option.label}
-  //           </option>
-  //         );
-  //       })}
-  //     </select>
-  //   );
 };
 
 export default Select;
