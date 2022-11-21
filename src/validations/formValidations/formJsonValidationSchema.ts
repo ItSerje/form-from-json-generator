@@ -147,7 +147,7 @@ export const fieldSchema = yup
         'Checkbox',
         'CheckboxGroup',
         'MultipleInputs',
-        'MultipleFilesUploadField',
+        'UploadInput',
       ]),
     name: yup.string().required(),
     label: yup.string(),
@@ -158,7 +158,7 @@ export const fieldSchema = yup
     componentSpecific: yup
       .object()
       .when('component', {
-        is: 'MultipleFilesUploadField',
+        is: 'UploadInput',
         then: yup
           .object()
           .shape({

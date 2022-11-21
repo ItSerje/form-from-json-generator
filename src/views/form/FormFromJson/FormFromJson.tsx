@@ -16,7 +16,7 @@ const COMPONENTS: { [key: string]: any } = {
   Select: FormComponents.Select,
   MultipleInputs: FormComponents.MultipleInputs,
   CheckboxGroup: FormComponents.CheckboxGroup,
-  MultipleFilesUploadField: FormComponents.UploadInput,
+  UploadInput: FormComponents.UploadInput,
   Checkbox: FormComponents.Checkbox,
 };
 
