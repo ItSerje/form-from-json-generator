@@ -49,7 +49,7 @@ const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
 
   return (
     <>
-      {!data && !jsonValidationError && (
+      {!data && !jsonValidationError.error && (
         <div className='container'>
           <h1>No data to display!</h1>
         </div>
