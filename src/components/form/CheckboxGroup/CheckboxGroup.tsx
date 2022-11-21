@@ -1,4 +1,4 @@
-import { FieldMetaProps, FormikValues, useField } from 'formik';
+import { useField } from 'formik';
 import { FC, useEffect, useRef, useState } from 'react';
 import { FaCheck } from 'react-icons/fa';
 import Checkbox from '../Checkbox';
@@ -11,9 +11,8 @@ type CheckboxGroupProps = {
 
 const CheckboxGroup: FC<CheckboxGroupProps> = (props) => {
   const { name, options, selectAll } = props;
-  const [field, meta, helpers] = useField({ name });
+  const [field, _, helpers] = useField({ name });
   const [selectAllChecked, setSelectAllChecked] = useState(false);
-  const [allSelected, setAllSelected] = useState(false);
 
   const selectAllCheckbox = useRef<HTMLInputElement>(null);
 
@@ -31,9 +30,6 @@ const CheckboxGroup: FC<CheckboxGroupProps> = (props) => {
   };
 
   useEffect(() => {
-    // console.log('type', typeof field.value, field.value);
-    // console.log('all', allValues);
-
     if (
       typeof field.value !== 'string' &&
       field.value.sort().join('') === allValues?.sort().join('')
@@ -67,23 +63,12 @@ const CheckboxGroup: FC<CheckboxGroupProps> = (props) => {
               ref={selectAllCheckbox}
               onChange={handleSelectAll}
             />
-
             <span>
               <FaCheck />
             </span>
           </div>
           Выделить все
         </label>
-
-        // <div className='single-checkbox__wrapper'>
-        //   <input
-        //     type='checkbox'
-        //     ref={selectAllCheckbox}
-        //     onChange={handleSelectAll}
-        //     className='single-checkbox__input'
-        //   />
-        //   <label className='single-checkbox__label'>Выделить все</label>
-        // </div>
       )}
     </div>
   );
