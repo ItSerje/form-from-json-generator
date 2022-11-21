@@ -3,7 +3,6 @@ export const cutStringFromStart = (
   maxLength: number
 ) => {
   for (let key in obj) {
-    console.log(typeof obj[key]);
     if (typeof obj[key] === 'string') {
       if (obj[key].length && obj[key].length > 100) {
         obj[key] = obj[key].slice(0, 100) + '...';
