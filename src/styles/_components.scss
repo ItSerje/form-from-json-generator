@@ -465,6 +465,12 @@
     &--inline {
       padding: 0.8rem 1.2rem;
     }
+
+    //////////////////////
+    // STATE CLASSOPTIONS
+    &.pressed {
+      box-shadow: var(--shadow-neuromorphic-action);
+    }
   }
 
   //////////////////////
@@ -633,6 +639,7 @@
   p {
     line-height: 1.4;
   }
+
   .neuromorphic {
     margin-top: 2.4rem;
   }

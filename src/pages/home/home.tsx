@@ -1,19 +1,28 @@
 import { FC, useState } from 'react';
 import FormFromJsonContainer from '../../views/form/FormFromJson';
-import FilePickerAsButton from './components/FilePickerAsButton';
+import { FilePickerAsButton, LoadPresetButtons } from './components';
 import '../../styles/main.scss';
-import multistepFormJson from '../../multistep-form.json';
+import multiStepFormJson from '../../jsonSamples/multi-step-form.json';
 
 const Home: FC = () => {
-  const [parsedJson, setParsedJson] = useState<any>(multistepFormJson);
+  const [parsedJson, setParsedJson] = useState<any>(multiStepFormJson);
+  const [allBtnsUnpressed, setAllBtnsUnpressed] = useState(false);
 
   return (
     <>
-      <div className='container introduction'>
+      <div className='container introduction neuromorphic'>
         <h1>Form-From-Json Generator</h1>
         <FilePickerAsButton
           onFilePick={(parsedJson) => {
             setParsedJson(parsedJson);
+            setAllBtnsUnpressed(true);
+          }}
+        />
+        <LoadPresetButtons
+          allBtnsUnpressed={allBtnsUnpressed}
+          onClick={(parsedJson) => {
+            setParsedJson(parsedJson);
+            setAllBtnsUnpressed(false);
           }}
         />
       </div>
