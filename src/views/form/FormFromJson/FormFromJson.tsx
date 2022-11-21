@@ -103,32 +103,16 @@ const FormFromJson: FC<FormFromJsonProps> = ({
                 );
               }
             )}
-            <div className='form__field-wrapper btn-group'>
-              {step > 0 ? (
-                <button
-                  className='btn btn--rounded btn--floating'
-                  type='button'
-                  disabled={isSubmitting}
-                  onClick={() => {
-                    setStep((s) => s - 1);
-                  }}
-                >
-                  Back
-                </button>
-              ) : null}
-              <button
-                className='btn btn--rounded btn--floating'
-                type='submit'
-                //   disabled={!dirty || !isValid || isSubmitting}
-                disabled={isSubmitting}
-              >
-                {isSubmitting
-                  ? data.submittingBtnText || 'Submitting...'
-                  : isLastStep()
-                  ? data.submitBtnText || 'Submit'
-                  : 'Next'}
-              </button>
-            </div>
+            <FormComponents.ButtonGroup
+              step={step}
+              submitBtnText={data.submitBtnText}
+              submittingBtnText={data.submittingBtnText}
+              isSubmitting={isSubmitting}
+              isLastStep={isLastStep()}
+              onClick={() => {
+                setStep((s) => s - 1);
+              }}
+            />
           </Form>
         );
       }}
