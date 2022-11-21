@@ -7,7 +7,7 @@ import CurrentFormValuesAndErrors from '../CurrentFormValuesAndErrors';
 import ValidationErrorMessages from '../ValidationErrorMessages';
 
 type FormFromJsonContainerProps = {
-  parsedJson: any; // data will be validated anyway
+  parsedJson: any; // data will be validated by yup
 };
 
 const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
@@ -27,7 +27,6 @@ const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
 
   const handleFormValuesChange = ({ values, errors }: any) => {
     setCurrentValuesAndErrors({ values, errors });
-    // console.log(values, errors);
   };
 
   useEffect(() => {
