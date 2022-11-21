@@ -5,7 +5,6 @@ function createYupSchema(schema: any, config: any) {
   const { name, validationType, validations = [] } = config;
   const options = config.componentSpecific?.options || [];
 
-  //   console.log('opts', options);
   if (!(yup as any)[validationType]) {
     return schema;
   }
@@ -15,6 +14,7 @@ function createYupSchema(schema: any, config: any) {
     validations.forEach((validation: any) => {
       const { params, type } = validation;
 
+      // nested validations are supported
       if (!validator[type]) {
         if (type === 'innerType') {
           validator.innerType = loopValidations(
@@ -25,6 +25,7 @@ function createYupSchema(schema: any, config: any) {
         return;
       }
 
+      // handle validation of options defined outside validations
       if (
         type === 'oneOf' &&
         options.length > 0 &&
@@ -42,7 +43,7 @@ function createYupSchema(schema: any, config: any) {
       }
     });
 
-    // add typeError for catching data type errors
+    // typeError for catching data type errors
     validator = validator['typeError'](`Value must be a ${validationType}`);
 
     return validator;
@@ -50,7 +51,6 @@ function createYupSchema(schema: any, config: any) {
 
   schema[name] = loopValidations(validationType, validations);
 
-  //   console.log('schema', schema);
   return schema;
 }
 
