@@ -6,6 +6,8 @@ declare module 'yup' {
   }
 }
 
+// the order of schemas below is reversed because schemas refer to one another
+
 const fileTypeKeyValueSchema = {
   'image/*': yup.array(
     yup.string().oneOf(['.bmp', '.gif', '.jpeg', '.jpg', '.png', '.webp'])
