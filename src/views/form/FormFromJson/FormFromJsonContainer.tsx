@@ -58,7 +58,7 @@ const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
         <ValidationErrorMessages messages={jsonValidationError.messages} />
       )}
 
-      {!jsonValidationError.error && data && data.formLabel && initialValues && (
+      {!jsonValidationError.error && data && initialValues && (
         <div className='container-column neuromorphic'>
           <div className='box'>
             <FormFromJson

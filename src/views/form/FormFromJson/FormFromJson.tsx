@@ -64,7 +64,7 @@ const FormFromJson: FC<FormFromJsonProps> = ({
         return (
           <Form className='form' autoComplete='off'>
             <FormObserver handleFormValuesChange={handleFormValuesChange} />
-            <h1 className='box-title'>{data.formLabel}</h1>
+            {data.formLabel && <h1 className='box-title'>{data.formLabel}</h1>}
             {data.steps[step].stepLabel && (
               <h2 className='box-title'>{data.steps[step].stepLabel}</h2>
             )}
