@@ -222,10 +222,16 @@ export const stepFieldsSchema = yup
 export const formJsonValidationSchema = yup
   .object({
     formLabel: yup.string(),
-    submitBtnText: yup.string(),
-    submittingBtnText: yup.string(),
-    nextBtnText: yup.string(),
-    backBtnText: yup.string(),
+    btnText: yup
+      .object()
+      .shape({
+        submit: yup.string(),
+        submitting: yup.string(),
+        next: yup.string(),
+        back: yup.string(),
+      })
+      .noUnknown(),
+
     steps: yup
       .array(
         yup.object().shape({
