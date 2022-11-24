@@ -31,10 +31,13 @@ const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
   };
 
   useEffect(() => {
+    console.log(parsedJson);
+    setFormData(null);
+    setInitialValues({});
+    setJsonValidationError({ error: false, messages: [] });
     validateParsedJson(
       parsedJson,
       (validatedJson: TFormData) => {
-        setJsonValidationError({ error: false, messages: [] });
         setFormData(validatedJson);
         setInitialValues(getInitialValues(validatedJson));
       },

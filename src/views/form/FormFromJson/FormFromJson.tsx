@@ -28,6 +28,7 @@ const FormFromJson: FC<FormFromJsonProps> = ({
   getFormValuesAndErrors,
 }) => {
   const [step, setStep] = useState(0);
+  const [shouldValidate, setShouldValidate] = useState(false);
 
   const isLastStep = () => {
     return step === formData.steps?.length - 1;
@@ -36,8 +37,9 @@ const FormFromJson: FC<FormFromJsonProps> = ({
   return (
     <Formik
       initialValues={initialValues}
-      validationSchema={() =>
-        generateFormValidations(formData.steps[step].fields)
+      validationSchema={
+        shouldValidate &&
+        (() => generateFormValidations(formData.steps[step].fields))
       }
       onSubmit={(values, { setSubmitting, setTouched }) => {
         if (isLastStep()) {
@@ -56,13 +58,14 @@ const FormFromJson: FC<FormFromJsonProps> = ({
       }}
     >
       {({ touched, errors, isSubmitting }) => {
+        console.log(step, formData.formLabel);
         return (
           <Form className='form' autoComplete='off'>
             <FormObserver getFormValuesAndErrors={getFormValuesAndErrors} />
             {formData.formLabel && (
               <h1 className='box-title'>{formData.formLabel}</h1>
             )}
-            {formData.steps[step].stepLabel && (
+            {formData.steps[step]?.stepLabel && (
               <h2 className='box-title'>{formData.steps[step].stepLabel}</h2>
             )}
             {formData.steps[step].fields?.map((field: TField, index) => {

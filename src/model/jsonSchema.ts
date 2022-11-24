@@ -230,6 +230,7 @@ const stepFieldsSchema = yup
 
 const jsonSchema = yup
   .object({
+    id: yup.string().required(),
     formLabel: yup.string(),
     btnText: yup
       .object()

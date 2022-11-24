@@ -3,10 +3,23 @@ import FormFromJsonContainer from '../../views/form/FormFromJson';
 import { FilePickerAsButton, LoadPresetButtons } from './components';
 import '../../styles/main.scss';
 import multiStepFormJson from '../../jsonSamples/multi-step-form.json';
+import { injectRandomId } from '../../utils/generalUtils/injectRandomId';
+
+const initialJson = injectRandomId(multiStepFormJson);
 
 const Home: FC = () => {
-  const [parsedJson, setParsedJson] = useState<any>(multiStepFormJson);
+  const [parsedJson, setParsedJson] = useState<any>(initialJson);
   const [allBtnsUnpressed, setAllBtnsUnpressed] = useState(false);
+
+  function filePickHandler(parsedJson: any) {
+    injectRandomId(parsedJson);
+    // console.log('got it');
+    // console.log(parsedJson);
+
+    setParsedJson((p: object) => {
+      p = parsedJson;
+    });
+  }
 
   return (
     <>
@@ -14,19 +27,21 @@ const Home: FC = () => {
         <h1>Form-From-Json Generator</h1>
         <FilePickerAsButton
           onFilePick={(parsedJson) => {
-            setParsedJson(parsedJson);
+            filePickHandler(parsedJson);
             setAllBtnsUnpressed(true);
           }}
         />
         <LoadPresetButtons
           allBtnsUnpressed={allBtnsUnpressed}
           onClick={(parsedJson) => {
-            setParsedJson(parsedJson);
+            filePickHandler(parsedJson);
             setAllBtnsUnpressed(false);
           }}
         />
       </div>
-      {parsedJson && <FormFromJsonContainer parsedJson={parsedJson} />}
+      {parsedJson && (
+        <FormFromJsonContainer parsedJson={parsedJson} key={parsedJson.id} />
+      )}
     </>
   );
 };
