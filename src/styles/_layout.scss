@@ -35,18 +35,22 @@
   align-items: flex-start;
   justify-content: center;
   width: 100%;
-  margin: 5rem 0;
+  margin: 1rem 0;
   padding: 5rem 3rem;
   overflow: hidden;
 
   //   flex-wrap: wrap;
 
   @media only screen and (max-width: $bp-large) {
-    margin: 2rem 0;
+    margin: 1rem 0;
     padding: 3rem 2rem;
   }
 
   @media only screen and (max-width: $bp-small) {
     margin: 0 0 1.5rem 0;
+  }
+
+  &:last-of-type{
+    flex: 0 0 40%;
   }
 }

@@ -1,4 +1,4 @@
-import { FC, createElement, useState } from 'react';
+import { FC, createElement } from 'react';
 import { Formik, Form } from 'formik';
 import FormComponents from '../../../components/form';
 import generateFormValidations from '../../../utils/formUtils/generateFormValidations';
@@ -27,48 +27,28 @@ const FormFromJson: FC<FormFromJsonProps> = ({
   initialValues,
   getFormValuesAndErrors,
 }) => {
-  const [step, setStep] = useState(0);
-  const [shouldValidate, setShouldValidate] = useState(false);
-
-  const isLastStep = () => {
-    return step === formData.steps?.length - 1;
-  };
-
   return (
     <Formik
       initialValues={initialValues}
-      validationSchema={
-        shouldValidate &&
-        (() => generateFormValidations(formData.steps[step].fields))
-      }
-      onSubmit={(values, { setSubmitting, setTouched }) => {
-        if (isLastStep()) {
-          setTimeout(() => {
-            alert('Form is successfully submitted');
-            return new Promise((res) => {
-              setTimeout(res, 2500);
-              setSubmitting(false);
-            });
-          }, 400);
-        } else {
-          setStep((s) => s + 1);
-          setSubmitting(false);
-          setTouched({});
-        }
+      validationSchema={() => generateFormValidations(formData)}
+      onSubmit={(_, { setSubmitting }) => {
+        setTimeout(() => {
+          alert('Form is successfully submitted');
+          return new Promise((res) => {
+            setTimeout(res, 2500);
+            setSubmitting(false);
+          });
+        }, 400);
       }}
     >
       {({ touched, errors, isSubmitting }) => {
-        console.log(step, formData.formLabel);
         return (
           <Form className='form' autoComplete='off'>
             <FormObserver getFormValuesAndErrors={getFormValuesAndErrors} />
             {formData.formLabel && (
               <h1 className='box-title'>{formData.formLabel}</h1>
             )}
-            {formData.steps[step]?.stepLabel && (
-              <h2 className='box-title'>{formData.steps[step].stepLabel}</h2>
-            )}
-            {formData.steps[step].fields?.map((field: TField, index) => {
+            {formData.fields?.map((field: TField, index) => {
               const {
                 validationType,
                 validations,
@@ -101,15 +81,13 @@ const FormFromJson: FC<FormFromJsonProps> = ({
                 </div>
               );
             })}
-            <FormComponents.ButtonGroup
-              step={step}
-              btnText={formData.btnText}
-              isSubmitting={isSubmitting}
-              isLastStep={isLastStep()}
-              onClick={() => {
-                setStep((s) => s - 1);
-              }}
-            />
+            <div className='form__field-wrapper btn-group'>
+              <FormComponents.Button
+                type='submit'
+                disabled={isSubmitting}
+                value='Submit'
+              />
+            </div>
           </Form>
         );
       }}

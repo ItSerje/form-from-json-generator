@@ -452,24 +452,21 @@
     }
 
     &--upload {
-      padding: 0.5rem 1rem 0.1rem 1rem;
-      background: transparent;
+    //   padding: 0.5rem 1rem 0.1rem 1rem;
+    //   background: transparent;
 
-      transition: color 0.2s ease-in-out;
+    //   transition: color 0.2s ease-in-out;
 
-      &:hover {
-        color: var(--color-red-1);
-      }
+    //   &:hover {
+    //     color: var(--color-red-1);
+    //   }
+
+    padding: 3rem;
+
     }
 
     &--inline {
       padding: 0.8rem 1.2rem;
-    }
-
-    //////////////////////
-    // STATE CLASSOPTIONS
-    &.pressed {
-      box-shadow: var(--shadow-neuromorphic-action);
     }
   }
 
@@ -632,9 +629,13 @@
 
 .introduction {
   margin-top: 2.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   h1 {
     text-align: center;
-    margin-bottom: 2.4rem;
+    // margin-bottom: 2.4rem;
   }
   p {
     line-height: 1.4;

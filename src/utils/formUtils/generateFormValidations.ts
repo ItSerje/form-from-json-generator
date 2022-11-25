@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import { TStepData } from '../../types/jsonTypes';
+import { TFormData } from '../../types/jsonTypes';
 
 function createYupSchema(schema: any, config: any) {
   const { name, validationType, validations = [] } = config;
@@ -54,10 +54,10 @@ function createYupSchema(schema: any, config: any) {
   return schema;
 }
 
-const yupSchema = (stepData: TStepData) =>
-  stepData?.reduce(createYupSchema, {});
+const yupSchema = (formData: TFormData) =>
+formData.fields?.reduce(createYupSchema, {});
 
-const generateFormValidations = (stepData: TStepData) =>
-  yup.object().shape(yupSchema(stepData));
+const generateFormValidations = (formData: TFormData) =>
+  yup.object().shape(yupSchema(formData));
 
 export default generateFormValidations;
