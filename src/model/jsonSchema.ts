@@ -222,43 +222,16 @@ const fieldSchema = yup
   })
   .noUnknown();
 
-const stepFieldsSchema = yup
-  .array(fieldSchema)
-  .required()
-  .min(1, 'Minimum one field in each step is required')
-  .unique((s) => s.name, '${path}: Value of property "name" is duplicated');
-
 const jsonSchema = yup
   .object({
-    id: yup.string().required(),
+    id: yup.string(),
     formLabel: yup.string(),
-    btnText: yup
-      .object()
-      .shape({
-        submit: yup.string(),
-        submitting: yup.string(),
-        next: yup.string(),
-        back: yup.string(),
-      })
-      .noUnknown(),
-
-    steps: yup
-      .array(
-        yup.object().shape({
-          stepLabel: yup.string(),
-          fields: stepFieldsSchema,
-        })
-      )
+    btnText: yup.string(),
+    fields: yup
+      .array(fieldSchema)
       .required()
-      .min(
-        1,
-        'Minimum one step with some fields is required for the form to be generated'
-      ),
+      .unique((s) => s.name, '${path}: Value of property "name" is duplicated'),
   })
   .noUnknown();
 
-const duplicateNameSchema = yup
-  .array()
-  .unique((s) => s.name, 'Value of field property "name" is duplicated');
-
-export { jsonSchema, stepFieldsSchema, fieldSchema, duplicateNameSchema };
+export { jsonSchema, fieldSchema };

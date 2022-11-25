@@ -31,7 +31,6 @@ const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
   };
 
   useEffect(() => {
-    console.log(parsedJson);
     setFormData(null);
     setInitialValues({});
     setJsonValidationError({ error: false, messages: [] });

@@ -5,6 +5,7 @@ type ButtonProps = {
   disabled?: boolean;
   onClick?: () => void;
   value: string;
+  className?: string;
 };
 
 const Button: FC<ButtonProps> = ({
@@ -12,10 +13,11 @@ const Button: FC<ButtonProps> = ({
   disabled = false,
   onClick,
   value,
+  className
 }) => {
   return (
     <button
-      className='btn btn--rounded btn--floating'
+      className={'btn btn--rounded btn--floating' + (className ? ` ${className}` : '')}
       type={type}
       disabled={disabled}
       onClick={onClick}

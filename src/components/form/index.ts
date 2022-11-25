@@ -8,7 +8,6 @@ import Select from './Select';
 import TextInput from './TextInput';
 import UploadInput from './UploadInput';
 import Button from './Button';
-import ButtonGroup from './ButtonGroup';
 
 export default {
   Checkbox,
@@ -21,5 +20,4 @@ export default {
   TextInput,
   UploadInput,
   Button,
-  ButtonGroup,
 };

@@ -1,62 +1,32 @@
-import { FC, useEffect, useState } from 'react';
-import multiStepFormJson from '../../../jsonSamples/multi-step-form.json';
-import singleStepFormJson from '../../../jsonSamples/single-step-form.json';
-import invalidFormJson from '../../../jsonSamples/invalid-form.json';
+import { FC } from 'react';
 
 type LoadPresetButtonsProps = {
-  allBtnsUnpressed: boolean;
-  onClick: (parsedJson: object) => void;
+  formSample: object;
 };
 
-const LoadPresetButtons: FC<LoadPresetButtonsProps> = ({
-  allBtnsUnpressed,
-  onClick,
-}) => {
-  const [pressedBtn, setPressedBtn] = useState(1);
-
-  useEffect(() => {
-    if (allBtnsUnpressed) {
-      setPressedBtn(0);
-    }
-  }, [allBtnsUnpressed]);
+const LoadPresetButtons: FC<LoadPresetButtonsProps> = ({ formSample }) => {
+  const downloadObjectAsJson = (jsonData: object, fileName: string) => {
+    const file = new Blob([JSON.stringify(jsonData, null, 2)], {
+      type: 'application/json',
+    });
+    const jsonURL = window.URL.createObjectURL(file);
+    const alink = document.createElement('a');
+    alink.href = jsonURL;
+    alink.download = fileName;
+    alink.click();
+    alink.remove();
+  };
 
   return (
     <div className='neuromorphic'>
       <button
-        className={`btn btn--rounded btn--embossed ${
-          pressedBtn === 1 ? 'pressed' : null
-        }`}
+        className={`btn btn--rounded btn--embossed`}
         type='button'
         onClick={() => {
-          onClick(multiStepFormJson);
-          setPressedBtn(1);
+          downloadObjectAsJson(formSample, 'json');
         }}
       >
-        Multi-step Sample
-      </button>
-      <button
-        className={`btn btn--rounded btn--embossed ${
-          pressedBtn === 2 ? 'pressed' : null
-        }`}
-        type='button'
-        onClick={() => {
-          onClick(singleStepFormJson);
-          setPressedBtn(2);
-        }}
-      >
-        Single-step Sample
-      </button>
-      <button
-        className={`btn btn--rounded btn--embossed ${
-          pressedBtn === 3 ? 'pressed' : null
-        }`}
-        type='button'
-        onClick={() => {
-          onClick(invalidFormJson);
-          setPressedBtn(3);
-        }}
-      >
-        Invalid Sample
+        Download Json Sample
       </button>
     </div>
   );
