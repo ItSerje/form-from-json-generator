@@ -8,7 +8,7 @@ const JsonValidationErrorMessages: FC<JsonValidationErrorMessagesProps> = ({
   messages,
 }) => {
   return (
-    <div className='container'>
+    <div className='container error-list'>
       <h1>Json Data Validation Error</h1>
       <h4>
         The form cannot be displayed due to incompatible json schema. Please resolve

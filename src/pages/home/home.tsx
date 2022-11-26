@@ -9,14 +9,16 @@ const Home: FC = () => {
 
   return (
     <>
-      <div className='container introduction neuromorphic'>
+      <div className='container introduction'>
         <h1>Form-From-Json Generator</h1>
-        <FilePickerAsButton
-          onFilePick={(parsedJson) => {
-            setParsedJson(parsedJson);
-          }}
-        />
-        <LoadPresetButtons formSample={formSample} />
+        <div className='introduction__btn-container '>
+          <FilePickerAsButton
+            onFilePick={(parsedJson) => {
+              setParsedJson(parsedJson);
+            }}
+          />
+          <LoadPresetButtons formSample={formSample} />
+        </div>
       </div>
       {parsedJson && (
         <FormFromJsonContainer parsedJson={parsedJson} key={parsedJson.id} />
