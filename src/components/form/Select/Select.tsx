@@ -1,6 +1,6 @@
 import { useField } from 'formik';
 import { FaChevronDown } from 'react-icons/fa';
-import { FC, useRef, useState } from 'react';
+import { FC, useCallback, useRef, useState } from 'react';
 import useOutsideClick from '../../../hooks/useOutsideClick';
 
 type SelectProps = {
@@ -13,7 +13,7 @@ type SelectProps = {
 };
 
 const Select: FC<SelectProps> = (props) => {
-  const [_, __, helpers] = useField(props);
+  const [_, meta, helpers] = useField(props);
   const { options, required } = props;
   const [showOptions, setShowOptions] = useState(false);
   const [currentLabel, setCurrentLabel] = useState(
@@ -25,7 +25,17 @@ const Select: FC<SelectProps> = (props) => {
   };
 
   const ref = useRef<HTMLDivElement>(null);
-  useOutsideClick(ref, () => setShowOptions(false));
+  useOutsideClick(
+    ref,
+    useCallback(() => {
+      if (showOptions) {
+        setShowOptions(false);
+        if (!meta.touched) {
+          helpers.setTouched(true);
+        }
+      }
+    }, [showOptions])
+  );
 
   const handleSelection = (value: string, label: string) => {
     setCurrentLabel(label);
