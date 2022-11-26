@@ -31,7 +31,7 @@ const CurrentFormValuesAndErrors: FC<CurrentFormValuesAndErrorsProps> = ({
           2
         )}
       </pre>
-      <p>{`* Note: Values longer than ${maxLength} symbols are cut`}</p>
+      <p>{`* Note: Values longer than ${maxLength} characters are cut`}</p>
     </div>
   );
 };
