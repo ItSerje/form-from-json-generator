@@ -1,92 +1,76 @@
 {
-  "formLabel": "Single-step Sample",
+  "formLabel": "Form Sample",
   "btnText": "Submit",
   "fields": [
     {
       "component": "TextInput",
-      "label": "Имя",
-      "placeholder": "123",
-      "name": "firstName",
+      "label": "Name",
+      "placeholder": "John",
+      "name": "name",
       "requiredLabel": true,
       "validationType": "string",
-      "validations": [
-        { "type": "required", "params": ["Это обязательное поле"] },
-        {
-          "type": "min",
-          "params": [3, "Минимальное колчиство символов: ${min}"]
-        },
-        {
-          "type": "oneOf",
-          "params": [["Иван", "Федор"], "Можно выбрать только ${values}"]
-        }
-      ]
+      "validations": [{ "type": "required", "params": ["Required field"] }]
     },
     {
       "component": "TextInput",
       "label": "Email",
-      "placeholder": "123@abc.com",
+      "placeholder": "email@example.com",
       "name": "email",
       "requiredLabel": true,
       "validationType": "string",
       "validations": [
-        { "type": "required", "params": ["Это обязательное поле"] },
-        {
-          "type": "min",
-          "params": [3, "Минимальное колчиство символов: ${min}"]
-        },
-        { "type": "email", "params": ["Введите валидный email"] }
+        { "type": "required", "params": ["Required field"] },
+        { "type": "email", "params": ["Email is not valid"] }
       ]
     },
     {
       "component": "NumberInput",
-      "label": "Возраст",
+      "label": "Age",
       "name": "age",
-      "initialValue": "1",
+      "initialValue": "0",
       "requiredLabel": true,
       "validationType": "number",
       "validations": [
-        { "type": "required", "params": ["Это обязательное поле"] },
-        { "type": "min", "params": [18, "Минимальный возраст: ${min}"] },
-        { "type": "max", "params": [150, "Максимальный возраст: ${max}"] }
+        { "type": "required", "params": ["Required field"] },
+        { "type": "min", "params": [18, "Minimum age for submitting: ${min}"] }
       ]
     },
     {
       "component": "Select",
-      "label": "Семейное положение",
+      "label": "Marriage Status",
       "name": "marriageStatus",
       "componentSpecific": {
         "required": true,
         "options": [
-          { "value": "", "label": "Выберите значение" },
-          { "value": "single", "label": "Не женат/не замужем" },
-          { "value": "married", "label": "Женат/замужем" }
+          { "value": "", "label": "Please select an option" },
+          { "value": "single", "label": "Single" },
+          { "value": "married", "label": "Married" }
         ]
       },
-
       "requiredLabel": true,
       "validationType": "string",
       "validations": [
-        { "type": "required", "params": ["Выберите одну из опций"] },
+        { "type": "required", "params": ["Please select an option"] },
         {
           "type": "oneOf",
-          "params": ["Недопустимая опция"]
+          "params": ["No such an option"]
         }
       ]
     },
     {
       "component": "MultipleInputs",
-      "label": "ВУЗ",
-      "placeholder": "Например, ВолгГАСУ",
-      "hint": "Укажите учебные заведения, в которых вы учились",
-      "name": "education",
+      "label": "References",
+      "placeholder": "Company Inc.",
+      "hint": "Please provide references",
+      "name": "references",
       "initialValue": "",
       "requiredLabel": true,
       "validationType": "array",
       "validations": [
-        { "type": "required", "params": ["Это обязательное поле"] },
+        { "type": "required", "params": ["Required field"] },
         {
           "type": "min",
-          "params": [2, "Укажите хотя бы ${min} учебных заведения"]
+          "params": [2, "Please provide at least ${min} references"]
         },
         {
           "type": "innerType",
@@ -95,11 +79,11 @@
             "validations": [
               {
                 "type": "required",
-                "params": ["Пожалуйста, заполните это поле"]
+                "params": ["Please fill in this field"]
               },
               {
                 "type": "min",
-                "params": [3, "Минимальное колчиство символов: ${min}"]
+                "params": [3, "Minimum ${min} characters"]
               }
             ]
           }
@@ -107,15 +91,43 @@
       ]
     },
     {
+      "component": "CheckboxGroup",
+      "label": "Skills",
+      "name": "skills",
+      "componentSpecific": {
+        "selectAll": true,
+        "selectAllText": "Select All",
+        "options": [
+          { "value": "programming", "checkboxLabel": "Programming" },
+          { "value": "cooking", "checkboxLabel": "Cooking" },
+          { "value": "hiking", "checkboxLabel": "Hiking" },
+          { "value": "singing", "checkboxLabel": "Singing" },
+          { "value": "driving", "checkboxLabel": "Driving" }
+        ]
+      },
+
+      "hint": "Please select your skills",
+      "validationType": "array",
+      "validations": [
+        {
+          "type": "required",
+          "params": ["Required field"]
+        },
+        {
+          "type": "min",
+          "params": [2, "Minimum ${min} skills are required"]
+        }
+      ]
+    },
+    {
       "component": "Select",
-      "label": "Место рождения",
-      "placeholder": "Не важно",
-      "name": "birthPlace",
+      "label": "Subscription",
+      "name": "subscription",
       "componentSpecific": {
         "options": [
-          { "value": "", "label": "Не важно" },
-          { "value": "abakan", "label": "Абакан" },
-          { "value": "angarsk", "label": "Ангарск" }
+          { "value": "", "label": "Please select your subscription" },
+          { "value": "standard", "label": "Standard" },
+          { "value": "premium", "label": "Premium" }
         ]
       },
 
@@ -123,52 +135,13 @@
       "validations": [
         {
           "type": "oneOf",
-          "params": ["Недопустимая опция"]
-        }
-      ]
-    },
-    {
-      "component": "CheckboxGroup",
-      "label": "Навыки",
-      "name": "skills",
-      "componentSpecific": {
-        "selectAll": true,
-        "selectAllText": "Выбрать все",
-        "options": [
-          { "value": "communication", "checkboxLabel": "Общение" },
-          {
-            "value": "languages",
-            "checkboxLabel": "Знание иностранных языков"
-          },
-          { "value": "cooking", "checkboxLabel": "Готовка" },
-          {
-            "value": "steeplechase",
-            "checkboxLabel": "Бег с препятствиями"
-          },
-          { "value": "speedReading", "checkboxLabel": "Быстрое чтение" },
-          { "value": "box", "checkboxLabel": "Бокс" },
-          { "value": "singing", "checkboxLabel": "Пение" },
-          { "value": "programming", "checkboxLabel": "Программирование" },
-          { "value": "driving", "checkboxLabel": "Вождение" }
-        ]
-      },
-
-      "hint": "Отметьте ваши навыки",
-      "validationType": "array",
-      "validations": [
-        {
-          "type": "required",
-          "params": ["Это обязательное поле"]
-        },
-        {
-          "type": "min",
-          "params": [2, "Минимальное колчиство навыков: ${min}"]
+          "params": ["No such an option"]
         }
       ]
     },
     {
       "component": "UploadInput",
-      "label": "Файлы",
+      "label": "Files",
       "name": "files",
       "componentSpecific": {
         "acceptedFormats": {
@@ -177,18 +150,15 @@
         },
         "maximumFileSize": 0.5,
         "multiple": true,
-        "dropzoneText": "Перетяните сюда файлы или нажмите"
+        "dropzoneText": "Drag 'n' drop some files here, or click to select files"
       },
 
       "validationType": "array",
-      "validations": [
-        { "type": "min", "params": [2, "Минимум ${min} файла(ов)"] },
-        { "type": "max", "params": [3, "Максимум ${max} файла(ов)"] }
-      ]
+      "validations": [{ "type": "max", "params": [2, "Maximum ${max} files"] }]
     },
     {
       "component": "UploadInput",
-      "label": "Фото",
+      "label": "Photo",
       "name": "photo",
       "componentSpecific": {
         "acceptedFormats": {
@@ -198,28 +168,25 @@
         "maximumFileSize": 200,
         "multiple": false,
         "preview": true,
-        "dropzoneText": "Внимание! Файлы загружаются на сервер до отправки формы"
+        "dropzoneText": "Drag 'n' drop your photo, or click to select one"
       },
 
       "validationType": "array",
-      "validations": [
-        { "type": "min", "params": [1, "Пожалуйста, загрузите фото"] },
-        { "type": "max", "params": [1, "Максимум ${max} файла(ов)"] }
-      ]
+      "validations": []
     },
     {
       "component": "Checkbox",
-      "name": "tac",
+      "name": "terms",
       "initialValue": false,
       "componentSpecific": {
-        "checkboxLabel": "Я соглашаюсь с условиями"
+        "checkboxLabel": "I accept all the terms and conditions"
       },
 
       "validationType": "boolean",
       "validations": [
         {
           "type": "oneOf",
-          "params": [[true], "Необходимо принять условия"]
+          "params": [[true], "This field is required"]
         }
       ]
     }
