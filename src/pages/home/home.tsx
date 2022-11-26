@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 import FormFromJsonContainer from '../../views/form/FormFromJson';
-import { FilePickerAsButton, LoadPresetButtons } from './components';
+import { FilePickerAsButton, DownloadSampleButton } from './components';
 import '../../styles/main.scss';
 import formSample from '../../form-sample.json';
 
@@ -17,7 +17,7 @@ const Home: FC = () => {
               setParsedJson(parsedJson);
             }}
           />
-          <LoadPresetButtons formSample={formSample} />
+          <DownloadSampleButton formSample={formSample} />
         </div>
       </div>
       {parsedJson && (

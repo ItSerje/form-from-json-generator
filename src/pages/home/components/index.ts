@@ -1,4 +1,4 @@
-import LoadPresetButtons from './LoadPresetButtons';
+import DownloadSampleButton from './DownloadSampleButton';
 import FilePickerAsButton from './FilePickerAsButton';
 
-export { LoadPresetButtons, FilePickerAsButton };
+export { DownloadSampleButton, FilePickerAsButton };

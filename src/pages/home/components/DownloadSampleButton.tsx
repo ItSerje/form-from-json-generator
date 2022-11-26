@@ -1,10 +1,12 @@
 import { FC } from 'react';
 
-type LoadPresetButtonsProps = {
+type DownloadSampleButtonProps = {
   formSample: object;
 };
 
-const LoadPresetButtons: FC<LoadPresetButtonsProps> = ({ formSample }) => {
+const DownloadSampleButton: FC<DownloadSampleButtonProps> = ({
+  formSample,
+}) => {
   const downloadObjectAsJson = (jsonData: object, fileName: string) => {
     const file = new Blob([JSON.stringify(jsonData, null, 2)], {
       type: 'application/json',
@@ -32,4 +34,4 @@ const LoadPresetButtons: FC<LoadPresetButtonsProps> = ({ formSample }) => {
   );
 };
 
-export default LoadPresetButtons;
+export default DownloadSampleButton;
