@@ -18,7 +18,6 @@ export const getFileDataUrlWithProgress = async (
       if (e.lengthComputable) {
         const percentage = (e.loaded / e.total) * 100;
         onProgress(Math.round(percentage));
-        console.log(Math.round(percentage))
       }
     };
     fileReader.readAsDataURL(file);
