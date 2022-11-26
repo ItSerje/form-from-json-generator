@@ -6,6 +6,7 @@ import { TValuesAndErrors } from '../../../types/formikTypes';
 import { getInitialValues } from '../../../utils/formUtils/getInitialValues';
 import CurrentFormValuesAndErrors from '../CurrentFormValuesAndErrors';
 import ValidationErrorMessages from '../JsonValidationErrorMessages';
+import Modal from '../Modal';
 
 type FormFromJsonContainerProps = {
   parsedJson: any; // data will be validated by yup
@@ -25,10 +26,15 @@ const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
       values: {},
       errors: {},
     });
+    const [modalShown, setModalShown]= useState(true)
 
   const getFormValuesAndErrors = ({ values, errors }: TValuesAndErrors) => {
     setCurrentValuesAndErrors({ values, errors });
   };
+
+  const toggleModal = () => {
+    setModalShown((current) => !current)
+  }
 
   useEffect(() => {
     setFormData(null);
@@ -76,6 +82,7 @@ const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
           </div>
         </div>
       )}
+      {modalShown && <Modal closeModal={toggleModal}/>}
     </>
   );
 };
