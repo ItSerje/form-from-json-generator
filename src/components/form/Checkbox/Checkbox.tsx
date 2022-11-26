@@ -21,7 +21,6 @@ const Checkbox: FC<CheckboxProps> = (props) => {
       </div>
       {props.checkboxLabel ? props.checkboxLabel : props.value}
     </label>
-    // </div>
   );
 };
 

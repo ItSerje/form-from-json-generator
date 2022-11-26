@@ -31,15 +31,12 @@
 .box {
   position: relative;
   display: flex;
-  //   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   width: 100%;
   margin: 1rem 0;
   padding: 5rem 3rem;
   overflow: hidden;
-
-  //   flex-wrap: wrap;
 
   @media only screen and (max-width: $bp-large) {
     margin: 1rem 0;
