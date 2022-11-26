@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import { validateParsedJson } from '../../../validations/formValidations/validateParsedJson';
 import FormFromJson from './FormFromJson';
 import { TFormData } from '../../../types/jsonTypes';
-import { TValuesAndErrors } from '../../../types/formikTypes';
+import { TFormikValuesAndErrors } from '../../../types/formikTypes';
 import { getInitialValues } from '../../../utils/formUtils/getInitialValues';
 import CurrentFormValuesAndErrors from '../CurrentFormValuesAndErrors';
 import ValidationErrorMessages from '../JsonValidationErrorMessages';
@@ -21,20 +21,25 @@ const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
     error: false,
     messages: [],
   });
-  const [currentValuesAndErrors, setCurrentValuesAndErrors] =
-    useState<TValuesAndErrors>({
-      values: {},
-      errors: {},
-    });
-    const [modalShown, setModalShown]= useState(true)
+  const [formikValuesAndErrors, setFormikValuesAndErrors] =
+    useState<TFormikValuesAndErrors>({ values: {}, errors: {} });
+  const [modalShown, setModalShown] = useState(false);
+  const [key, setKey] = useState(0);
 
-  const getFormValuesAndErrors = ({ values, errors }: TValuesAndErrors) => {
-    setCurrentValuesAndErrors({ values, errors });
+  const refreshForm = () => {
+    setKey((key) => key + 1);
+  };
+
+  const getFormikValuesAndErrors = ({
+    values,
+    errors,
+  }: TFormikValuesAndErrors) => {
+    setFormikValuesAndErrors({ values, errors });
   };
 
   const toggleModal = () => {
-    setModalShown((current) => !current)
-  }
+    setModalShown((current) => !current);
+  };
 
   useEffect(() => {
     setFormData(null);
@@ -71,18 +76,26 @@ const FormFromJsonContainer: FC<FormFromJsonContainerProps> = ({
             <FormFromJson
               formData={formData}
               initialValues={initialValues}
-              getFormValuesAndErrors={getFormValuesAndErrors}
+              getFormikValuesAndErrors={getFormikValuesAndErrors}
+              toggleModal={toggleModal}
+              key={key}
             />
           </div>
           <div className='box'>
             <CurrentFormValuesAndErrors
-              values={currentValuesAndErrors.values}
-              errors={currentValuesAndErrors.errors}
+              values={formikValuesAndErrors.values}
+              errors={formikValuesAndErrors.errors}
             />
           </div>
         </div>
       )}
-      {modalShown && <Modal closeModal={toggleModal}/>}
+      {modalShown && (
+        <Modal
+          closeModal={toggleModal}
+          values={formikValuesAndErrors.values}
+          resetForm={refreshForm}
+        />
+      )}
     </>
   );
 };

@@ -1,6 +1,6 @@
 import { FormikValues, FormikErrors } from 'formik';
 
-export type TValuesAndErrors = {
+export type TFormikValuesAndErrors = {
   values: FormikValues;
   errors: FormikErrors<FormikValues>;
 };

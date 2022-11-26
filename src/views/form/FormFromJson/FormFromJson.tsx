@@ -19,24 +19,26 @@ const COMPONENTS: { [key: string]: any } = {
 type FormFromJsonProps = {
   formData: TFormData;
   initialValues: any;
-  getFormValuesAndErrors: ({ values, errors }: any) => void;
+  getFormikValuesAndErrors: ({ values, errors }: any) => void;
+  toggleModal: () => void;
 };
 
 const FormFromJson: FC<FormFromJsonProps> = ({
   formData,
   initialValues,
-  getFormValuesAndErrors,
+  getFormikValuesAndErrors,
+  toggleModal,
 }) => {
   return (
     <Formik
       initialValues={initialValues}
-      validationSchema={() => generateFormValidations(formData)}
+      validationSchema={false ? () => generateFormValidations(formData) : null}
       onSubmit={(_, { setSubmitting }) => {
         setTimeout(() => {
-          alert('Form is successfully submitted');
           return new Promise((res) => {
             setTimeout(res, 2500);
             setSubmitting(false);
+            toggleModal();
           });
         }, 400);
       }}
@@ -44,7 +46,7 @@ const FormFromJson: FC<FormFromJsonProps> = ({
       {({ touched, errors, isSubmitting }) => {
         return (
           <Form className='form' autoComplete='off'>
-            <FormObserver getFormValuesAndErrors={getFormValuesAndErrors} />
+            <FormObserver getFormikValuesAndErrors={getFormikValuesAndErrors} />
             {formData.formLabel && (
               <h1 className='box-title'>{formData.formLabel}</h1>
             )}
@@ -85,7 +87,7 @@ const FormFromJson: FC<FormFromJsonProps> = ({
               <FormComponents.Button
                 type='submit'
                 disabled={isSubmitting}
-                value='Submit'
+                value={isSubmitting ? 'Submiting...' : 'Submit'}
               />
             </div>
           </Form>

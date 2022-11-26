@@ -1,16 +1,19 @@
 import { FC, useEffect } from 'react';
 import { useFormikContext } from 'formik';
-import { TValuesAndErrors } from '../../../types/formikTypes';
+import { TFormikValuesAndErrors } from '../../../types/formikTypes';
 
 type FormObserverProps = {
-  getFormValuesAndErrors: ({ values, errors }: TValuesAndErrors) => void;
+  getFormikValuesAndErrors: ({
+    values,
+    errors,
+  }: TFormikValuesAndErrors) => void;
 };
 
-const FormObserver: FC<FormObserverProps> = ({ getFormValuesAndErrors }) => {
-  const { values, errors }: TValuesAndErrors = useFormikContext();
+const FormObserver: FC<FormObserverProps> = ({ getFormikValuesAndErrors }) => {
+  const { values, errors }: TFormikValuesAndErrors = useFormikContext();
 
   useEffect(() => {
-    getFormValuesAndErrors({ values, errors });
+    getFormikValuesAndErrors({ values, errors });
   }, [values, errors]);
 
   return null;
