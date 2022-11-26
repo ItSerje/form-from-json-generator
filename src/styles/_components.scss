@@ -454,6 +454,12 @@
     &--inline {
       padding: 0.8rem 1.2rem;
     }
+
+    & span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
   }
 
   //////////////////////
@@ -498,10 +504,6 @@
         }
 
         & span {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
           & svg {
             filter: drop-shadow(0.1rem 0.1rem 0 #fff);
           }
