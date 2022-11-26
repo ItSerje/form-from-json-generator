@@ -13,10 +13,6 @@
     width: 100%;
 
     &__field-wrapper {
-      // ПЕРЕДЕЛАТЬ ЕСЛИ ПОЛУЧИТСЯ НА МАРДЖИН У САМОЙ ОБЕРТКИ
-      //   & > *:last-child {
-      //     margin-bottom: 2.4rem;
-      //   }
       &:not(:last-of-type) {
         margin-bottom: 2.4rem;
       }
@@ -48,7 +44,6 @@
       color: var(--color-grey-dark-1);
       text-shadow: var(--shadow-text-2);
 
-      // ADD ERROR CLASS
       &--error {
         color: var(--color-red-1);
       }
@@ -134,8 +129,6 @@
     &:focus {
       box-shadow: var(--shadow-neuromorphic-action);
     }
-
-    // &--with-icon{}
   }
 
   //////////////////////
@@ -178,12 +171,7 @@
       -webkit-appearance: none;
       width: 1.6rem;
       height: 1.6rem;
-      // margin: 3rem;
       background-color: var(--color-grey-light-1);
-      // box-shadow: 0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.2),
-      //   -0.5rem -0.5rem 1rem rgba(255, 255, 255, 1),
-      //   inset 0 0 0 rgba(0, 0, 0, 0.2), inset 0 0 0 rgba(255, 255, 255, 0.2);
-
       box-shadow: var(--shadow-neuromorphic-hover);
 
       outline: none;
@@ -191,18 +179,7 @@
       transition: all 0.2s ease-in-out;
 
       &:checked {
-        //   background-color: #686de0;
-        //   box-shadow: 0 0 0 rgba(0, 0, 0, 0), 0 0 0 rgba(255, 255, 255, 1),
-        //     inset 0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.2),
-        //     inset -0.5rem -0.5rem 1rem rgba(255, 255, 255, 0.2);
-
         box-shadow: var(--shadow-neuromorphic-action);
-
-        // &:before {
-        //   display: inline;
-        //   color: var(--color-red-1);
-        //   text-shadow: var(--shadow-text-2);
-        // }
       }
 
       &:not(:checked) {
@@ -211,17 +188,6 @@
           opacity: 0;
         }
       }
-
-      //   &:before {
-      //     display: none;
-      //     font-family: FontAwesome;
-      //     font-weight: 900;
-
-      //     position: absolute;
-      //     top: 50%;
-      //     left: 50%;
-      //     transform: translate(-50%, -50%);
-      //   }
     }
 
     &__label {
@@ -235,8 +201,6 @@
       cursor: pointer;
 
       text-shadow: var(--shadow-text-2);
-      // margin-top: 0.8rem;
-      // margin-bottom: 0.8rem;
       &:only-of-type {
         margin-left: 1.6rem;
       }
@@ -268,23 +232,7 @@
         }
       }
     }
-
-    //   input[type='checkbox']:checked {
-    //     span {
-    //       visibility: visible;
-    //       opacity: 1;
-    //     }
-    //   }
   }
-
-  // &__input {
-  //   &::before {
-  //     content: '';
-
-  //     //   font-weight: bolder;
-  //   }
-  // }
-  //   }
 
   //////////////////////
   // DROPDOWN/SELECT
@@ -318,10 +266,8 @@
       color: var(--color-grey-dark-2);
       transition: transform 0.2s ease-in-out;
 
-      // size to align icon similarly to input with btns
       width: 2rem;
       height: 2rem;
-      //   padding-right: 0.2rem;
 
       svg {
         transition: transform 0.2s ease-in-out;
@@ -335,9 +281,6 @@
       left: 0;
 
       display: none;
-      //   visibility: hidden;
-      //   opacity: 0;
-      // transition: all 0.2s ease-in-out;
       z-index: 1;
     }
 
@@ -348,10 +291,7 @@
       box-shadow: var(--shadow-neuromorphic-hover);
       cursor: pointer;
 
-      //   transition: all 0.2s ease-in-out;
-
       li {
-        // position: relative;
         padding: 1.6rem;
         color: var(--color-grey-dark-2);
         list-style: none;
@@ -383,12 +323,9 @@
 
     &.show {
       box-shadow: var(--shadow-neuromorphic-basic-1);
-      //   transition: all 0.2s ease-in-out;
 
       .dropdown__options-container {
         display: block;
-        // visibility: visible;
-        // opacity: 1;
         margin-bottom: 2.4rem;
         transition: opacity 2s ease-in-out;
       }
@@ -487,7 +424,6 @@
         width: 2rem;
         height: 2rem;
         border-radius: 50%;
-        // padding: 2rem;
         box-shadow: none;
         background-color: transparent;
         text-shadow: var(--shadow-text-2);
@@ -508,21 +444,6 @@
             filter: drop-shadow(0.1rem 0.1rem 0 #fff);
           }
         }
-
-        // & svg {
-        //   //   color: var(--color-grey-dark-3);
-        //   //   text-shadow: var(--shadow-text-2);
-        //   //   transition: color 0.2s ease-in-out;
-
-        //   //   width: 2rem;
-        //   //   height: 2rem;
-        //   //   padding: 0;
-        //   //   fill: var(--color-grey-dark-3);
-        // }
-
-        // // &:hover svg {
-        // //   color: var(--color-red-1);
-        // // }
       }
     }
   }
@@ -531,11 +452,7 @@
   // DROPZONE
   .dropzone {
     border: 2px dashed var(--color-grey-dark-2);
-
     box-shadow: var(--shadow-neuromorphic-basic-2);
-    // box-shadow: var(--shadow-neuromorphic-action);
-    // background: var(--gray-100);
-    // box-shadow: var(--shadow-neuromorphic-action);
     border-radius: 3px;
     outline: none;
     display: flex;
@@ -550,7 +467,6 @@
     transition: all 0.2s ease-in-out;
 
     &:hover {
-      //   box-shadow: var(--shadow-neuromorphic-hover);
       box-shadow: var(--shadow-neuromorphic-hover);
     }
 
@@ -559,17 +475,11 @@
       font-size: 1.4rem;
     }
 
-    // p {
-    //   margin: 2rem auto;
-    // }
-
     &--image-preview {
       width: 100%;
-      // object-fit: ;
     }
 
     &__message {
-      //   padding: 0 1.6rem;
       margin-top: 0.5rem;
 
       text-align: left;
@@ -634,7 +544,6 @@
     justify-content: space-around;
     align-items: center;
     gap: 2rem;
-    // margin: 2rem auto;
 
     @media only screen and (max-width: $bp-small) {
       flex-direction: column;
