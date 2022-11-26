@@ -26,7 +26,7 @@ const LoadPresetButtons: FC<LoadPresetButtonsProps> = ({ formSample }) => {
           downloadObjectAsJson(formSample, 'json');
         }}
       >
-        Download Json Sample
+        Download Sample
       </button>
     </div>
   );
