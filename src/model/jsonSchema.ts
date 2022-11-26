@@ -232,6 +232,6 @@ const jsonSchema = yup
       .required()
       .unique((s) => s.name, '${path}: Value of property "name" is duplicated'),
   })
-  .noUnknown();
+  .noUnknown(true, 'root field has unspecified keys: ${unknown}');
 
 export { jsonSchema, fieldSchema };
