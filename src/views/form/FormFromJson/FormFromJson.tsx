@@ -32,7 +32,7 @@ const FormFromJson: FC<FormFromJsonProps> = ({
   return (
     <Formik
       initialValues={initialValues}
-      validationSchema={false ? () => generateFormValidations(formData) : null}
+      validationSchema={() => generateFormValidations(formData)}
       onSubmit={(_, { setSubmitting }) => {
         setTimeout(() => {
           return new Promise((res) => {
