@@ -16,7 +16,7 @@ export const getInitialValues = (formData: TFormData) => {
     } else {
       if (field.component === 'MultipleInputs') {
         initialValues[field.name] = [''];
-      } else if (field.component === 'MultipleFilesUploadField') {
+      } else if (field.component === 'UploadInput') {
         initialValues[field.name] = [];
       } else {
         initialValues[field.name] = '';
