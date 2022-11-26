@@ -28,8 +28,6 @@ type UploadInputContainerProps = JSX.IntrinsicElements['input'] & {
   maximumFileSize?: number;
   preview?: boolean;
   dropzoneText?: string;
-  checkboxLabel?: string;
-  value?: string;
 };
 
 const UploadInputContainer: FC<UploadInputContainerProps> = (props) => {
@@ -43,7 +41,7 @@ const UploadInputContainer: FC<UploadInputContainerProps> = (props) => {
   } = props;
   const [field, _, helpers] = useField(name);
   const [files, setFiles] = useState<DroppedFiles[]>(
-    field.value.length ? field.value : []
+    field.value.length ? field.value : []   
   );
 
   const onDrop = useCallback((accFiles: File[], rejFiles: FileRejection[]) => {
