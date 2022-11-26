@@ -13,7 +13,7 @@ const Home: FC = () => {
         <h1>Form-From-Json Generator</h1>
         <FilePickerAsButton
           onFilePick={(parsedJson) => {
-            setParsedJson((p: object) => Object.assign({}, p, parsedJson));
+            setParsedJson(parsedJson);
           }}
         />
         <LoadPresetButtons formSample={formSample} />
