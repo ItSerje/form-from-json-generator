@@ -1,4 +1,4 @@
-export const cutStringFromStart = (
+export const cutObjStringValuesFromStart = (
   obj: { [x: string]: any },
   maxLength: number
 ) => {
@@ -8,7 +8,7 @@ export const cutStringFromStart = (
         obj[key] = obj[key].slice(0, 100) + '...';
       }
     } else {
-      cutStringFromStart(obj[key], maxLength);
+      cutObjStringValuesFromStart(obj[key], maxLength);
     }
   }
   return obj;

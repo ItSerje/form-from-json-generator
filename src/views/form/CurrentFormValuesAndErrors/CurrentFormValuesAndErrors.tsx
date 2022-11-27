@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cutStringFromStart } from '../../../utils/generalUtils/cutStringFromStart';
+import { cutObjStringValuesFromStart } from '../../../utils/generalUtils/cutObjStringValuesFromStart';
 
 type CurrentFormValuesAndErrorsProps = {
   values: object;
@@ -18,7 +18,10 @@ const CurrentFormValuesAndErrors: FC<CurrentFormValuesAndErrorsProps> = ({
       <pre>
         values:{' '}
         {JSON.stringify(
-          cutStringFromStart(JSON.parse(JSON.stringify(values)), maxLength),
+          cutObjStringValuesFromStart(
+            JSON.parse(JSON.stringify(values)),
+            maxLength
+          ),
           null,
           2
         )}
@@ -26,7 +29,10 @@ const CurrentFormValuesAndErrors: FC<CurrentFormValuesAndErrorsProps> = ({
       <pre>
         errors:{' '}
         {JSON.stringify(
-          cutStringFromStart(JSON.parse(JSON.stringify(errors)), maxLength),
+          cutObjStringValuesFromStart(
+            JSON.parse(JSON.stringify(errors)),
+            maxLength
+          ),
           null,
           2
         )}
