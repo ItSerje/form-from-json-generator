@@ -388,6 +388,16 @@
       }
     }
 
+    &--delete {
+      padding: 0.5rem 1rem 0.1rem 1rem;
+      background: transparent;
+      transition: color 0.2s ease-in-out;
+
+      &:hover {
+        color: var(--color-red-1);
+      }
+    }
+
     &--inline {
       padding: 0.8rem 1.2rem;
     }

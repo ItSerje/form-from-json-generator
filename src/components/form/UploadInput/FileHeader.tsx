@@ -11,7 +11,7 @@ export function FileHeader({ file, onDelete }: FileHeaderProps) {
     <Grid container justifyContent='space-between' alignItems='center'>
       <Grid item>{file.name}</Grid>
       <div>
-        <button onClick={() => onDelete(file)} className='btn btn--upload'>
+        <button onClick={() => onDelete(file)} className='btn btn--delete'>
           <span>
             <FaTrash />
           </span>
