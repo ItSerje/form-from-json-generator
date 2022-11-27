@@ -4,6 +4,8 @@ This app built using ReactJS, Typescript, [Formik](https://www.npmjs.com/package
 
 ## Deployed App
 
+[form-from-json.netlify.app](https://form-from-json.netlify.app/)
+
 You can donwload json sample, modify it and upload again to generate your custom form.
 
 ## Json Schema
