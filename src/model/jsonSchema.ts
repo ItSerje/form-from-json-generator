@@ -13,7 +13,7 @@ const fileTypeKeyValueSchema = {
     yup.string().oneOf(['.bmp', '.gif', '.jpeg', '.jpg', '.png', '.webp'])
   ),
   'video/*': yup.array(yup.string().oneOf(['.webm', '.avi', '.mp4', '.mpeg'])),
-  'application/*': yup.array(yup.string().oneOf(['.pdf', '.rtf'])),
+  'application/*': yup.array(yup.string().oneOf(['.pdf', '.rtf', '.json'])),
   'text/*': yup.array(
     yup.string().oneOf(['.txt', '.md', '.markdown', '.mdown', '.markdn'])
   ),
@@ -30,6 +30,7 @@ const fileTypeKeyValueSchema = {
 
   'application/rtf': yup.array(yup.string().oneOf(['.rtf'])),
   'application/pdf': yup.array(yup.string().oneOf(['.pdf'])),
+  'application/json': yup.array(yup.string().oneOf(['.json'])),
 
   'video/webm': yup.array(yup.string().oneOf(['.webm'])),
   'video/x-msvideo': yup.array(yup.string().oneOf(['.avi'])),
