@@ -1,5 +1,5 @@
 {
-  "formLabel": "Form Sample",
+  "formLabel": "Registration Form",
   "btnText": "Submit",
   "fields": [
     {
@@ -61,16 +61,14 @@
       "component": "MultipleInputs",
       "label": "References",
       "placeholder": "Company Inc.",
-      "hint": "Please provide references",
       "name": "references",
       "initialValue": "",
       "requiredLabel": true,
       "validationType": "array",
       "validations": [
-        { "type": "required", "params": ["Required field"] },
         {
-          "type": "min",
-          "params": [2, "Please provide at least ${min} references"]
+          "type": "max",
+          "params": [2, "Please provide maximum ${max} references"]
         },
         {
           "type": "innerType",
@@ -94,6 +92,7 @@
       "component": "CheckboxGroup",
       "label": "Skills",
       "name": "skills",
+      "requiredLabel": true,
       "componentSpecific": {
         "selectAll": true,
         "selectAllText": "Select All",
@@ -145,6 +144,7 @@
       "name": "files",
       "componentSpecific": {
         "acceptedFormats": {
+          "application/json": [".json"],
           "image/png": [".png"],
           "image/jpg": [".jpg"]
         },
