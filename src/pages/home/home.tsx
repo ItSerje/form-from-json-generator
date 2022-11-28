@@ -11,7 +11,7 @@ const Home: FC = () => {
     <>
       <div className='container introduction'>
         <h1>Form-From-Json Generator</h1>
-        <div className='introduction__btn-container '>
+        <div className='introduction__btn-container neuromorphic'>
           <FilePickerAsButton
             onFilePick={(parsedJson) => {
               setParsedJson(parsedJson);

@@ -30,7 +30,6 @@ const FilePickerAsButton: FC<FilePickerButtonProps> = ({ onFilePick }) => {
         setIsParsingError(false);
       } catch (error) {
         setIsParsingError(true);
-        console.log(error)
       }
     };
 
@@ -41,10 +40,16 @@ const FilePickerAsButton: FC<FilePickerButtonProps> = ({ onFilePick }) => {
     <>
       <label className='neuromorphic'>
         <input type='file' ref={inputRef} onChange={handleFileChange} hidden />
-        <FormComponents.Button className='btn--embossed' value='UPLOAD JSON' onClick={handleClick} />
+        <FormComponents.Button
+          className='btn--embossed'
+          value='UPLOAD JSON'
+          onClick={handleClick}
+        />
       </label>
       {isParsingError && (
-        <div className='form__message form__message--error'>Please upload valid json</div>
+        <div className='form__message form__message--error invalid-json-error'>
+          Please upload valid json
+        </div>
       )}
     </>
   );
