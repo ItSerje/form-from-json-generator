@@ -8,6 +8,14 @@ This app built using ReactJS, Typescript, [Formik](https://www.npmjs.com/package
 
 You can donwload json sample, modify it and upload again to generate your custom form.
 
+## Technical Requirements
+
+Create generator of custom forms based on fields described in json (array of objects).
+
+For each field pass a component name, label, placeholder, validations and othe required data.
+
+Ensure json schema validation in order to prevent app failure not just in the process of rendering, but also during form filling.
+
 ## Json Schema
 
 General validations include unknown keys detection as well as value type checking. Some properties may be required.
